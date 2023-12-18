@@ -1,16 +1,21 @@
 const QuestaoModel = require('../models/questao');
-const connection = require('../mysql/conn');
 
-const QuestaoController = {
-  getQuestaoData: async (req, res) => {
-    try {
-      const questaoData = await QuestaoModel.getQuestaoData();
-      res.json({ questaoData });
-    } catch (err) {
-      console.error('Error in QuestaoController:', err);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  },
+module.exports.getAllQuestoes = () => {
+  return QuestaoModel.getAllQuestoes();
 };
 
-module.exports = QuestaoController;
+module.exports.getQuestaoById = (id) => {
+  return QuestaoModel.getQuestaoById(id);
+};
+
+module.exports.createQuestao = (questao) => {
+  return QuestaoModel.createQuestao(questao);
+};
+
+module.exports.updateQuestao = (id, updatedQuestao) => {
+  return QuestaoModel.updateQuestao(id, updatedQuestao);
+};
+
+module.exports.deleteQuestao = (id) => {
+  return QuestaoModel.deleteQuestao(id);
+};

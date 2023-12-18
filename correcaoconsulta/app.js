@@ -13,6 +13,9 @@ const seeProva =  `SHOW COLUMNS FROM prova;`
 const seeTipoQuestao =  `SHOW COLUMNS FROM tipoquestao;`
 const seeQuestao =  `SHOW COLUMNS FROM questao;`
 
+var provasRouter = require('./routes/provas');
+var questoesRouter = require('./routes/questoes');
+var tipoquestoesRouter = require('./routes/tipoquestoes');
 
 connection.query(seeDatabase, (err, results) => {
   if (err) {
@@ -125,10 +128,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Routes
-app.get('/api/prova', ProvaController.getProvaData);
-app.get('/api/questao', QuestaoController.getQuestaoData); // Add this line
-app.get('/api/tipoquestao', TipoQuestaoController.getTipoQuestaoData); // Add this line
+app.use('/api/cc/prova', provasRouter);
+app.use('/api/cc/questao', questoesRouter);
+app.use('/api/cc/tipoquestao', tipoquestoesRouter);
 
 connection.query(seeTables, (err, results) => {
   if (err) {

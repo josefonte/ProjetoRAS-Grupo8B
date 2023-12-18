@@ -1,20 +1,94 @@
 const connection = require('../mysql/conn');
 
 const QuestaoModel = {
-  getQuestaoData: () => {
+  getAllQuestoes: () => {
     return new Promise((resolve, reject) => {
       const selectQuery = 'SELECT * FROM Questao';
       connection.query(selectQuery, (err, results) => {
         if (err) {
           reject(err);
         } else {
-          const questaoData = results.map(result => ({
+          const QuestaoData = results.map(result => ({
             id_questao: result.id_questao,
-            cotacaoTotal: result.cotacaoTotal,
-            Prova_id_prova_realizada: result.Prova_id_prova_realizada,
-            TipoQuestao_id_tipo: result.TipoQuestao_id_tipo,
+            cotacaoTotal: result.cotacaoTotal,   
+            Prova_id_prova_realizada: result.Prova_id_prova_realizada, 
+            TipoQuestao_id_tipo: result.TipoQuestao_id_tipo, 
           }));
-          resolve(questaoData);
+          resolve(QuestaoData);
+        }
+      });
+    });
+  },
+
+  getQuestaoById: (id) => {
+    return new Promise((resolve, reject) => {
+      const selectQuery = 'SELECT * FROM Questao WHERE id_questao = ?';
+      connection.query(selectQuery, [id], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          if (results.length > 0) {
+            const questaoData = {
+              id_questao: result[0].id_questao,
+              cotacaoTotal: result[0].cotacaoTotal,   
+              Prova_id_prova_realizada: result[0].Prova_id_prova_realizada, 
+              TipoQuestao_id_tipo: result[0].TipoQuestao_id_tipo, 
+            };
+            resolve(questaoData);
+          } else {
+            resolve(null);
+          }
+        }
+      });
+    });
+  },
+
+  createQuestao: (questao) => {
+    return new Promise((resolve, reject) => {
+      const insertQuery = 'INSERT INTO Questao (id_questao, cotacaoTotal, Prova_id_prova_realizada, TipoQuestao_id_tipo) VALUES (?, ?, ?, ?)';
+      const values = [questao.id_questao, questao.cotacaoTotal, questao.Prova_id_prova_realizada, questao.TipoQuestao_id_tipo];
+  
+      connection.query(insertQuery, values, (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results.insertId);
+        }
+      });
+    });
+  },
+
+  updateQuestao: (id, updatedQuestao) => {
+    return new Promise((resolve, reject) => {
+      const keys = Object.keys(updatedQuestao);
+      const values = Object.values(updatedQuestao);
+  
+      // Generate SET clause dynamically
+      const setClause = keys.map((key) => `${key} = ?`).join(', ');
+  
+      // Create the update query with the dynamic SET clause
+      const updateQuery = `UPDATE Questao SET ${setClause} WHERE id_questao = ?`;
+  
+      // Execute the query with values array including the values and id
+      connection.query(updateQuery, [...values, id], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results.affectedRows > 0);
+        }
+      });
+    });
+  },
+  
+
+  deleteQuestao: (id) => {
+    return new Promise((resolve, reject) => {
+      const deleteQuery = 'DELETE FROM Questao WHERE id_questao = ?';
+      connection.query(deleteQuery, [id], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results.affectedRows > 0);
         }
       });
     });
