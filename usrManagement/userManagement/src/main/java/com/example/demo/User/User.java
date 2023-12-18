@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String number;
 
     private String name;
@@ -14,9 +13,14 @@ public class User {
     private String password;
 
     public User(){
-        this.name = "ola";
-        this.email = "123@gmail.com";
-        this.password = "1234";
+
+    }
+
+    public User(String name, String number, String email){
+        this.name = name;
+        this.number = number;
+        this.email = email;
+        //this.password =
     }
 
     public String getNumber() {

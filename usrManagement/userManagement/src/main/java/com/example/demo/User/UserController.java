@@ -1,8 +1,9 @@
 package com.example.demo.User;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,8 +12,35 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/usr")
 public class UserController {
-    @GetMapping
-    public List<User> getUser(){
-        return List.of(new User());
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
+
+    @GetMapping(path="/all")
+    public List<User> getUsers(){
+        return this.userService.getUsers();
+    }
+
+    @PutMapping(path="/register")
+    public @ResponseBody String registerUser(@RequestParam String name, @RequestParam String number, @RequestParam String email){
+        this.userService.addUser(name, number, email);
+        return "Added";
+    }
+
+    @PostMapping(path="/register")
+    public @ResponseBody String registerUsers(@RequestParam List<User> users){
+        this.userService.addUsers(users);
+        return "Added";
+    }
+
+    @GetMapping(path="/auth")
+    public ResponseEntity<String> authenticateUser(@RequestParam String password, @RequestParam String number){
+        return this.userService.authenticateUser(password, number)
+                ? ResponseEntity.ok("User successfully authenticated")
+                : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
     }
 }
