@@ -25,14 +25,8 @@ public class UserController {
         return this.userService.getUsers();
     }
 
-    @PutMapping(path="/register")
-    public @ResponseBody String registerUser(@RequestParam String name, @RequestParam String number, @RequestParam String email){
-        this.userService.addUser(name, number, email);
-        return "Added";
-    }
-
     @PostMapping(path="/register")
-    public @ResponseBody String registerUsers(@RequestParam List<User> users){
+    public @ResponseBody String registerUsers(@RequestBody List<User> users){
         this.userService.addUsers(users);
         return "Added";
     }
