@@ -2,6 +2,9 @@ package com.example.demo.User;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity(name="User")
 public class User {
 
@@ -12,15 +15,18 @@ public class User {
     private String email;
     private String password;
 
-    public User(){
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserType> userTypes;
 
+    public User(){
+        this.userTypes = new HashSet<>();
     }
 
     public User(String name, String number, String email){
         this.name = name;
         this.number = number;
         this.email = email;
-        //this.password =
+        this.userTypes = new HashSet<>();
     }
 
     public String getNumber() {
@@ -53,6 +59,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean removeUserType(String type) {
+        return this.userTypes.removeIf(userType -> userType.getType().equals(type));
+    }
+
+    public void setUserType(UserType userType) {
+        this.userTypes.add(userType);
     }
 
     @Override

@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @PostMapping(path="/register")
-    public @ResponseBody String registerUsers(@RequestBody List<User> users){
-        this.userService.addUsers(users);
+    public @ResponseBody String registerUsers(@RequestParam String userType, @RequestBody List<User> users){
+        this.userService.addUsers(userType, users);
         return "Added";
     }
 
