@@ -1,6 +1,7 @@
 package com.example.demo.User;
 
 import com.example.demo.User.security.SafePasswordGenerator;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +12,20 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    private final UserTypeRepository userTypeRepository;
     private final SafePasswordGenerator safePasswordGenerator;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserTypeRepository userTypeRepository, SafePasswordGenerator safePasswordGenerator){
+    public UserService(UserRepository userRepository, SafePasswordGenerator safePasswordGenerator){
         this.userRepository = userRepository;
-        this.userTypeRepository = userTypeRepository;
         this.safePasswordGenerator = safePasswordGenerator;
     }
 
+    @Transactional
     public void addUsers(String userType, List<User> users){
-        String password = null;
+        String password;
         for(User user: users) {
             password = this.safePasswordGenerator.generateStrongPassword(); // Todo: notificar users por mail desta password
+            System.out.println(password);
             user.setPassword(this.safePasswordGenerator.generateEncodedPassword(password));
             user.setUserType(new UsersType(user, userType));
             this.userRepository.save(user);
