@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name="User")
+@Entity
+@Table(name="USERS")
 public class User {
 
     @Id
@@ -15,18 +16,24 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserType> userTypes;
+    //@OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "USERTYPE",
+            joinColumns = { @JoinColumn(name = "number") },
+            inverseJoinColumns = { @JoinColumn(name = "type") }
+    )
+    private Set<UsersType> usersTypes;
 
     public User(){
-        this.userTypes = new HashSet<>();
+        this.usersTypes = new HashSet<>();
     }
 
     public User(String name, String number, String email){
         this.name = name;
         this.number = number;
         this.email = email;
-        this.userTypes = new HashSet<>();
+        this.usersTypes = new HashSet<>();
     }
 
     public String getNumber() {
@@ -62,11 +69,11 @@ public class User {
     }
 
     public boolean removeUserType(String type) {
-        return this.userTypes.removeIf(userType -> userType.getType().equals(type));
+        return this.usersTypes.removeIf(usersType -> usersType.getType().equals(type));
     }
 
-    public void setUserType(UserType userType) {
-        this.userTypes.add(userType);
+    public void setUserType(UsersType usersType) {
+        this.usersTypes.add(usersType);
     }
 
     @Override
