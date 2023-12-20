@@ -1,5 +1,8 @@
 package com.example.demo.User;
 
+import com.example.demo.User.JsonModels.UserInfoRequest;
+import com.example.demo.User.JsonModels.UserInfoResponse;
+import com.example.demo.User.JsonModels.UserVerificationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path="/all")
+    @GetMapping(path="/all") // TODO: remover isto após testes
     public List<User> getUsers(){
         return this.userService.getUsers();
     }
@@ -31,10 +34,30 @@ public class UserController {
         return "Added";
     }
 
-    @GetMapping(path="/auth")
+    @PostMapping(path="/login")
     public ResponseEntity<String> authenticateUser(@RequestParam String password, @RequestParam String number){
         return this.userService.authenticateUser(password, number)
                 ? ResponseEntity.ok("User successfully authenticated")
                 : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
+    }
+
+    @GetMapping(path="/profile")
+    public ResponseEntity<Object> getUserInfo(@RequestParam String number){
+        UserInfoResponse userInfoResponse = this.userService.getUserInfo(number);
+        return userInfoResponse != null
+                ? ResponseEntity.ok(userInfoResponse)
+                : ResponseEntity.badRequest().body("Requirements to change user not met");
+    }
+
+    @PostMapping(path="/profile")
+    public ResponseEntity<String> changeUserInfo(@RequestBody UserInfoRequest user){
+        return this.userService.changeUserInfo(user)
+                ? ResponseEntity.ok("User settings changed successfully")
+                : ResponseEntity.badRequest().body("Requirements to change user not met");
+    }
+
+    @GetMapping(path="/verify")
+    public ResponseEntity<List<UserVerificationResponse>> verifyUsers(@RequestBody List<String> usersNumbers){
+        return ResponseEntity.ok(this.userService.verifyUsers(usersNumbers));
     }
 }
