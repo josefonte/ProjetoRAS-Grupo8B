@@ -42,24 +42,24 @@ connection.query(dropdatabase,(err, results) => {
 
 connection.query(createdatabase,(err, results) => {
   if (err) {
-    console.error('Error deleting tables:', err);
+    console.error('Error creating db:', err);
   } else {
-    console.log('Tables deleted successfully');
+    console.log('Database created successfully');
   }
 });
 connection.query(usedatabase,(err, results) => {
   if (err) {
-    console.error('Error deleting tables:', err);
+    console.error('Error using database:', err);
   } else {
-    console.log('Tables deleted successfully');
+    console.log('Using database');
   }
 });
 
 connection.query(seeTables, (err, results) => {
   if (err) {
-    console.error('Error creating table TipoQuestao:', err);
+    console.error('Error seeing tables:', err);
   } else {
-    console.log('TipoQuestao Table created successfully', results);
+    console.log('Seeing tables...', results);
   }
 });
 
@@ -104,12 +104,12 @@ const createTableQuestao = `
     PRIMARY KEY (id_questao),
     FOREIGN KEY (Prova_id_prova_realizada)
       REFERENCES Prova (id_prova_realizada)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
     FOREIGN KEY (TipoQuestao_id_tipo)
       REFERENCES TipoQuestao (id_tipo)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
   );
 `;
 
@@ -134,9 +134,9 @@ app.use('/api/cc/tipoquestao', tipoquestoesRouter);
 
 connection.query(seeTables, (err, results) => {
   if (err) {
-    console.error('Error creating table TipoQuestao:', err);
+    console.error('Error seeing Tables:', err);
   } else {
-    console.log('TipoQuestao Table created successfully', results);
+    console.log('Seeing tables:', results);
   }
 });
 
