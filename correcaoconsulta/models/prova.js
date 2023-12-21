@@ -79,7 +79,55 @@ const ProvaModel = {
       });
     });
   },
-  
+
+  getProvasByDuplicateId: (duplicateId) => {
+  return new Promise((resolve, reject) => {
+    const selectQuery = 'SELECT * FROM Prova WHERE id_prova_duplicada = ?';
+
+    
+    connection.query(selectQuery, [duplicateId], (err, results) => {
+      if (err) {
+        reject(err);
+      } else {
+        const ProvaData = results.map(result => ({
+          id_prova_realizada: result.id_prova_realizada,
+          id_prova_duplicada: result.id_prova_duplicada,
+          classificacao_final: result.classificacao_final,
+          num_Aluno: result.num_Aluno,
+        }));
+        resolve(ProvaData);
+        }
+      });
+    });
+  },
+
+  getProvasReady: (id) => {
+  return new Promise((resolve, reject) => {
+    const selectQuery = `
+      SELECT Prova.*, COUNT(Questao.id_questao) AS total_questoes
+      FROM Prova
+      JOIN Questao ON Prova.id_prova_realizada = Questao.Prova_id_prova_duplicada
+      WHERE Prova.id_prova_duplicada = ? AND Questao.cotacaoTotal IS NOT NULL
+      GROUP BY Prova.id_prova_duplicada
+      HAVING COUNT(Questao.id_questao) > 0
+         AND COUNT(Questao.id_questao) = SUM(CASE WHEN Questao.cotacaoTotal IS NOT NULL THEN 1 ELSE 0 END)
+    `;
+
+    connection.query(selectQuery, [id], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          const ProvaData = results.map(result => ({
+            id_prova_realizada: result.id_prova_realizada,
+            id_prova_duplicada: result.id_prova_duplicada,
+            classificacao_final: result.classificacao_final,
+            num_Aluno: result.num_Aluno,
+          }));
+          resolve(ProvaData);
+        }
+      });
+    });
+  },
 
   deleteProva: (id) => {
     return new Promise((resolve, reject) => {
