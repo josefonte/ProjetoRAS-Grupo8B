@@ -16,6 +16,9 @@ const seeQuestao =  `SHOW COLUMNS FROM questao;`
 var provasRouter = require('./routes/provas');
 var questoesRouter = require('./routes/questoes');
 var tipoquestoesRouter = require('./routes/tipoquestoes');
+var seeRouter = require('./routes/see');
+var correctRouter = require('./routes/correct');
+
 
 connection.query(seeDatabase, (err, results) => {
   if (err) {
@@ -131,6 +134,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/cc/prova', provasRouter);
 app.use('/api/cc/questao', questoesRouter);
 app.use('/api/cc/tipoquestao', tipoquestoesRouter);
+app.use('/api/see', seeRouter);
+app.use('/api/correct', correctRouter);
+
 
 connection.query(seeTables, (err, results) => {
   if (err) {
