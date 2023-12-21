@@ -3,12 +3,13 @@ const router = express.Router();
 const Prova = require('../models/prova');
 const Questao = require('../models/questao');
 
-/*FAZ O CODIGO RAPOSO*/
 
 
 router.get('/listprovas/:id/ready', async (req, res) => {
     try {
-      //insere codigo
+      const provasId = req.params.id;
+      const provas = await Prova.getProvasReady(provasId);
+      res.json(provas);
     } catch (error) {
       console.error('Error getting Provas:', error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -16,19 +17,23 @@ router.get('/listprovas/:id/ready', async (req, res) => {
   });
 
 
-  router.get('/prova/:id', async (req, res) => {
+router.get('/prova/:id', async (req, res) => {
     try {
-      //insere codigo
+      const provaId = req.params.id;
+      const prova = await Prova.getProvaById(provasId);
+      res.json(prova);
     } catch (error) {
       console.error('Error getting Provas:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
 
-  router.post('/prova/:id/recorrect', async (req, res) => {
+router.post('/prova/:id/recorrect', async (req, res) => {
     try {
-      //insere codigo
-      console.log("ISTO NAO FAZ SENTIDO, NAO FAÇO")
+      const provaId = req.params.id;
+
+      console.log("RAFA : ISTO NAO FAZ SENTIDO, NAO FAÇO")
+      console.log("MIGUEL : EU TMB NAO SEI COMO >:C ")
     } catch (error) {
       console.error('Error getting Provas:', error);
       res.status(500).json({ error: 'Internal Server Error' });
