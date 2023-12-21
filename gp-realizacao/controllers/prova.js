@@ -50,12 +50,11 @@ module.exports.deleteProva = id => {
             })
 }
 
-module.exports.updateRespostasInProva = (id_prova,id_questao,respostas) => {
+module.exports.updateRespostasInQuestao = (id_prova,id_questao,respostas) => {
     return ProvaDuplicada.updateOne({ 
-                            _id: id_prova, 
-                            'respostas.id_questao': id_questao 
+                            _id: id_prova
                         },
-                        { $set: { 'respostas.$.opcoes': respostas } }
+                        { $set: { [`respostas.${id_questao}`]: respostas }}
                         )
             .then(resposta => {
                 return resposta

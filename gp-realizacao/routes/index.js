@@ -21,6 +21,17 @@ router.get('/api/evaluation/prova', function(req, res, next) {
   else {res.jsonp({'error':'Id nonexistent in query string'})}
 });
 
+
+router.get('/api/evaluation/prova_list', function(req, res, next) {
+  ProvaDuplicada.list()
+    .then(lista => {
+      res.jsonp(lista)
+    })
+    .catch(erro => {
+      res.jsonp({'error':erro})
+    })
+});
+
 router.put('/api/evaluation/prova', function(req, res, next) {
   if (req.query) {
     if (req.query.id && req.body._id == req.query.id) {
@@ -37,6 +48,20 @@ router.put('/api/evaluation/prova', function(req, res, next) {
     }
   }
   else {res.jsonp({'error':'Id nonexistent in query string'})}
+});
+
+
+router.put('/api/evaluation/updateRespostas', function(req, res, next) {
+  if (req.body) {
+      ProvaDuplicada.updateRespostasInQuestao(req.body.id_prova, req.body.id_questao, req.body.respostas)
+        .then(dados => {
+          res.jsonp(dados)
+        })
+        .catch(erro => {
+          res.jsonp({'error':erro})
+        })
+  }
+  else {res.jsonp({'error':'Error in body'})}
 });
 
 router.post('/api/evaluation/correct', function(req, res, next) {
@@ -68,5 +93,8 @@ router.post('/api/evaluation/save/:idProva', function(req, res, next) {
         res.jsonp({'error':erro})
       })
 });
+
+
+
 
 module.exports = router;
