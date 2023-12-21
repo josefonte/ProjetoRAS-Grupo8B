@@ -61,7 +61,7 @@ public class NotificationsService {
     @Transactional
     public boolean addNotificationType(String type, List<String> users){
         Optional<Notifications> notificationsOptional = this.notificationsRepository.findById(type);
-        if(notificationsOptional.isEmpty() || !this.userService.isEveryUserValid(users)) return false;
+        if(notificationsOptional.isPresent() || !this.userService.isEveryUserValid(users)) return false;
 
         Notifications notifications = new Notifications(type);
 

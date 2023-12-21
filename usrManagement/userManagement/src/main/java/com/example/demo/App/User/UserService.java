@@ -38,7 +38,7 @@ public class UserService {
             System.out.println(password); // TODO: remover isto após testes
             user.setPassword(this.safePasswordGenerator.generateEncodedPassword(password));
             user.setUserType(new UsersType(user, userType));
-            if(this.userRepository.findById(user.getNumber()).isPresent()) {
+            if(this.userRepository.findById(user.getNumber()).isEmpty()) {
                 this.userRepository.save(user);
                 mailService.sendAccountCreationMail(user.getEmail(), user.getNumber(), password);
             } else invalidUsers.add(user.getNumber());
