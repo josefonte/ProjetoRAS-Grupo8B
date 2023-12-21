@@ -47,6 +47,14 @@ public class Notifications {
         this.users.addAll(users);
     }
 
+    public void removeUsers(Set<User> users){
+        this.users.removeAll(users);
+    }
+
+    public void removeAllUsers(){
+        removeUsers(this.users);
+    }
+
     public Notifications clone()
     {
         return new Notifications(this);

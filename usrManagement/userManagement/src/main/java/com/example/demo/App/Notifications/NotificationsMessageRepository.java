@@ -13,4 +13,8 @@ public interface NotificationsMessageRepository extends CrudRepository<Notificat
     @Query("SELECT n.message FROM NotificationMessage n WHERE n.notification= :type")
     List<String> getAllMessagesFromType(String type);
 
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM NotificationMessage  n WHERE n.notification= :type")
+    void removeAllNotificationsByType(String type);
 }

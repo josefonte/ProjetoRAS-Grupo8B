@@ -40,4 +40,11 @@ public class NotificationsController {
                 ? ResponseEntity.ok("Notification type created")
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Parameters");
     }
+
+    @DeleteMapping(path="/notifications")
+    public ResponseEntity<String> deleteNotificationType(@RequestParam String type){
+        return this.notificationsService.removeNotificationType(type)
+                ? ResponseEntity.ok("Notification type removed")
+                : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Notification Type");
+    }
 }

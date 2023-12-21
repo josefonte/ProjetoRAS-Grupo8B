@@ -78,6 +78,19 @@ public class NotificationsService {
     }
 
     @Transactional
+    public boolean removeNotificationType(String type){
+        Optional<Notifications> notificationsOptional = this.notificationsRepository.findById(type);
+        if(notificationsOptional.isEmpty()) return false;
+
+        Notifications notification = notificationsOptional.get();
+        notification.removeAllUsers();
+        this.notificationsMessageRepository.removeAllNotificationsByType(type);
+
+        this.notificationsRepository.delete(notification);
+        return true;
+    }
+
+    @Transactional
     public List<String> getNotificationMessages(String type){
         if(this.notificationsRepository.findById(type).isEmpty()) return null;
 
