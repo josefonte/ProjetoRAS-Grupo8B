@@ -1,4 +1,4 @@
-package com.example.demo.User.security;
+package com.example.demo.App.security;
 
 
 import org.passay.CharacterData;

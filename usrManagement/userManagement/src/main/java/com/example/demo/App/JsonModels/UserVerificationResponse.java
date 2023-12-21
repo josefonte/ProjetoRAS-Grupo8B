@@ -1,4 +1,4 @@
-package com.example.demo.User.JsonModels;
+package com.example.demo.App.JsonModels;
 
 public class UserVerificationResponse {
     private String number;

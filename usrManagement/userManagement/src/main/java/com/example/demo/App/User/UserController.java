@@ -1,15 +1,13 @@
-package com.example.demo.User;
+package com.example.demo.App.User;
 
-import com.example.demo.User.JsonModels.UserInfoRequest;
-import com.example.demo.User.JsonModels.UserInfoResponse;
-import com.example.demo.User.JsonModels.UserVerificationResponse;
+import com.example.demo.App.JsonModels.UserInfoRequest;
+import com.example.demo.App.JsonModels.UserInfoResponse;
+import com.example.demo.App.JsonModels.UserVerificationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -23,15 +21,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path="/all") // TODO: remover isto após testes
-    public List<User> getUsers(){
-        return this.userService.getUsers();
-    }
-
     @PostMapping(path="/register")
-    public @ResponseBody String registerUsers(@RequestParam String userType, @RequestBody List<User> users){
-        this.userService.addUsers(userType, users);
-        return "Added";
+    public ResponseEntity<Object> registerUsers(@RequestParam String userType, @RequestBody List<User> users){
+        List<String> invalidUsers = this.userService.addUsers(userType, users);
+        return invalidUsers.isEmpty()
+                ? ResponseEntity.ok("Users successfully added")
+                : ResponseEntity.badRequest()
+                                .body("Some invalid users were not added\n" + invalidUsers);
     }
 
     @PostMapping(path="/login")

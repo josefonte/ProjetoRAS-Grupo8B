@@ -1,9 +1,10 @@
-package com.example.demo.User;
+package com.example.demo.App.User;
 
-import com.example.demo.User.JsonModels.UserInfoRequest;
-import com.example.demo.User.JsonModels.UserInfoResponse;
-import com.example.demo.User.JsonModels.UserVerificationResponse;
-import com.example.demo.User.security.SafePasswordGenerator;
+import com.example.demo.App.JsonModels.UserInfoRequest;
+import com.example.demo.App.JsonModels.UserInfoResponse;
+import com.example.demo.App.JsonModels.UserVerificationResponse;
+import com.example.demo.App.Mail.MailService;
+import com.example.demo.App.security.SafePasswordGenerator;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,26 +20,31 @@ public class UserService {
 
     private final SafePasswordGenerator safePasswordGenerator;
 
+    private final MailService mailService;
+
     @Autowired
-    public UserService(UserRepository userRepository, SafePasswordGenerator safePasswordGenerator){
+    public UserService(UserRepository userRepository, SafePasswordGenerator safePasswordGenerator, MailService mailService){
         this.userRepository = userRepository;
         this.safePasswordGenerator = safePasswordGenerator;
+        this.mailService = mailService;
     }
 
     @Transactional
-    public void addUsers(String userType, List<User> users){
+    public List<String> addUsers(String userType, List<User> users){
+        List<String> invalidUsers = new ArrayList<>();
         String password;
         for(User user: users) {
-            password = this.safePasswordGenerator.generateStrongPassword(); // Todo: notificar users por mail desta password
-            System.out.println(password);
+            password = this.safePasswordGenerator.generateStrongPassword();
+            System.out.println(password); // TODO: remover isto após testes
             user.setPassword(this.safePasswordGenerator.generateEncodedPassword(password));
             user.setUserType(new UsersType(user, userType));
-            this.userRepository.save(user);
+            if(this.userRepository.findById(user.getNumber()).isPresent()) {
+                this.userRepository.save(user);
+                mailService.sendAccountCreationMail(user.getEmail(), user.getNumber(), password);
+            } else invalidUsers.add(user.getNumber());
         }
-    }
 
-    public List<User> getUsers(){
-        return (List<User>) this.userRepository.findAll();
+        return invalidUsers;
     }
 
     public boolean authenticateUser(String password, String number){
