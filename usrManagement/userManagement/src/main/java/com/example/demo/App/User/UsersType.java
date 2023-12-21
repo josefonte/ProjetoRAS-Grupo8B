@@ -3,10 +3,10 @@ package com.example.demo.App.User;
 import com.example.demo.App.User.User;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="USERSTYPE")
 public class UsersType {
     @Id
     private String type;
@@ -14,8 +14,6 @@ public class UsersType {
     //@ManyToOne
     //@JoinColumn(name="number", nullable = false)
     //private User user;
-    @ManyToMany
-    private Set<User> users;
 
     public UsersType(){
 
@@ -23,6 +21,10 @@ public class UsersType {
 
     public UsersType(User user, String type){
         this.type = type;
+    }
+
+    public UsersType(UsersType usersType){
+        this.type = usersType.getType();
     }
 
     public String getType() {

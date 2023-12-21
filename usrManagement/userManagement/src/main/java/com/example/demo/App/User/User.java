@@ -1,12 +1,12 @@
 package com.example.demo.App.User;
 
+import com.example.demo.App.Notifications.Notifications;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="USERS")
 public class User {
 
     @Id
@@ -33,6 +33,14 @@ public class User {
         this.name = name;
         this.number = number;
         this.email = email;
+        this.usersTypes = new HashSet<>();
+    }
+
+    public User(User user){
+        this.name = user.getName();
+        this.number = user.getNumber();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
         this.usersTypes = new HashSet<>();
     }
 
@@ -83,5 +91,10 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public User clone(){
+        return new User(this);
     }
 }

@@ -91,4 +91,14 @@ public class UserService {
 
         return userVerificationResponses;
     }
+
+    @Transactional
+    public boolean isEveryUserValid(List<String> usersNumbers){
+        for(String userNumber: usersNumbers){
+            if(this.userRepository.findById(userNumber).isEmpty())
+                return false;
+        }
+
+        return true;
+    }
 }
