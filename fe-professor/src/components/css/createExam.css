@@ -1,0 +1,19 @@
+.exam-title {
+    color: #007bff;
+    border: 1px solid #007bff;
+    font-size: 24px;
+    font-weight: bold;
+}
+.form {
+    display:grid;
+    justify-content: center; 
+}
+
+.buttonCreateExame {
+    margin-top: 100px;
+    justify-content: center; 
+    display:grid;
+    background-color: #3493f9;
+    text-align: center;
+    
+}
