@@ -28,22 +28,23 @@ router.put('/corrAUTOprovas/:id', async (req, res) => {
       var provaoriginal;
 
       // nao esta no sitio certo
-      /*
+      
       axios.get(`http://localhost:8011/api/gestao/prova/${provadupId}`).then(resp => {
         // pode ser necessario tratar a data ?
         provaoriginal = resp.data;
       })
-      */
+      
 
     //BUSCAR TODAS AS PROVAS QUE FORAM REALIZADAS
      const provas = await Prova.getProvasByDuplicateId(provadupId) 
-
+      /*
      //TESTE DO EQUIVALENTE DE FAZER AXIOS.GET
       const fileContent = fs.readFileSync("test/criar.json", 'utf8');
 
 
       provaoriginal = JSON.parse(fileContent); 
       //FINAL DO CODIGO DE TESTE
+      */
 
       //QUESTOES DA PROVA ORIGINAL
       questoes = provaoriginal.questoes
