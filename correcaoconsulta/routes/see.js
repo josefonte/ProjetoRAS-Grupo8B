@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Prova = require('../models/prova');
+const TipoQuestao = require('../models/tipoquestao');
 const Questao = require('../models/questao');
 
 

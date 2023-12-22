@@ -18,6 +18,8 @@ var questoesRouter = require('./routes/questoes');
 var tipoquestoesRouter = require('./routes/tipoquestoes');
 var seeRouter = require('./routes/see');
 var correctRouter = require('./routes/correct');
+var debugRouter = require('./routes/debug');
+
 
 
 connection.query(seeDatabase, (err, results) => {
@@ -29,6 +31,7 @@ connection.query(seeDatabase, (err, results) => {
 });
 
 
+/*
 const dropdatabase=`DROP DATABASE IF EXISTS fixe;`
 // Create tables at the start
 const createdatabase = `CREATE DATABASE fixe;`;
@@ -65,6 +68,7 @@ connection.query(seeTables, (err, results) => {
     console.log('Seeing tables...', results);
   }
 });
+*/
 
 
 const createTableProva = `
@@ -101,6 +105,8 @@ connection.query(createTableTipoQuestao, (err, results) => {
 const createTableQuestao = `
   CREATE TABLE IF NOT EXISTS Questao (
     id_questao VARCHAR(255) NOT NULL,
+    nr_questao VARCHAR(255) NOT NULL,
+    resposta VARCHAR(255) NULL,
     cotacaoTotal FLOAT(10) NULL,
     Prova_id_prova_realizada VARCHAR(255) NOT NULL,
     TipoQuestao_id_tipo VARCHAR(255) NOT NULL,
@@ -136,7 +142,7 @@ app.use('/api/cc/questao', questoesRouter);
 app.use('/api/cc/tipoquestao', tipoquestoesRouter);
 app.use('/api/see', seeRouter);
 app.use('/api/correct', correctRouter);
-
+app.use('/debug', debugRouter)
 
 connection.query(seeTables, (err, results) => {
   if (err) {
@@ -145,7 +151,7 @@ connection.query(seeTables, (err, results) => {
     console.log('Seeing tables:', results);
   }
 });
-
+/*
 connection.query(seeProva, (err, results) => {
   if (err) {
     console.error('Error creating table TipoQuestao:', err);
@@ -169,7 +175,7 @@ connection.query(seeTipoQuestao, (err, results) => {
     console.log('TipoQuestao Table created successfully', results);
   }
 });
-
+*/
 
 // Error handler
 app.use((err, req, res, next) => {

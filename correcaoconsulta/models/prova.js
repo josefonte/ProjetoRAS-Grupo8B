@@ -72,8 +72,12 @@ const ProvaModel = {
       // Execute the query with values array including the values and id
       connection.query(updateQuery, [...values, id], (err, results) => {
         if (err) {
+          console.log(results)
+
           reject(err);
         } else {
+          console.log(results)
+
           resolve(results.affectedRows > 0);
         }
       });
