@@ -1,0 +1,233 @@
+[
+    {
+        "_id": "1",
+        "cotacao": "20",
+        "nome": "Prova 22/23 DAA",
+        "id_docente": "d123",
+        "versao": 1,
+        "data": "2023-12-14",
+        "hora_preferencial": "11:00",
+        "tempo_admissao": 200,
+        "duracao": 60,
+        "alunos": ["pg53791", "a96075"],
+        "acesso_autorizado": ["d123", "d345"],
+        "questoes": [
+          {
+            "_id": "q1",
+            "enunciado": "Qual o significado de 'boosting' no contexto de modelos de previsão?",
+            "imagem": "",
+            "cotacaoTotal": "4",
+            "tipo_Questao": "EC",
+            "options": [
+              { "_id": "o1", "texto": "Fazer diferentes modelos 'votar' para obter uma solução final;", "cotacao": "-0.5", "resolucao": "" },
+              { "_id": "o2", "texto": "Validar um modelo utilizando conjuntos de dados maiores;", "cotacao": "-0.5", "resolucao": "" },
+              { "_id": "o3", "texto": "Treinar modelos iterativamente de acordo com os erros de classificação;", "cotacao": "1", "resolucao": "" },
+              { "_id": "o4", "texto": "Dividir aleatoriamente um conjunto de dados para produzir modelos alternativos.", "cotacao": "-0.5", "resolucao": "" }
+            ]
+          },
+          {
+            "_id": "q2",
+            "enunciado": "Em alguns algoritmos de Machine Learning é usada a técnica de descida por gradiente (gradient descent) no processo de otimização dos parâmetros do algoritmo. \nQuais poderão ser os motivos para esta convergir lentamente ou não convergir?",
+            "imagem": "",
+            "cotacaoTotal": "6",
+            "tipo_Questao": "D",
+            "options": []
+          },
+          {
+            "_id": "q3",
+            "enunciado": "Feature Engineering permite a criação de _________________________________ a partir da informação disponível, como forma de auxiliar o ________________________________ a realizar previsões mais ____________________________.",
+            "imagem": "",
+            "cotacaoTotal": "4",
+            "tipo_Questao": "CE",
+            "options": [
+                { "_id": "o1", "texto": "", "cotacao": "-0.5", "resolucao": "novas features" },
+                { "_id": "o2", "texto": "", "cotacao": "-0.5", "resolucao": "modelo" },
+                { "_id": "o3", "texto": "", "cotacao": "1", "resolucao": "exatos" }
+              ]
+          },
+          {
+            "_id": "q4",
+            "enunciado": "PARA CADA AFIRMAÇÃO, RESPONDA ASSINALANDO A SUA VERACIDADE (V) OU FALSIDADE (F).",
+            "imagem": "",
+            "cotacaoTotal": "6",
+            "tipo_Questao": "VF",
+            "options": [
+                { "_id": "o1", "texto": "Uma matriz de confusão é uma métrica de avaliação de desempenho de modelos de Reinforcement Learning.", "cotacao": "2", "resolucao": "F" },
+                { "_id": "o2", "texto": "Em todos os algoritmos de clustering é necessário justificar a quantidade de clusters a procurar nos dados.", "cotacao": "2", "resolucao": "F" },
+                { "_id": "o3", "texto": "A Off-Policy Learning verificada nos algoritmos de Reinforcement Learning considera a avaliação e a otimização da respetiva policy aplicada para a seleção das ações do algoritmo inteligente", "cotacao": "2", "resolucao": "V" }
+              ]
+          }
+        ]
+    },
+    {
+        "_id": "2",
+        "cotacao": "20",
+        "nome": "Exame Redes de Computadores",
+        "id_docente": "d456",
+        "versao": 1,
+        "data": "2023-12-20",
+        "hora_preferencial": "14:30",
+        "tempo_admissao": 180,
+        "duracao": 90,
+        "alunos": ["a12345", "a67890"],
+        "acesso_autorizado": ["d456", "d789"],
+        "questoes": [
+          {
+            "_id": "q1",
+            "enunciado": "Explique os conceitos de IPv4 e IPv6. Quais são as principais diferenças e vantagens do IPv6 em comparação com o IPv4?",
+            "imagem": "",
+            "cotacaoTotal": "6",
+            "tipo_Questao": "D",
+            "options": []
+          },
+          {
+            "_id": "q2",
+            "enunciado": "Descreva os passos envolvidos no processo de estabelecimento de uma conexão TCP.",
+            "imagem": "",
+            "cotacaoTotal": "5",
+            "tipo_Questao": "D",
+            "options": []
+          },
+          {
+            "_id": "q3",
+            "enunciado": "O que é um endereço IP na versão IPv4?",
+            "imagem": "",
+            "cotacaoTotal": "7",
+            "tipo_Questao": "EC",
+            "options": [
+              { "_id": "o1", "texto": "Um identificador único de 32 bits atribuído a cada dispositivo em uma rede.", "cotacao": "7", "resolucao": "" },
+              { "_id": "o2", "texto": "Um endereço de e-mail associado a um dispositivo de rede.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o3", "texto": "Um identificador único de 64 bits atribuído a cada dispositivo em uma rede.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o4", "texto": "Um número de porta associado a um servidor web específico.", "cotacao": "-1", "resolucao": "" }
+            ]
+          },
+          {
+            "_id": "q4",
+            "enunciado": "O que é um protocolo de routing em redes de computadores?",
+            "imagem": "",
+            "cotacaoTotal": "8",
+            "tipo_Questao": "EC",
+            "options": [
+              { "_id": "o1", "texto": "Um conjunto de regras para transferência de dados entre dispositivos de uma rede.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o2", "texto": "Um algoritmo que determina o caminho mais eficiente para encaminhar dados entre redes.", "cotacao": "8", "resolucao": "" },
+              { "_id": "o3", "texto": "Um protocolo para configuração automática de endereços IP em dispositivos de rede.", "cotacao": "-1", "resolucao": "" }
+            ]
+          },
+          {
+            "_id": "q5",
+            "enunciado": "PARA CADA AFIRMAÇÃO, RESPONDA ASSINALANDO A SUA VERACIDADE (V) OU FALSIDADE (F).",
+            "imagem": "",
+            "cotacaoTotal": "4",
+            "tipo_Questao": "VF",
+            "options": [
+                { "_id": "o1", "texto": "A topologia de rede em estrela é mais resistente a falhas do que a topologia em anel.", "cotacao": "2", "resolucao": "V" },
+                { "_id": "o2", "texto": "O protocolo TCP (Transmission Control Protocol) é um protocolo de comunicação orientado a conexão.", "cotacao": "2", "resolucao": "V" }
+              ]
+          }
+        ]
+    },
+    {
+        "_id": "3",
+        "cotacao": "18",
+        "nome": "Recurso de Algoritmos",
+        "id_docente": "d987",
+        "versao": 1,
+        "data": "2023-12-28",
+        "hora_preferencial": "15:30",
+        "tempo_admissao": 180,
+        "duracao": 90,
+        "alunos": ["a24680", "a13579"],
+        "acesso_autorizado": ["d987", "d654"],
+        "questoes": [
+          {
+            "_id": "q1",
+            "enunciado": "Qual é a complexidade de tempo do algoritmo de ordenação QuickSort?",
+            "imagem": "",
+            "cotacaoTotal": "5",
+            "tipo_Questao": "EC",
+            "options": [
+              { "_id": "o1", "texto": "O(n log n)", "cotacao": "5", "resolucao": "" },
+              { "_id": "o2", "texto": "O(n^2)", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o3", "texto": "O(log n)", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o4", "texto": "O(n)", "cotacao": "-1", "resolucao": "" }
+            ]
+          },
+          {
+            "_id": "q2",
+            "enunciado": "O que é um grafo ponderado?",
+            "imagem": "",
+            "cotacaoTotal": "6",
+            "tipo_Questao": "EC",
+            "options": [
+              { "_id": "o1", "texto": "Um grafo sem pesos nas arestas.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o2", "texto": "Um grafo com pesos atribuídos às arestas.", "cotacao": "6", "resolucao": "" },
+              { "_id": "o3", "texto": "Um grafo acíclico.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o4", "texto": "Um grafo completo.", "cotacao": "-1", "resolucao": "" }
+            ]
+          },
+          {
+            "_id": "q3",
+            "enunciado": "O que é a técnica de programação dinâmica?",
+            "imagem": "",
+            "cotacaoTotal": "7",
+            "tipo_Questao": "EC",
+            "options": [
+              { "_id": "o1", "texto": "Uma técnica para resolver problemas ótimos dividindo-os em subproblemas menores e resolvendo-os de forma recursiva.", "cotacao": "7", "resolucao": "" },
+              { "_id": "o2", "texto": "Uma técnica que envolve a criação de programas que se adaptam ao ambiente de execução.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o3", "texto": "Uma técnica que usa o tempo de execução do programa para otimizar o código automaticamente.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o4", "texto": "Uma técnica que envolve a alocação dinâmica de memória durante a execução do programa.", "cotacao": "-1", "resolucao": "" }
+            ]
+          },
+          {
+            "_id": "q4",
+            "enunciado": "PARA CADA AFIRMAÇÃO, RESPONDA ASSINALANDO A SUA VERACIDADE (V) OU FALSIDADE (F).",
+            "imagem": "",
+            "cotacaoTotal": "9",
+            "tipo_Questao": "VF",
+            "options": [
+              { "_id": "o1", "texto": "Algoritmos de ordenação baseados em comparação têm uma complexidade inferior a O(n log n) no pior caso.", "cotacao": "2.5", "resolucao": "F" },
+              { "_id": "o2", "texto": "A procura binária é um algoritmo eficiente para listas ligadas não ordenadas.", "cotacao": "2.5", "resolucao": "F" }
+            ]
+          }
+        ]
+    },
+    {
+        "_id": "4",
+        "cotacao": "8",
+        "nome": "Teste de Programação Orientada a Objetos",
+        "id_docente": "d789",
+        "versao": 1,
+        "data": "2023-12-22",
+        "hora_preferencial": "10:00",
+        "tempo_admissao": 150,
+        "duracao": 120,
+        "alunos": ["a54321", "a98765"],
+        "acesso_autorizado": ["d789", "d012"],
+        "questoes": [
+          {
+            "_id": "q1",
+            "enunciado": "O que é polimorfismo em programação orientada a objetos?",
+            "imagem": "",
+            "cotacaoTotal": "8",
+            "tipo_Questao": "EC",
+            "options": [
+              { "_id": "o1", "texto": "É a capacidade de uma classe herdar de múltiplas classes pai.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o2", "texto": "É a capacidade de uma classe ter várias instâncias.", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o3", "texto": "É a capacidade de uma classe ter métodos com o mesmo nome, mas comportamentos diferentes.", "cotacao": "3", "resolucao": "" },
+              { "_id": "o4", "texto": "É a capacidade de uma classe armazenar múltiplos valores em um único atributo.", "cotacao": "-1", "resolucao": "" }
+            ]
+          },
+          {
+            "_id": "q2",
+            "enunciado": "PARA CADA AFIRMAÇÃO, RESPONDA ASSINALANDO A SUA VERACIDADE (V) OU FALSIDADE (F).",
+            "imagem": "",
+            "cotacaoTotal": "9",
+            "tipo_Questao": "VF",
+            "options": [
+              { "_id": "o1", "texto": "Em herança, uma subclasse herda todos os membros (atributos e métodos) da superclasse.", "cotacao": "2", "resolucao": "V" },
+              { "_id": "o2", "texto": "Uma interface pode conter implementações de métodos.", "cotacao": "2", "resolucao": "F" }
+            ]
+          }
+        ]
+    }                   
+]
