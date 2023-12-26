@@ -113,20 +113,21 @@ router.put('/corrAUTOprovas/:id', async (req, res) => {
   });
 
 router.put('/corriMANUALprovas/:id', async (req, res) => {
-    try {
-      var provaId = req.params.id;
-      var provaCorrigida;
+  const provaId = req.params.id;
+  
+  try {
+    const success = await Prova.updateProva(provaId, req.body);
 
-      axios.get("http://localhost:porta_q_nao_sei/ frontend ou api do frontend manda as correçoes q o stor colocou na interface e eu ponho? n sei onde raiz isso acontece ").then(resp => {
-        // pode ser necessario tratar a data ?
-        provaCorrigida = resp.data;
-    })
-    
-
-    } catch (error) {
-      console.error('Error getting Provas:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+    if (!success) {
+      res.status(404).json({ error: 'Prova not found' });
+      return;
     }
+
+    res.json({ message: 'Prova updated successfully' });
+  } catch (error) {
+    console.error('Error updating Prova:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
   });
 
 

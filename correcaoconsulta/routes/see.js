@@ -21,8 +21,13 @@ router.get('/listprovas/:id/ready', async (req, res) => {
 router.get('/prova/:id', async (req, res) => {
     try {
       const provaId = req.params.id;
-      const prova = await Prova.getProvaById(provasId);
-      res.json(prova);
+      const prova = await Prova.getProvaById(provaId);
+      const perguntas = await Questao.getQuestoesByProva(provaId)
+      const jsonObject = {
+        prova: prova,
+        perguntas: perguntas
+      };
+      res.json(jsonObject);
     } catch (error) {
       console.error('Error getting Provas:', error);
       res.status(500).json({ error: 'Internal Server Error' });

@@ -107,14 +107,11 @@ const ProvaModel = {
 
   getProvasReady: (id) => {
   return new Promise((resolve, reject) => {
-    const selectQuery = `
-      SELECT Prova.*, COUNT(Questao.id_questao) AS total_questoes
-      FROM Prova
-      JOIN Questao ON Prova.id_prova_realizada = Questao.Prova_id_prova_duplicada
-      WHERE Prova.id_prova_duplicada = ? AND Questao.cotacaoTotal IS NOT NULL
-      GROUP BY Prova.id_prova_duplicada
-      HAVING COUNT(Questao.id_questao) > 0
-         AND COUNT(Questao.id_questao) = SUM(CASE WHEN Questao.cotacaoTotal IS NOT NULL THEN 1 ELSE 0 END)
+    const selectQuery =`
+    SELECT Prova.*, Questao.*
+    FROM Prova
+    JOIN Questao ON Prova.id_prova_realizada = Questao.Prova_id_prova_realizada 
+    WHERE Prova.classificacao_final IS NOT NULL AND Prova.id_prova_duplicada = ?;
     `;
 
     connection.query(selectQuery, [id], (err, results) => {
@@ -126,6 +123,12 @@ const ProvaModel = {
             id_prova_duplicada: result.id_prova_duplicada,
             classificacao_final: result.classificacao_final,
             num_Aluno: result.num_Aluno,
+            id_questao: result.id_questao,
+            nr_questao: result.nr_questao,
+            resposta: result.resposta,
+            cotacaoTotal: result.cotacaoTotal,
+            Prova_id_prova_realizada: result.Prova_id_prova_realizada,
+            TipoQuestao_id_tipo: result.TipoQuestao_id_tipo,
           }));
           resolve(ProvaData);
         }

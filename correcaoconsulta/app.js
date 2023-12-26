@@ -75,7 +75,7 @@ const createTableProva = `
   CREATE TABLE IF NOT EXISTS Prova (
     id_prova_realizada VARCHAR(255) NOT NULL,
     id_prova_duplicada VARCHAR(255) NOT NULL,
-    classificacao_final INT(10) NULL,
+    classificacao_final FLOAT(10) NULL,
     num_Aluno VARCHAR(255) NOT NULL,
     PRIMARY KEY (id_prova_realizada)
   );
