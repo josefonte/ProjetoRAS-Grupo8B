@@ -1,68 +1,11 @@
 import React from "react";
 
 import { AppHeader } from "../components/AppHeader";
+import { Link } from "react-router-dom";
 
 import { Layout, Table, Tag, theme } from "antd";
 const { Header, Content } = Layout;
 
-const columns = [
-  {
-    title: "Nome",
-    dataIndex: "nome",
-    key: "nome",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Descrição",
-    dataIndex: "descricao",
-    key: "descricao",
-    render: (text) => (
-      <p
-        style={{
-          margin: "0 0 0 0",
-          maxWidth: "600px",
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-        }}
-      >
-        {text}
-      </p>
-    ),
-  },
-  {
-    title: "Data",
-    dataIndex: "data",
-    key: "data",
-  },
-  {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = "green";
-          if (tag === "Finished") {
-            color = "orange";
-          }
-
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-
-  {
-    title: "Classificação",
-    dataIndex: "classificacao",
-    key: "classificacao",
-  },
-];
 const data = [
   {
     key: "1",
@@ -104,6 +47,72 @@ function AppProvasConcluidas() {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const columns = [
+    {
+      title: "Nome",
+      dataIndex: "nome",
+      key: "nome",
+      render: (text, record) => (
+        <Link
+          to={`/provas-concluidas/${record.id}`}
+          style={{ minWidth: "100px" }}
+        >
+          {text}
+        </Link>
+      ),
+    },
+    {
+      title: "Descrição",
+      dataIndex: "descricao",
+      key: "descricao",
+      render: (text) => (
+        <p
+          style={{
+            margin: "0 0 0 0",
+            maxWidth: "600px",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {text}
+        </p>
+      ),
+    },
+    {
+      title: "Data",
+      dataIndex: "data",
+      key: "data",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (_, { tags }) => (
+        <>
+          {tags.map((tag) => {
+            let color = "green";
+            if (tag === "Finished") {
+              color = "orange";
+            }
+
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
+
+    {
+      title: "Classificação",
+      dataIndex: "classificacao",
+      key: "classificacao",
+    },
+  ];
+
   return (
     <Layout>
       <Header
@@ -116,7 +125,7 @@ function AppProvasConcluidas() {
 
       <Content
         style={{
-          padding: "20px 100px",
+          padding: "20px 10%",
           minHeight: "calc(100vh - 64px)",
         }}
       >

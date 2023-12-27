@@ -1,64 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { AppHeader } from "../components/AppHeader";
 
 import { PlayCircleTwoTone } from "@ant-design/icons";
 import { Layout, Space, Table, theme } from "antd";
 const { Header, Content } = Layout;
 
-const columns = [
-  {
-    title: "Nome",
-    dataIndex: "nome",
-    key: "nome",
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: "Descrição",
-    dataIndex: "descricao",
-    key: "descricao",
-    render: (text) => (
-      <p
-        style={{
-          margin: "0 0 0 0",
-          maxWidth: "600px",
-          textOverflow: "ellipsis",
-          overflow: "hidden",
-          whiteSpace: "nowrap",
-        }}
-      >
-        {text}
-      </p>
-    ),
-  },
-  {
-    title: "Data",
-    dataIndex: "data",
-    key: "data",
-  },
-  {
-    title: "Hora",
-    dataIndex: "hora",
-    key: "hora",
-  },
-
-  {
-    title: "Salas",
-    dataIndex: "salas",
-    key: "salas",
-  },
-
-  {
-    title: "Ação",
-    key: "action",
-    render: () => (
-      <Space size="small">
-        <a>
-          Começar <PlayCircleTwoTone size={"small"} />
-        </a>
-      </Space>
-    ),
-  },
-];
 const data = [
   {
     key: "1",
@@ -91,6 +38,67 @@ const data = [
 ];
 
 function AppProvasAtivas() {
+  const columns = [
+    {
+      title: "Nome",
+      dataIndex: "nome",
+      key: "nome",
+      render: (text) => <span>{text}</span>,
+    },
+    {
+      title: "Descrição",
+      dataIndex: "descricao",
+      key: "descricao",
+      render: (text) => (
+        <p
+          style={{
+            margin: "0 0 0 0",
+            maxWidth: "600px",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {text}
+        </p>
+      ),
+    },
+    {
+      title: "Data",
+      dataIndex: "data",
+      key: "data",
+    },
+    {
+      title: "Hora",
+      dataIndex: "hora",
+      key: "hora",
+    },
+
+    {
+      title: "Salas",
+      dataIndex: "salas",
+      key: "salas",
+    },
+
+    {
+      title: "Ação",
+      key: "action",
+      render: (_, record) => (
+        <Space size="small">
+          <a onClick={() => handleStartExam(record.key)}>
+            Começar <PlayCircleTwoTone size={"small"} />
+          </a>
+        </Space>
+      ),
+    },
+  ];
+
+  const navigate = useNavigate();
+
+  const handleStartExam = (examId) => {
+    navigate(`/provas-ativas/${examId}`);
+  };
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -107,7 +115,7 @@ function AppProvasAtivas() {
 
       <Content
         style={{
-          padding: "20px 100px",
+          padding: "20px 10%",
           minHeight: "calc(100vh - 64px)",
         }}
       >

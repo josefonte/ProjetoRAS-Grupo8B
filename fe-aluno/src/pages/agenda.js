@@ -21,17 +21,13 @@ function AppAgenda() {
 
       <Content
         style={{
-          padding: "20px 100px",
+          padding: "20px 15%",
           minHeight: "calc(100vh - 64px)",
         }}
       >
         <h3 style={{ paddingLeft: "10px" }}>Agenda</h3>
 
-        <Calendar
-          style={{
-            background: "",
-          }}
-        />
+        <Calendar />
       </Content>
     </Layout>
   );

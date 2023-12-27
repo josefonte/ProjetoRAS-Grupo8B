@@ -1,8 +1,9 @@
 import React from "react";
 
 import { AppHeader } from "../components/AppHeader";
-import { Layout, theme } from "antd";
+import { Layout, theme, Row, Col } from "antd";
 import { Footer } from "antd/es/layout/layout";
+
 const { Header, Content } = Layout;
 
 function AppHome() {
@@ -22,11 +23,79 @@ function AppHome() {
 
       <Content
         style={{
-          padding: "20px 100px",
+          padding: "20px 20%",
           minHeight: "calc(100vh - 128px)",
         }}
       >
-        <h3 style={{ alignSelf: "center" }}>HOME</h3>
+        <Row>
+          <Col span={6} offset={11}>
+            <h3>GRUPO 8B</h3>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            <img
+              src={"../assets/images/joaopedro.jpg"}
+              alt="Joao Pedro"
+              class="fit-picture"
+            />
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            <img
+              src={"../assets/images/nsimba.jpg"}
+              alt="Nsimba"
+              class="fit-picture"
+            />
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            <img
+              src={"../assets/images/duarte.jpg"}
+              alt="Duarte"
+              class="fit-picture"
+            />
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            <img
+              src={"../assets/images/andre.jpg"}
+              alt="André"
+              class="fit-picture"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            <img
+              src={"../assets/images/carlos.jpg"}
+              alt="carlos"
+              class="fit-picture"
+            />
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            foto
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            foto
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            foto
+          </Col>
+        </Row>
+        <Row>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            foto
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            foto
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            foto
+          </Col>
+          <Col span={6} style={{ border: "1px solid red" }}>
+            foto
+          </Col>
+        </Row>
+
         <p>
           Este produto surge na sequência do contacto do Reitor da Universidade
           de Vigo (Espanha) com o objetivo de criar um produto de software que

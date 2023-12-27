@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import {
   CalendarTwoTone,
@@ -34,6 +35,22 @@ const items = [
 
 export function AppHeader() {
   const [current, setCurrent] = useState("");
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  console.log(currentPath);
+
+  useEffect(() => {
+    if (currentPath === "/") {
+      setCurrent("");
+    } else if (currentPath === "/agenda") {
+      setCurrent("agenda");
+    } else if (currentPath === "/provas-ativas") {
+      setCurrent("ativas");
+    } else if (currentPath === "/provas-concluidas") {
+      setCurrent("concluidas");
+    }
+  }, [currentPath]);
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -54,9 +71,9 @@ export function AppHeader() {
     >
       <div className="logo" style={{ maxWidth: "90px", paddingLeft: "10px" }}>
         <Link to={"/"}>
-          <a style={{ color: "black" }}>
-            <h2 style={{ margin: "0 0 0 0" }}>ProbUM</h2>
-          </a>
+          <h2 style={{ color: "black", margin: "0 0 0 0", cursor: "pointer" }}>
+            ProbUM
+          </h2>
         </Link>
       </div>
 
