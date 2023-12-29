@@ -54,7 +54,7 @@ function AppProvasConcluidas() {
       key: "nome",
       render: (text, record) => (
         <Link
-          to={`/provas-concluidas/${record.id}`}
+          to={`/provas-concluidas/${record.key}`}
           style={{ minWidth: "100px" }}
         >
           {text}

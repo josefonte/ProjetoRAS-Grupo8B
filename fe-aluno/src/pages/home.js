@@ -3,6 +3,18 @@ import React from "react";
 import { AppHeader } from "../components/AppHeader";
 import { Layout, theme, Row, Col } from "antd";
 import { Footer } from "antd/es/layout/layout";
+import carlos from "../assets/images/carlos.jpg";
+import duarte from "../assets/images/duarte.jpg";
+import escudeiro from "../assets/images/escudeiro.jpg";
+import francisca from "../assets/images/francisca.jpg";
+import joaopedro from "../assets/images/joaopedro.jpg";
+import juliana from "../assets/images/juliana.jpg";
+import lucena from "../assets/images/lucena.jpg";
+import nsimba from "../assets/images/nsimba.jpg";
+import picao from "../assets/images/picao.jpg";
+import raposo from "../assets/images/raposo.jpg";
+import senra from "../assets/images/senra.jpg";
+import ze from "../assets/images/ze.jpg";
 
 const { Header, Content } = Layout;
 
@@ -34,65 +46,45 @@ function AppHome() {
         </Row>
 
         <Row>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            <img
-              src={"../assets/images/joaopedro.jpg"}
-              alt="Joao Pedro"
-              class="fit-picture"
-            />
+          <Col span={6}>
+            <img src={joaopedro} alt="Joao Pedro" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            <img
-              src={"../assets/images/nsimba.jpg"}
-              alt="Nsimba"
-              class="fit-picture"
-            />
+          <Col span={6}>
+            <img src={nsimba} alt="Nsimba" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            <img
-              src={"../assets/images/duarte.jpg"}
-              alt="Duarte"
-              class="fit-picture"
-            />
+          <Col span={6}>
+            <img src={duarte} alt="Duarte" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            <img
-              src={"../assets/images/andre.jpg"}
-              alt="André"
-              class="fit-picture"
-            />
+          <Col span={6}>
+            <img src={juliana} alt="juliana" class="fit-picture" />
           </Col>
         </Row>
         <Row>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            <img
-              src={"../assets/images/carlos.jpg"}
-              alt="carlos"
-              class="fit-picture"
-            />
+          <Col span={6}>
+            <img src={raposo} alt="raposo" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            foto
+          <Col span={6}>
+            <img src={ze} alt="ze" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            foto
+          <Col span={6}>
+            <img src={carlos} alt="carlos" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            foto
+          <Col span={6}>
+            <img src={francisca} alt="carlos" class="fit-picture" />
           </Col>
         </Row>
         <Row>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            foto
+          <Col span={6}>
+            <img src={escudeiro} alt="carlos" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            foto
+          <Col span={6}>
+            <img src={picao} alt="carlos" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            foto
+          <Col span={6}>
+            <img src={lucena} alt="carlos" class="fit-picture" />
           </Col>
-          <Col span={6} style={{ border: "1px solid red" }}>
-            foto
+          <Col span={6}>
+            <img src={senra} alt="carlos" class="fit-picture" />
           </Col>
         </Row>
 
