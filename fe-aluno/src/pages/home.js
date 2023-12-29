@@ -44,45 +44,57 @@ function AppHome() {
         </Row>
 
         <Row>
-          <Col span={6}>
+          <Col span={6} align="center">
             <img src={joaopedro} alt="Joao Pedro" class="fit-picture" />
+            PG53951
           </Col>
-          <Col span={6}>
+          <Col span={6} align="center">
             <img src={nsimba} alt="Nsimba" class="fit-picture" />
+            PG51636
           </Col>
-          <Col span={6}>
+          <Col span={6} align="center">
             <img src={duarte} alt="Duarte" class="fit-picture" />
+            PG53791
           </Col>
-          <Col span={6}>
+          <Col span={6} align="center">
             <img src={juliana} alt="juliana" class="fit-picture" />
+            PG50006
           </Col>
         </Row>
         <Row>
-          <Col span={6}>
+          <Col span={6} align="center">
             <img src={raposo} alt="raposo" class="fit-picture" />
+            A94942
           </Col>
-          <Col span={6}>
+          <Col span={6} align="center">
             <img src={ze} alt="ze" class="fit-picture" />
+            A91775
           </Col>
-          <Col span={6}>
+          <Col span={6} align="center">
             <img src={carlos} alt="carlos" class="fit-picture" />
+            PG52675
           </Col>
-          <Col span={6}>
-            <img src={francisca} alt="carlos" class="fit-picture" />
+          <Col span={6} align="center">
+            <img src={francisca} alt="francisca" class="fit-picture" />
+            PG52693
           </Col>
         </Row>
         <Row>
-          <Col span={6}>
-            <img src={escudeiro} alt="carlos" class="fit-picture" />
+          <Col span={6} align="center">
+            <img src={escudeiro} alt="escudeiro" class="fit-picture" />
+            A96075
           </Col>
-          <Col span={6}>
-            <img src={picao} alt="carlos" class="fit-picture" />
+          <Col span={6} align="center">
+            <img src={picao} alt="picao" class="fit-picture" />
+            PG54162
           </Col>
-          <Col span={6}>
-            <img src={lucena} alt="carlos" class="fit-picture" />
+          <Col span={6} align="center">
+            <img src={lucena} alt="lucena" class="fit-picture" />
+            PG52672
           </Col>
-          <Col span={6}>
-            <img src={senra} alt="carlos" class="fit-picture" />
+          <Col span={6} align="center">
+            <img src={senra} alt="senra" class="fit-picture" />
+            PG54093
           </Col>
         </Row>
 
