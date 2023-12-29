@@ -79,14 +79,14 @@ public class UserService {
         return null;
     }
 
-    @Transactional
-    public List<UserVerificationResponse> verifyUsers(List<String> usersNumbers){
-        List<UserVerificationResponse> userVerificationResponses = new ArrayList<>();
 
-        for(String userNumber: usersNumbers){
+    @Transactional
+    public List<UserVerificationResponse> verifyUsers(String info, List<String> usersInfo){
+        List<UserVerificationResponse> userVerificationResponses = new ArrayList<>();
+        for(String userInfo: usersInfo){
             userVerificationResponses.add(new UserVerificationResponse(
-                    userNumber,
-                    this.userRepository.findById(userNumber).isPresent()));
+                    userInfo,
+                    this.userRepository.findUserByInfo(info, userInfo).isPresent()));
         }
 
         return userVerificationResponses;
