@@ -52,8 +52,8 @@ public class UserController {
                 : ResponseEntity.badRequest().body("Requirements to change user not met");
     }
 
-    @GetMapping(path="/verify")
-    public ResponseEntity<List<UserVerificationResponse>> verifyUsers(@RequestBody List<String> usersNumbers){
-        return ResponseEntity.ok(this.userService.verifyUsers(usersNumbers));
+    @PutMapping(path="/verify")
+    public ResponseEntity<List<UserVerificationResponse>> verifyUsersNumbers(@RequestParam String info, @RequestBody List<String> usersInfos){
+        return ResponseEntity.ok(this.userService.verifyUsers(info, usersInfos));
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends CrudRepository<User, String> {
 
     @Transactional
@@ -17,4 +19,9 @@ public interface UserRepository extends CrudRepository<User, String> {
     @Modifying
     @Query("UPDATE User u SET u.password = :newPassword WHERE u.number = :number")
     void updateUserPasswordByNumber(String number, String newPassword);
+
+    @Transactional
+    @Query("SELECT u FROM User u WHERE (u.number = :userInfo AND :info = 'number') OR (u.email = :userInfo AND :info = 'email') OR (u.name = :userInfo AND :info = 'name')")
+    Optional<User> findUserByInfo(String info, String userInfo);
+
 }
