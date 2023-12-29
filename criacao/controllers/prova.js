@@ -37,6 +37,12 @@ module.exports.getProvas = idUtilizador => {
 
 /* Criar uma nova prova */
 module.exports.criarProva = (novaProva) => {
+
+    const idDocente = novaProva.id_docente
+
+    novaProva.acesso_autorizado.push(idDocente)
+
+
     return Prova.create(novaProva)
         .then(resposta => {
             return resposta;
@@ -82,6 +88,17 @@ module.exports.obterDetalhesProvaParaEdicao = (idProva, idDocente) => {
 /* Atualizar uma prova existente */
 module.exports.atualizarProvaExistente = (idProva, idDocente, novaProva) => {
     return Prova.findOneAndUpdate({ _id: idProva, id_docente: idDocente }, novaProva, { new: true })
+        .then(resposta => {
+            return resposta;
+        })
+        .catch(erro => {
+            return erro;
+        });
+}
+
+module.exports.adicionarQuestao = (idProva, idDocente, novaQuestao) => {
+
+    return Prova.findOneAndUpdate({ _id: idProva, id_docente: idDocente }, { $push: { questoes: novaQuestao } }, { new: true })
         .then(resposta => {
             return resposta;
         })

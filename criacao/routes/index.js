@@ -37,11 +37,21 @@ router.get('/api/gestao/editar/:idProva', function(req, res, next){
 });
 
 
-/* POST /api/gestao/CREATE/<IDU>*/
+/* POST /api/gestao/CREATE/<IDU> */
 router.post('/api/gestao/criar/:idUtilizador', function(req, res, next){
+  console.log(req.body)
   Prova.criarProva(req.body)
       .then(dados => res.status(200).json(dados))
       .catch(erro => res.status(523).json({ erro: erro, mensagem: "Erro na criação da prova" }));
+});
+
+/* POST /api/gestao/CREATE/questao/<IDU>?idProva=<IDP> */
+router.post('/api/gestao/criar/questao/:idUtilizador', function(req, res, next){
+
+  Prova.adicionarQuestao(req.query.idProva, req.params.idUtilizador, req.body)
+      .then(dados => res.status(200).json(dados))
+      .catch(erro => res.status(523).json({ erro: erro, mensagem: "Erro na criação da prova" }));
+
 });
 
 

@@ -38,12 +38,28 @@ router.get('/api/gestao/editar/:idProva', function(req, res, next) {
 /* POST /api/gestao/CREATE/<IDU>*/
 router.post('/api/gestao/criar/:idUtilizador', function(req, res, next) {
 
+  console.log(req.body)
+
   axios.post(`http://localhost:8011/api/gestao/criar/${req.params.idUtilizador}`, req.body).then(resp => {
       res.status(200).json(resp.data)
     })
     .catch(erro => res.status(525).json({erro: erro, mensagem: "Erro na criação da prova"}))
 
 })
+
+
+/* POST /api/gestao/CREATE/questao/<IDU>?idProva=<IDP> */
+router.post('/api/gestao/criar/questao/:idUtilizador', function(req, res, next){
+  const idProva = req.query.idProva;
+  if (idProva != undefined){
+    axios.post(`http://localhost:8011/api/gestao/criar/questao/${req.params.idUtilizador}?idProva=${idProva}`, req.body).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova com o id " + req.params.idProva}))
+
+  }
+  else res.status(528).json({mensagem: "Rota Inválida"})
+});
 
 
 /* PUT /api/gestao/gestprovas/edit/:idProva?idDocente=<ID_DOCENTE> */
@@ -58,7 +74,7 @@ router.put('/api/gestao/editar/:idProva', function(req, res, next){
     .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova com o id " + req.params.idProva}))
 
   }
-  else res.status(527).json({mensagem: "Rota Inválida"})
+  else res.status(529).json({mensagem: "Rota Inválida"})
 });
 
 
@@ -73,7 +89,7 @@ router.delete('/api/gestao/apagar/:idProva', function(req, res, next){
     })
     .catch(erro => res.status(528).json({erro: erro, mensagem: "Erro na eliminação da prova com o id " + req.params.idProva}))
   }
-  else res.status(529).json({mensagem: "Rota Inválida"})
+  else res.status(530).json({mensagem: "Rota Inválida"})
   
 });
 
