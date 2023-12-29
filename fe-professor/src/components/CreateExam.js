@@ -1,35 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { TextField, FormControl, Box, Typography } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { TextField, FormControl, Box, Typography } from "@mui/material";
 
-import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from "@material-ui/core/Dialog";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
-
-import './css/createExam.css';
-
+import "./css/createExam.css";
 
 const CreateExam = () => {
-  const [titulo, setTitulo] = useState('');
-  const [alunos, setAlunos] = useState('');
-  const [goalDescription, setGoalDescription] = useState('');
-  const [dia, setDia] = useState('');
-  const [hora, setHora] = useState('');
-  const [duracao, setDuracao] = useState('');
-  const [numeroDeVersoes, setNumeroDeVersoes] = useState('');
+  const [titulo, setTitulo] = useState("");
+  const [alunos, setAlunos] = useState("");
+  const [goalDescription, setGoalDescription] = useState("");
+  const [dia, setDia] = useState("");
+  const [hora, setHora] = useState("");
+  const [duracao, setDuracao] = useState("");
+  const [numeroDeVersoes, setNumeroDeVersoes] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
 
-  const navigate = useNavigate();
-  
-  const handleSubmit = (event) => {
+	const navigate = useNavigate();
+
+  const handleSubmit =  (event) => {
     event.preventDefault();
     setOpenDialog(true);
-
-    // TODO: Submit the form data to a backend server
   };
 
   const handleCloseDialog = () => {
@@ -37,49 +33,62 @@ const CreateExam = () => {
     setOpenDialog(false);
   };
 
-  const handleCreateQuestions = () => {
-    // Handle logic for creating questions if needed
-
-    // Navigate to the "CreateQuestions" page (replace '/create-questions' with your desired route)
-    navigate('/create-questions');
-
-    // Close the dialog
+  const handleCreateQuestions =  () => {
+    navigate("/create-questions");
     setOpenDialog(false);
   };
 
+
+
   return (
     <>
-      <FormControl class="form" style={{ flexDirection: 'column' , textAlign:'center'}}>
+      <FormControl
+        class="form"
+        style={{ flexDirection: "column", textAlign: "center" }}
+      >
+        <Typography variant="h3">Criar Prova</Typography>
         <TextField
           id="titulo"
-          classes={{ root: 'exam-title' }}
+          classes={{ root: "exam-title" }}
           label="Título"
           onChange={(e) => setTitulo(e.target.value)}
-          margin="normal"
-        />
-        <TextField type="file" />
-          <Button variant="contained" color="primary" component="span">
-            Upload file
-          </Button>
-        
-        <TextField
-          id="goalDescription"
-          label="Exam Description"
-          onChange={(e) => setGoalDescription(e.target.value)}
-          variant="filled"
-          margin="normal"
-        />
-        <TextField
-          id="dia"
-          onChange={(e) => setDia(e.target.value)}
-          type="date"
           variant="outlined"
           margin="normal"
         />
 
+        <Typography
+          variant="h6"
+          style={{ margin: "10px 0", textAlign: "left" }}>
+          Alunos Admitidos
+        </Typography>
+        <TextField
+          type="file"
+        />
+
+        <Button variant="contained" color="primary" component="span">
+          Upload file
+        </Button>
+
+        <TextField
+          id="goalDescription"
+          label="Descrição"
+          onChange={(e) => setGoalDescription(e.target.value)}
+          variant="outlined"
+          margin="normal"
+        />
+        <TextField
+          id="dia"
+          label="Dia da Prova"
+          onChange={(e) => setDia(e.target.value)}
+          type="date"
+          variant="filled"
+          margin="normal"
+          opacity={0.5}
+        />
+
         <TextField
           id="hora"
-          label="Exam Time"
+          label="Hora da Prova"
           onChange={(e) => setHora(e.target.value)}
           type="time"
           variant="filled"
@@ -88,22 +97,21 @@ const CreateExam = () => {
 
         <TextField
           id="duracao"
-          label="Exam Duration"
+          label="Duração"
           onChange={(e) => setDuracao(e.target.value)}
           type="number"
-          variant="outlined"
+          variant="filled"
           margin="normal"
         />
-      
+
         <TextField
           id="numeroDeVersoes"
-          label="Number of Versions"
+          label="Número de versões"
           onChange={(e) => setNumeroDeVersoes(e.target.value)}
           type="number"
-          variant="outlined"
+          variant="filled"
           margin="normal"
         />
-        {/* Centered submit button */}
         <Box mt={2} textAlign="center">
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Guardar
@@ -112,21 +120,20 @@ const CreateExam = () => {
       </FormControl>
 
       <Dialog open={openDialog} onClose={handleCloseDialog}>
-        <DialogTitle>Exam Submitted</DialogTitle>
+        <DialogTitle>O seu exame ja tem calendarização</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Your exam has been successfully submitted!
-          </DialogContentText>
+          <DialogContentText>Data/Hora do teste. Salas</DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color="primary">
-            Fechar
-          </Button>
-          <Button onClick={handleCreateQuestions} color="primary">
-            Criar Questões
-          </Button>
+				<DialogActions>
+  				<Button onClick={handleCloseDialog} color="primary">
+  				  Fechar
+  				</Button>
+  				  <Button onClick={handleCreateQuestions} color="primary">
+  				    Criar Questões
+  				  </Button>
+  				
+				</DialogActions>
 
-        </DialogActions>
       </Dialog>
     </>
   );

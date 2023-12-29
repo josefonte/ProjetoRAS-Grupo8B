@@ -1,0 +1,27 @@
+.root {
+      width: '100%';
+      max-width: 500;
+      margin: '0 auto';
+}
+.title {
+    margin-bottom: 20;
+}
+
+.textField {
+      width: '100%';
+      
+}
+.button{
+      margin: 10;
+}
+
+.modal {
+    display: 'flex';
+    align-items: 'center';
+    justify-content: 'center';
+}
+
+.modalContent {
+      padding: 20;
+}
+  

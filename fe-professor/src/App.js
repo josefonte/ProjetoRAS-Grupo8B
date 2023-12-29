@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import CreateExam from './components/CreateExam';
+import CorrectExam from './components/CorrectExam';
 import CreateQuestions from './components/CreateQuestions';
 import MainPage from './components/MainPage';
 
@@ -22,8 +23,8 @@ function App() {
           {/* Add the MainPage route here */}
           <Route path="/" element={<MainPage />} />
           <Route path="/create-exam" element={<CreateExam />} />
-          <Route path="/create-questions" component={CreateQuestions} />
-          {/* Add more routes as needed */}
+          <Route path="/create-questions" element={<CreateQuestions/>} />
+          <Route path="/correct-exam" element={<CorrectExam/>} />  
         </Routes>
       </BrowserRouter>
     </div>

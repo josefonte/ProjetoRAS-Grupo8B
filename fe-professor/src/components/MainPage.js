@@ -1,21 +1,24 @@
-// Import necessary modules from React, React Router, and Material-UI
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
-import './css/MainPage.css';
+import './css//MainPage.css';
 
 const MainPage = () => {
   return (
-    <div className='main-page'>
-
+    <div className="main-page" style={{ textAlign: 'center', flexDirection: 'column' }}>
       <Typography variant="h3" gutterBottom>
-        Welcome to the Main Page
+        Welcome to ProbUM
       </Typography>
 
-      {/* Link to navigate to CreateExam component */}
-      <Link to="/create-exam">
-        <Button variant="contained" color="primary">
+      <Link to="/create-exam" style={{ cursor: 'pointer' }}>
+        <Button variant="contained" color="primary" style={{ margin: '10px 0' }}>
           Criar Prova
+        </Button>
+      </Link>
+
+      <Link to="/correct-exam" style={{ cursor: 'pointer' }}>
+        <Button variant="contained" color="primary" style={{ margin: '10px 0' }}>
+          Corrigir Prova
         </Button>
       </Link>
     </div>

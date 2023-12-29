@@ -1,0 +1,36 @@
+.form {
+  display: grid;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+}
+
+.number-input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.number-input-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.number-input-placeholder {
+  color: #ccc;
+}
+
+.number-input-value {
+  font-weight: bold;
+}
+
+.number-input-step {
+  display: inline-block;
+  margin-left: 5px;
+  font-size: 12px;
+}
