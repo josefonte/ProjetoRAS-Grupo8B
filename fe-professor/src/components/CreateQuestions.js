@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import {
   Button,
   TextField,
@@ -21,6 +23,48 @@ const CreateQuestions = () => {
   const [questionDescription, setQuestionDescription] = React.useState("");
   const [questionType, setQuestionType] = React.useState("multiple_choice");
   const [correctAnswers, setCorrectAnswers] = React.useState([]);
+
+  const { idProva } = useParams();
+
+
+  const [formData, setFormData] = useState({
+    _id: uuidv4(),
+    enunciado: "",
+    imagens: "",
+    cotacaoTotal: "",
+    tipo_Questao: "",
+    options: []
+  });
+
+  const [optionsData, setOptionsData] = useState([
+    { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" },
+    { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" },
+    { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" },
+    { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" }
+  ]);
+
+
+  const handleChangeForm = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+  
+
+  const handleChangeOptions = (index) => (e) => {
+    const { name, value } = e.target;
+    setOptionsData((prevOptionsData) => {
+      const updatedOptionsData = [...prevOptionsData];
+      updatedOptionsData[index] = {
+        ...updatedOptionsData[index],
+        [name]: value
+      };
+      return updatedOptionsData;
+    });
+  };
+
 
   function setValue(index, newValue) {
     const newRespostas = respostas.slice(0);
@@ -47,9 +91,26 @@ const CreateQuestions = () => {
     setQuestionType(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    // TODO: guardar questao na db
+  const handleSubmit =  async (event) => {
     event.preventDefault();
+
+    setFormData({
+      ...formData,
+      options: optionsData
+    });
+
+    try {
+      const response = await fetch(`http://localhost:8010/api/gestao/criar/questao/d123?idProva=${idProva}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+    } catch (error) {
+      console.error('Erro ao enviar o formulário:', error.message);
+    }
   };
 
   const handleSubmitNextQuestion = (event) => {
@@ -81,18 +142,21 @@ const CreateQuestions = () => {
       <FormControl className="form">
         <Typography variant="h3">Criar Questão</Typography>
         <TextField
-          label="Descrição"
+          label="Enunciado"
           multiline
           fullWidth
-          value={questionDescription}
-          onChange={handleQuestionDescriptionChange}
+          name="enunciado"
+          onChange={handleChangeForm}
+          //onChange={handleQuestionDescriptionChange}
           style={{ margin: "10px 0" }}
         />
 
         <Select
           label="Tipo"
-          value={questionType}
-          onChange={handleQuestionTypeChange}
+          name="tipo_Questao"
+          //value={questionType}
+          onChange={handleChangeForm}
+          //onChange={handleQuestionTypeChange}
           style={{ margin: "10px 0" }}
         >
           <MenuItem value="multiple_choice">Escolha Múltipla</MenuItem>
@@ -104,25 +168,27 @@ const CreateQuestions = () => {
         <Typography variant="h6" style={{ margin: "10px 0" }}>
           Respostas (selecione as corretas e as respetivas cotações)
         </Typography>
-        {respostas.map((resposta, index) => (
+        {optionsData.map((option, index) => (
           <div key={index} className="answers-container">
-            <div className="up-part"> 
+            <div className="up-part">
               <Checkbox
-                checked={resposta.checked}
+                checked={respostas[1].checked}
                 onChange={() => handleChange(index)}
               />
               <TextField
-                id={resposta.text}
-                value={resposta.text}
+                id={option._id}
+                //value={resposta.text}
                 variant = 'filled'
                 className="text-field"
-                onChange={(e) => {
-                  setRespostas((prevRespostas) => {
-                    const updatedRespostas = [...prevRespostas];
-                    updatedRespostas[index].text = e.target.value;
-                    return updatedRespostas;
-                  });
-                }}
+                name="texto"
+                onChange={handleChangeOptions(index)}
+                //onChange={(e) => {
+                //  setRespostas((prevRespostas) => {
+                //    const updatedRespostas = [...prevRespostas];
+                //    updatedRespostas[index].text = e.target.value;
+                //    return updatedRespostas;
+                //  });
+                //}}
               />
             </div>
             <div className="cotaçao">
@@ -132,8 +198,10 @@ const CreateQuestions = () => {
                 className="number-input centered-text"
                 aria-label="Demo number input"
                 step={0.1}
-                value={respostas[index].cotacao}
-                onChange={(event, val) => setCotacao(respostas[index].text, val)}
+                name="cotacao"
+                //value={respostas[index].cotacao}
+                onChange={handleChangeOptions(index)}
+                //onChange={(event, val) => setCotacao(respostas[index].text, val)}
               />
           </div>
           </div>

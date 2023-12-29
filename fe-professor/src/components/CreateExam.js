@@ -2,29 +2,56 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, FormControl, Box, Typography } from "@mui/material";
 
+
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { v4 as uuidv4 } from 'uuid';
 
 import "./css/createExam.css";
 
-const CreateExam = () => {
-  const [titulo, setTitulo] = useState("");
-  const [alunos, setAlunos] = useState("");
-  const [goalDescription, setGoalDescription] = useState("");
-  const [dia, setDia] = useState("");
-  const [hora, setHora] = useState("");
-  const [duracao, setDuracao] = useState("");
-  const [numeroDeVersoes, setNumeroDeVersoes] = useState("");
+const CreateExam = (props) => {
   const [openDialog, setOpenDialog] = useState(false);
+
+  const [formData, setFormData] = useState({
+    _id: uuidv4(),
+    cotacao: "",
+    nome: "",
+    id_docente: props.idDocente,
+    alunos: [],
+    data: "",
+    hora_preferencial: "",
+    tempo_admissao: "",
+    duracao: "",
+    acesso_autorizado: [],
+    versao: ""
+  });
 
 	const navigate = useNavigate();
 
-  const handleSubmit =  (event) => {
+  const handleSubmit =  async (event) => {
     event.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:8010/api/gestao/criar/d123', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+  
+      if (response.ok) {
+        setOpenDialog(true);
+      } else {
+        console.error('Erro ao enviar o formulário:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Erro ao enviar o formulário:', error.message);
+    }
     setOpenDialog(true);
   };
 
@@ -34,8 +61,16 @@ const CreateExam = () => {
   };
 
   const handleCreateQuestions =  () => {
-    navigate("/create-questions");
+    navigate(`/create-questions/${formData._id}`);
     setOpenDialog(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
 
 
@@ -51,7 +86,9 @@ const CreateExam = () => {
           id="titulo"
           classes={{ root: "exam-title" }}
           label="Título"
-          onChange={(e) => setTitulo(e.target.value)}
+          name="nome"
+          onChange={handleChange}
+          // onChange={(e) => setTitulo(e.target.value)}
           variant="outlined"
           margin="normal"
         />
@@ -70,16 +107,20 @@ const CreateExam = () => {
         </Button>
 
         <TextField
-          id="goalDescription"
-          label="Descrição"
-          onChange={(e) => setGoalDescription(e.target.value)}
+          id="cotacao"
+          label="Cotação"
+          name="cotacao"
+          onChange={handleChange}
+          // onChange={(e) => setGoalDescription(e.target.value)}
           variant="outlined"
           margin="normal"
         />
         <TextField
           id="dia"
           label="Dia da Prova"
-          onChange={(e) => setDia(e.target.value)}
+          name="data"
+          onChange={handleChange}
+          // onChange={(e) => setDia(e.target.value)}
           type="date"
           variant="filled"
           margin="normal"
@@ -87,10 +128,22 @@ const CreateExam = () => {
         />
 
         <TextField
+          id="tempo_Admissao"
+          name="tempo_admissao"
+          label="Tempo de Admissão"
+          onChange={handleChange}
+          // onChange={(e) => setHora(e.target.value)}
+          type="number"
+          variant="filled"
+          margin="normal"
+        />
+
+        <TextField
           id="hora"
+          name="hora_preferencial"
           label="Hora da Prova"
-          onChange={(e) => setHora(e.target.value)}
-          type="time"
+          onChange={handleChange}
+          // onChange={(e) => setHora(e.target.value)}
           variant="filled"
           margin="normal"
         />
@@ -98,7 +151,9 @@ const CreateExam = () => {
         <TextField
           id="duracao"
           label="Duração"
-          onChange={(e) => setDuracao(e.target.value)}
+          name="duracao"
+          onChange={handleChange}
+          // onChange={(e) => setDuracao(e.target.value)}
           type="number"
           variant="filled"
           margin="normal"
@@ -106,8 +161,10 @@ const CreateExam = () => {
 
         <TextField
           id="numeroDeVersoes"
-          label="Número de versões"
-          onChange={(e) => setNumeroDeVersoes(e.target.value)}
+          label="Versão"
+          name="versao"
+          onChange={handleChange}
+          // onChange={(e) => setNumeroDeVersoes(e.target.value)}
           type="number"
           variant="filled"
           margin="normal"

@@ -14,6 +14,8 @@ function App() {
     setExams([...exams, newExam]);
   };
 
+  const id_docente = "d123"
+
   return (
     <div className="wrapper">
       <BrowserRouter>
@@ -22,9 +24,9 @@ function App() {
         <Routes>
           {/* Add the MainPage route here */}
           <Route path="/" element={<MainPage />} />
-          <Route path="/create-exam" element={<CreateExam />} />
-          <Route path="/create-questions" element={<CreateQuestions/>} />
-          <Route path="/correct-exam" element={<CorrectExam/>} />  
+          <Route path="/create-exam" element={<CreateExam idDocente={id_docente} />} />
+          <Route path="/create-questions/:idProva" element={<CreateQuestions />} />
+          <Route path="/correct-exam" element={<CorrectExam />} />  
         </Routes>
       </BrowserRouter>
     </div>
