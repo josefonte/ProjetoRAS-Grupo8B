@@ -39,10 +39,8 @@ function AppHome() {
           minHeight: "calc(100vh - 128px)",
         }}
       >
-        <Row>
-          <Col span={6} offset={11}>
-            <h3>GRUPO 8B</h3>
-          </Col>
+        <Row justify={"center"}>
+          <h1>GRUPO 8B</h1>
         </Row>
 
         <Row>
@@ -89,23 +87,21 @@ function AppHome() {
         </Row>
 
         <p>
-          Este produto surge na sequência do contacto do Reitor da Universidade
-          de Vigo (Espanha) com o objetivo de criar um produto de software que
-          permita a realização de provas de avaliação académicas. O ProbUM
-          permite que alunos de uma dada unidade curricular de um curso
-          universitário ou politécnico (i.e. do ensino superior) realizem as
-          suas provas académicas, utilizando as infraestruturas informáticas da
-          sua própria instituição de ensino superior (IES), mesmo que estas
-          sejam muito limitadas quanto à sua dimensão, disponibilidade e
-          capacidade. Assim, o Probum deve incluir requisitos funcionais que
-          permitam a sua utilização em diversas IES e permitir alguma
-          parametrização e configuração. No essencial, o Probum permite que os
-          professores criem provas de avaliação e que as calendarizem, que os
-          alunos as realizem (de forma devidamente calendarizada) e que essas
-          provas sejam corrigidas, tendencialmente de forma automática.
+          O ProbUM é um produto de software desenvolvido em resposta ao pedido
+          do Reitor da Universidade de Vigo, com o propósito de facilitar a
+          realização de provas de avaliação acadêmica. Este software permite que
+          alunos de cursos universitários ou politécnicos realizem suas
+          avaliações utilizando as infraestruturas informáticas de suas próprias
+          instituições de ensino superior, mesmo que estas sejam limitadas em
+          dimensão, disponibilidade e capacidade. O ProbUM é projetado para ser
+          utilizado em diversas instituições de ensino, sendo configurável e
+          parametrizável. Em resumo, o ProbUM possibilita que professores criem
+          e agendem provas de avaliação, alunos as realizem conforme o
+          calendário estabelecido, e as provas sejam corrigidas,
+          preferencialmente de forma automática.
         </p>
       </Content>
-      <Footer style={{ textAlign: "center" }}>
+      <Footer style={{ textAlign: "center", fontWeight: "500" }}>
         Requisitos de Arquiteturas de Software ©2023 Desenvolvido por Grupo 8B
       </Footer>
     </Layout>

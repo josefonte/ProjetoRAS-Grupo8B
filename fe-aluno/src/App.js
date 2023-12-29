@@ -6,6 +6,7 @@ import AppProvasConcluidas from "./pages/provasConcluidas";
 import AppHome from "./pages/home";
 import AppStartProva from "./pages/startProva";
 import AppConsultarProva from "./pages/consultarProva";
+import AppResolverProva from "./pages/resolverProva";
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
           <Route
             path="/provas-concluidas/:id"
             element={<AppConsultarProva />}
+          />
+          <Route
+            path="/provas-ativas/resolver-prova/:id"
+            element={<AppResolverProva />}
           />
         </Routes>
       </Router>

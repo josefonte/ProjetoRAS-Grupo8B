@@ -1,61 +1,13 @@
 import React from "react";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 
-import {
-  Layout,
-  Breadcrumb,
-  theme,
-  Col,
-  Row,
-  Button,
-  Flex,
-  Divider,
-  Space,
-  Checkbox,
-} from "antd";
-
-const CheckboxGroup = Checkbox.Group;
-
-const questao = {
-  title: "indicadores financeiros",
-  enunciado:
-    "Habitant ut vitae mo Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed cibus libero semper viverra sit. ",
-  cotação_total: "3",
-  cotação_resposta: "1.5",
-  respostas: [
-    {
-      id: 1,
-      selected: true,
-      content: "Lorem sad dolor sit amet consectetur",
-      correct: true,
-    },
-    {
-      id: 2,
-      selected: true,
-      content: "Lorem ipsadfsum dolor sit amet consectetur",
-      correct: false,
-    },
-    {
-      id: 3,
-      selected: false,
-      content: "Lorem ipasfafssum dolor sit amet consectetur",
-      correct: true,
-    },
-    {
-      id: 4,
-      selected: false,
-      content: "Lorem ipsdafadfdasum dolor sit amet consectetur",
-      correct: false,
-    },
-  ],
-};
+import { Col, Row, Divider, Checkbox } from "antd";
 
 function ConsultaQuestao(questao) {
   console.log(questao);
   const id = questao.id;
   const { title, enunciado, respostas, cotação_resposta, cotação_total } =
     questao.questao;
-  const { selected, content, correct } = questao.questao.respostas;
 
   return (
     <>

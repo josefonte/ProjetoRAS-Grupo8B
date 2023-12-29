@@ -1,5 +1,6 @@
 import React from "react";
 import { FileTextOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 import { AppHeader } from "../components/AppHeader";
 import { useParams } from "react-router-dom";
@@ -160,7 +161,9 @@ function AppStartProva() {
               <Button href="/provas-ativas" style={{ color: "gray" }}>
                 Voltar
               </Button>
-              <Button type="primary">Começar</Button>
+              <Button type="primary">
+                <Link to={`/provas-ativas/resolver-prova/${id}`}>Começar</Link>
+              </Button>
             </Flex>
           </Col>
         </Row>
