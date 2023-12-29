@@ -157,7 +157,9 @@ function AppStartProva() {
         <Row>
           <Col span={8} offset={16}>
             <Flex gap="small" wrap="wrap" justify="flex-end">
-              <Button style={{ color: "gray" }}>Voltar</Button>
+              <Button href="/provas-ativas" style={{ color: "gray" }}>
+                Voltar
+              </Button>
               <Button type="primary">Começar</Button>
             </Flex>
           </Col>
