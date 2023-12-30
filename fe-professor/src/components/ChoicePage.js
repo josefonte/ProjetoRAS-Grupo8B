@@ -1,18 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
-import './css//MainPage.css';
+import './css/ChoicePage.css';
 
-const MainPage = () => {
+const ChoicePage = () => {
   return (
     <div className="main-page" style={{ textAlign: 'center', flexDirection: 'column' }}>
       <Typography variant="h3" gutterBottom>
         Welcome to ProbUM
       </Typography>
 
-      <Link to="/create-exam" style={{ cursor: 'pointer' }}>
+      <Link to="/edit-exam" style={{ cursor: 'pointer' }}>
         <Button variant="contained" color="primary" style={{ margin: '10px 0' }}>
-          Criar Prova
+          Editar Prova
         </Button>
       </Link>
 
@@ -25,4 +25,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default ChoicePage;
