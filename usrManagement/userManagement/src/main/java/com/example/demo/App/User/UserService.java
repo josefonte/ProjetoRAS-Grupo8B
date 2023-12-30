@@ -86,7 +86,7 @@ public class UserService {
         for(String userInfo: usersInfo){
             userVerificationResponses.add(new UserVerificationResponse(
                     userInfo,
-                    this.userRepository.findUserByInfo(info, userInfo).isPresent()));
+                    !this.userRepository.findUserByInfo(info, userInfo).isEmpty()));
         }
 
         return userVerificationResponses;

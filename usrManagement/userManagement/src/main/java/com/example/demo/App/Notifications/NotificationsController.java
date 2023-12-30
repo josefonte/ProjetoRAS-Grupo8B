@@ -1,5 +1,6 @@
 package com.example.demo.App.Notifications;
 
+import com.example.demo.App.JsonModels.MessageFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,8 @@ public class NotificationsController {
     }
 
     @PutMapping(path="/notifications")
-    public ResponseEntity<String> addNotification(@RequestParam String type, @RequestParam String subject, @RequestBody String Message){
-        return this.notificationsService.addNotification(type, subject, Message)
+    public ResponseEntity<String> addNotification(@RequestParam String type, @RequestBody MessageFormat message){
+        return this.notificationsService.addNotification(type, message)
                 ? ResponseEntity.ok("Notification added")
                 : ResponseEntity.badRequest().body("The exam associated is not valid");
     }
