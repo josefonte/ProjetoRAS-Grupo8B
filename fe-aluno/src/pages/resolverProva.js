@@ -97,6 +97,11 @@ function AppResolverProva() {
   };
 
   const handleOk = () => {
+    respostas.push({
+      selectedIndexes: selectedOptions
+        .map((option, index) => (option ? index : null))
+        .filter((index) => index !== null),
+    });
     submitProva();
     //submeter respostas
     //informar que a prova foi preenchida
@@ -115,7 +120,7 @@ function AppResolverProva() {
         .map((option, index) => (option ? index : null))
         .filter((index) => index !== null),
     });
-
+    console.log(respostas);
     setSelectedOptions([]);
 
     if (current + 1 < questoesProva.length) {
@@ -144,6 +149,7 @@ function AppResolverProva() {
 
   const submitProva = () => {
     console.log("submit prova");
+    console.log(respostas);
   };
 
   return (
