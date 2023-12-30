@@ -55,7 +55,6 @@ const ChoicePage = (props) => {
         </Button>
       </Link>
     </div>
-
   );
 };
 
