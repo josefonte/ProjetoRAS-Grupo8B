@@ -92,7 +92,7 @@ function AppLogin() {
               }}
             >
               <Button type="primary" htmlType="submit">
-                Submit
+                Entrar
               </Button>
             </Form.Item>
           </Form>

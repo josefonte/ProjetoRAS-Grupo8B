@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AppHeader } from "../components/AppHeader";
 
@@ -6,38 +7,26 @@ import { PlayCircleTwoTone } from "@ant-design/icons";
 import { Layout, Space, Table, theme } from "antd";
 const { Header, Content } = Layout;
 
-const data = [
-  {
-    key: "1",
-    nome: "Teste de Ras",
-    descricao: "Teste de escolhas Mutiplas de 10 questões",
-    salas: "CP1 1.02",
-    data: "10/12/2020",
-    hora: "10:00",
-    tags: ["active"],
-  },
-  {
-    key: "2",
-    nome: "Teste de Ras",
-    descricao:
-      "Teste de escolhas Mutiplas de 10 questões descriçao muito muito muito muito muito grannnnnnnnde muitomuito",
-    salas: "CP1 1.02",
-    data: "11/12/2020",
-    hora: "11:00",
-    tags: ["active"],
-  },
-  {
-    key: "3",
-    nome: "Teste de Ras",
-    descricao: "Teste de escolhas Mutiplas de 10 questões",
-    salas: "CP1 1.02",
-    data: "12/12/2020",
-    hora: "12:00",
-    tags: ["active"],
-  },
-];
+function AppProvasAtivas(props) {
+  const [data, setExamData] = useState([]);
 
-function AppProvasAtivas() {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8010/api/gestao/gestprovas/${props.idAluno}`
+        );
+        const dados = await response.json();
+        setExamData(dados);
+        console.log(dados);
+      } catch (error) {
+        console.error("Erro ao obter o exame:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const columns = [
     {
       title: "Nome",
@@ -46,38 +35,21 @@ function AppProvasAtivas() {
       render: (text) => <span>{text}</span>,
     },
     {
-      title: "Descrição",
-      dataIndex: "descricao",
-      key: "descricao",
-      render: (text) => (
-        <p
-          style={{
-            margin: "0 0 0 0",
-            maxWidth: "600px",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {text}
-        </p>
-      ),
-    },
-    {
       title: "Data",
       dataIndex: "data",
       key: "data",
     },
     {
       title: "Hora",
-      dataIndex: "hora",
-      key: "hora",
+      dataIndex: "hora_preferencial",
+      key: "hora_preferencial",
     },
 
     {
       title: "Salas",
       dataIndex: "salas",
       key: "salas",
+      render: () => <span>CP1 0.08</span>,
     },
 
     {
@@ -85,7 +57,7 @@ function AppProvasAtivas() {
       key: "action",
       render: (_, record) => (
         <Space size="small">
-          <a onClick={() => handleStartExam(record.key)}>
+          <a onClick={() => handleStartExam(record._id)}>
             Começar <PlayCircleTwoTone size={"small"} />
           </a>
         </Space>

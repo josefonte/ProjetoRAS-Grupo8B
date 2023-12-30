@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import {
   Layout,
@@ -20,74 +21,53 @@ const { Header, Content } = Layout;
 
 const { Countdown } = Statistic;
 
-const questoes = [
-  {
-    enunciado:
-      "1Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
-    opções: ["opçao1", "opçao2", "opçao3", "opção4"],
-  },
-  {
-    enunciado:
-      "2Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
-    opções: ["opçao1", "opçao2", "opçao3", "opção4"],
-  },
-  {
-    enunciado:
-      "3Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
-    opções: ["opçao1", "opçao2", "opçao3", "opção4"],
-  },
-  {
-    enunciado:
-      "4Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
-    opções: ["opçao1", "opçao2", "opçao3", "opção4"],
-  },
-  {
-    enunciado:
-      "Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
-    opções: ["opçao1", "opçao2", "opçao3", "opção4"],
-  },
-  {
-    enunciado:
-      "Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
-    opções: ["opçao1", "opçao2", "opçao3", "opção4"],
-  },
-  {
-    enunciado:
-      "Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
-    opções: ["opçao1", "opçao2", "opçao3", "opção4"],
-  },
-  {
-    enunciado:
-      "Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
-    opções: ["opçao1", "opçao2", "opçao3", "opção4"],
-  },
-];
-
 const createNavItems = (questoes, step) => {
   return questoes.map((_, index) => ({
     status: index === step ? "progress" : index < step ? "finish" : "wait",
   }));
 };
 
-const getQuestoes = () => {
-  return questoes;
-};
+//const getQuestoes = () => {
+//  return questoes;
+//};
 
 function conversorDuracao(hours, minutes) {
   const totalMilliseconds = hours * 60 * 60 * 1000 + minutes * 60 * 1000;
   return totalMilliseconds;
 }
 
-function AppResolverProva() {
+function AppResolverProva(props) {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const { idProva } = useParams();
+  const [questoesProva, setQuestoesProva] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8010/api/gestao/gestprovas/${props.idAluno}?id=${idProva}`
+        );
+        const dados = await response.json();
+        setQuestoesProva(dados.questoes);
+        setNavItems(createNavItems(dados.questoes, current));
+        setLoading(false); // Set loading to false when data is fetched
+        console.log(dados.questoes);
+      } catch (error) {
+        console.error("Erro ao obter o exame:", error);
+        setLoading(false); // Set loading to false in case of an error
+      }
+    };
+    fetchData();
+  }, [props.idAluno, idProva]); // Include props.idAluno and idProva in the dependency array
+
   const [duracao] = useState(Date.now() + conversorDuracao(1, 30));
-  const [NavItems, setNavItems] = useState(createNavItems(questoes));
+  const [NavItems, setNavItems] = useState(createNavItems(questoesProva));
   const [current, setCurrent] = useState(0);
   const [respostas, setRespostas] = useState([]); // [ {id: 1, resposta: 1}, {id: 2, resposta: 2}
-  const [questoesProva, setQuestoesProva] = useState(getQuestoes());
   const [selectedOptions, setSelectedOptions] = useState([]); // [ {id: 1, resposta: 1}, {id: 2, resposta: 2}
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -190,32 +170,35 @@ function AppResolverProva() {
           <h2>Pergunta {current + 1}</h2>
         </Row>
         <Divider style={{ margin: "1px 0px 10px 0px" }} />
-        <Row>
-          <span>{questoesProva[current].enunciado}</span>
-        </Row>
-        <Row>
-          <h3>Respostas</h3>
-        </Row>
-
-        <Row>
-          <Space
-            direction="vertical"
-            size="small"
-            style={{
-              display: "flex",
-            }}
-          >
-            {questoesProva[current].opções.map((opção, index) => (
-              <Checkbox
-                key={index}
-                onChange={() => handleCheckboxChange(index)}
-                checked={selectedOptions[index]}
+        {!loading ? (
+          <>
+            <Row>
+              <span>{questoesProva[current].enunciado}</span>
+            </Row>
+            <Row>
+              <h3>Respostas</h3>
+            </Row>
+            <Row>
+              <Space
+                direction="vertical"
+                size="small"
+                style={{
+                  display: "flex",
+                }}
               >
-                {opção}
-              </Checkbox>
-            ))}
-          </Space>
-        </Row>
+                {questoesProva[current].options.map((opção, index) => (
+                  <Checkbox
+                    key={opção._id}
+                    onChange={() => handleCheckboxChange(opção._id)}
+                    checked={selectedOptions[opção._id]}
+                  >
+                    {opção.texto}
+                  </Checkbox>
+                ))}
+              </Space>
+            </Row>
+          </>
+        ) : null}
 
         <Row justify={"end"}>
           {current < questoesProva.length - 1 ? (

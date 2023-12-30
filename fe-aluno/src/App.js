@@ -10,22 +10,30 @@ import AppResolverProva from "./pages/resolverProva";
 import AppLogin from "./pages/login";
 
 function App() {
+  const id_aluno = "a96075";
+
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={<AppHome />} />
           <Route path="/agenda" element={<AppAgenda />} />
-          <Route path="/provas-ativas" element={<AppProvasAtivas />} />
-          <Route path="/provas-ativas/:id" element={<AppStartProva />} />
+          <Route
+            path="/provas-ativas"
+            element={<AppProvasAtivas idAluno={id_aluno} />}
+          />
+          <Route
+            path="/provas-ativas/:idProva"
+            element={<AppStartProva idAluno={id_aluno} />}
+          />
           <Route path="/provas-concluidas" element={<AppProvasConcluidas />} />
           <Route
             path="/provas-concluidas/:id"
             element={<AppConsultarProva />}
           />
           <Route
-            path="/provas-ativas/resolver-prova/:id"
-            element={<AppResolverProva />}
+            path="/provas-ativas/resolver-prova/:idProva"
+            element={<AppResolverProva idAluno={id_aluno} />}
           />
           <Route path="/login" element={<AppLogin />} />
         </Routes>

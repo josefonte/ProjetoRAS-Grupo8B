@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FileTextOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -17,45 +17,58 @@ import {
 } from "antd";
 const { Header, Content } = Layout;
 
-const exam = {
-  key: "1",
-  nome: "Teste de Ras",
-  descricao:
-    "Este produto surge na sequência do contacto do Reitor da Universidade de Vigo (Espanha) com o objetivo de criar um produto de software que permita a realização de provas de avaliação académicas. O ProbUM permite que alunos de uma dada unidade curricular de um curso universitário ou politécnico (i.e. do ensino superior) realizem as suas provas académicas, utilizando as infraestruturas informáticas da sua própria instituição de ensino superior (IES), mesmo que estas sejam muito limitadas quanto à sua dimensão, disponibilidade e capacidade. ",
-  salas: "CP1 1.02",
-  data: "10/12/2020",
-  hora_inicio: "10:00",
-  hora_fim: "11:30",
-  tags: ["active"],
-  uc: "Requisitos de Arquitetura de Software",
-  curso: "Mestrado em Engenharia Informática",
-  semestre: "1º",
-  anoletivo: "2023/2024",
-};
+const descricao_placeholder =
+  "Este exame é configurado no formato de escolha múltipla, sem a opção de revisão ou alteração de respostas após a seleção inicial. Uma vez que os participantes concluem o exame, ele é encerrado automaticamente. As respostas são armazenadas ao longo do exame, sendo efetivadas somente quando o aluno decide sair ou conclui integralmente a avaliação. ";
 
-function getDuration(hora_inicio, hora_fim) {
-  const startTime = new Date(`2000-01-01T${hora_inicio}:00Z`);
-  const endTime = new Date(`2000-01-01T${hora_fim}:00Z`);
-
-  const timeDifferenceInMilliseconds = endTime - startTime;
-
-  const hours = Math.floor(timeDifferenceInMilliseconds / (1000 * 60 * 60));
-  const minutes = Math.floor(
-    (timeDifferenceInMilliseconds % (1000 * 60 * 60)) / (1000 * 60)
-  );
+function getDuration(durationInMinutes) {
+  const hours = Math.floor(durationInMinutes / 60);
+  const minutes = durationInMinutes % 60;
 
   return { hours, minutes };
 }
 
-function AppStartProva() {
-  const { id } = useParams();
-  console.log("Id da prova: ", id);
+function calculateEndTime(initialTime, durationInMinutes) {
+  const [initialHours, initialMinutes] = initialTime.split(":").map(Number);
 
-  // route get the exam from its id
-  const { hours: dur_hora, minutes: dur_min } = getDuration(
-    exam.hora_inicio,
-    exam.hora_fim
-  );
+  const totalInitialMinutes = initialHours * 60 + initialMinutes;
+
+  const totalEndMinutes = totalInitialMinutes + durationInMinutes;
+
+  const endHours = Math.floor(totalEndMinutes / 60);
+  const endMinutes = totalEndMinutes % 60;
+
+  const formattedEndTime = `${String(endHours).padStart(2, "0")}:${String(
+    endMinutes
+  ).padStart(2, "0")}`;
+
+  return formattedEndTime;
+}
+
+function AppStartProva(props) {
+  const { idProva } = useParams();
+
+  const [exam, setExam] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8010/api/gestao/gestprovas/${props.idAluno}?id=${idProva}`
+        );
+        const dados = await response.json();
+        setExam(dados);
+        console.log(dados);
+      } catch (error) {
+        console.error("Erro ao obter o exame:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const { hours: dur_hora, minutes: dur_min } = getDuration(exam.duracao);
+
+  const hora_fim = calculateEndTime(exam.hora_preferencial, exam.duracao);
 
   const {
     token: { colorBgContainer },
@@ -101,7 +114,7 @@ function AppStartProva() {
         <Divider style={{ margin: "1px 0px 10px 0px" }} />
         <Row>
           <Col span={24}>
-            <span>{exam.descricao}</span>
+            <span>{descricao_placeholder}</span>
           </Col>
         </Row>
         <Row style={{ marginBottom: "5%" }}>
@@ -133,20 +146,20 @@ function AppStartProva() {
               </Row>
               <Row>
                 <span style={{ fontWeight: "bold" }}>
-                  {exam.semestre} Semestre | Ano Letivo {exam.anoletivo}
+                  1º Semestre | Ano Letivo 2023/2024
                 </span>
               </Row>
             </Space>
 
             <Row style={{ marginTop: "5%", marginBottom: "5%" }}>
               <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
-                Início{" "}
+                Início
               </span>
-              &nbsp;: &nbsp;{exam.hora_inicio}&nbsp;| &nbsp;
+              &nbsp;: &nbsp;{exam.hora_preferencial}&nbsp;| &nbsp;
               <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
                 Fim
               </span>
-              &nbsp;: &nbsp;{exam.hora_fim}&nbsp;| &nbsp;
+              &nbsp;: &nbsp;{hora_fim}&nbsp;| &nbsp;
               <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
                 Duração
               </span>
@@ -162,7 +175,9 @@ function AppStartProva() {
                 Voltar
               </Button>
               <Button type="primary">
-                <Link to={`/provas-ativas/resolver-prova/${id}`}>Começar</Link>
+                <Link to={`/provas-ativas/resolver-prova/${idProva}`}>
+                  Começar
+                </Link>
               </Button>
             </Flex>
           </Col>
