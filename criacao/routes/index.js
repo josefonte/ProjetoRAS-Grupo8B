@@ -26,6 +26,11 @@ router.get('/api/gestao/gestprovas/:idUtilizador', function(req, res, next){
   }
 });
 
+router.get('/api/gestao/gestprovas/getprova/:idProva', function(req, res, next){
+  Prova.getProvaById(req.params.idProva)
+    .then(dados => res.status(200).json(dados))
+    .catch(erro => res.status(500).json({ erro: erro, mensagem: "Erro na obtenção da prova com o id: " + req.params.idProva }));
+});
 
 /* GET /api/gestao/edit/:idProva?idDocente=<ID_DOCENTE> */
 router.get('/api/gestao/editar/:idProva', function(req, res, next){
