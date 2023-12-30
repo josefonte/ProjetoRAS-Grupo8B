@@ -36,7 +36,7 @@ const CreateExam = (props) => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8010/api/gestao/criar/d123', {
+      const response = await fetch(`http://localhost:8010/api/gestao/criar/${props.idDocente}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
