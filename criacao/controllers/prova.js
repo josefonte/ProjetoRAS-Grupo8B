@@ -23,6 +23,16 @@ module.exports.getProva = (idProva, idUtilizador) => {
         })
 }
 
+module.exports.getProvaById = (idProva, ) => {
+    return Prova.findOne({_id: idProva})
+        .then(resposta => {
+            return resposta
+        })
+        .catch(erro => {
+            return erro
+        })
+}
+
 /* Get todas as provas que um Utilizador tem acesso */
 module.exports.getProvas = idUtilizador => {
     return Prova.find({acesso_autorizado: idUtilizador})
