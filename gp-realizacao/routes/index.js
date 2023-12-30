@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var ProvaDuplicada = require('../controllers/prova')
+var axios = require('axios')
 
 /* GET home page. */
 router.get('/api/evaluation/prova', function(req, res, next) {
@@ -30,6 +31,45 @@ router.get('/api/evaluation/prova_list', function(req, res, next) {
     .catch(erro => {
       res.jsonp({'error':erro})
     })
+});
+
+router.get('/api/evaluation/correct', function(req, res, next) {
+  if (req.query) {
+    if (req.query.id) {
+      ProvaDuplicada.getById(req.query.id)
+        .then(prova => {
+          
+          info = {
+              prova: {
+                id_prova_realizada: prova._id,
+                id_prova_duplicada: prova.id_prova_original,
+                classificacao_final: null,
+                num_Aluno: prova.id_aluno,
+                respostas: prova.respostas
+              }
+          }
+
+
+          axios.post('http://localhost:7778/api/cc/prova', newprova)
+            .then(response => {
+              res.jsonp(response)
+            })
+            .catch(e =>{
+              res.jsonp({'error':e})
+            })
+
+
+          res.jsonp(prova)
+        })
+        .catch(erro => {
+          res.jsonp({'error':erro})
+        })
+    }
+    else {
+      res.jsonp({'error':'Id nonexistent in query string'})
+    }
+  }
+  else {res.jsonp({'error':'Id nonexistent in query string'})}
 });
 
 router.put('/api/evaluation/prova', function(req, res, next) {
@@ -64,24 +104,6 @@ router.put('/api/evaluation/updateRespostas', function(req, res, next) {
   else {res.jsonp({'error':'Error in body'})}
 });
 
-router.post('/api/evaluation/correct', function(req, res, next) {
-  // !REVIEW - post incoerente
-  if (req.query) {
-    if (req.query.id) {
-      ProvaDuplicada.getById(req.query.id)
-        .then(prova => {
-          res.jsonp(prova)
-        })
-        .catch(erro => {
-          res.jsonp({'error':erro})
-        })
-    }
-    else {
-      res.jsonp({'error':'Id nonexistent in query string'})
-    }
-  }
-  else {res.jsonp({'error':'Id nonexistent in query string'})}
-});
 
 router.post('/api/evaluation/save/:idProva', function(req, res, next) {
   if (req.params.idProva == req.body._id)
