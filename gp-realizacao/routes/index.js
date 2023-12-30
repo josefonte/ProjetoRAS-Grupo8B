@@ -4,7 +4,7 @@ var ProvaDuplicada = require('../controllers/prova')
 var axios = require('axios')
 
 /* GET home page. */
-router.get('/api/evaluation/prova', function(req, res, next) {
+router.get('/api/realizacao/prova', function(req, res, next) {
   if (req.query) {
     if (req.query.id) {
       ProvaDuplicada.getById(req.query.id)
@@ -23,7 +23,7 @@ router.get('/api/evaluation/prova', function(req, res, next) {
 });
 
 
-router.get('/api/evaluation/prova_list', function(req, res, next) {
+router.get('/api/realizacao/prova_list', function(req, res, next) {
   ProvaDuplicada.list()
     .then(lista => {
       res.jsonp(lista)
@@ -33,7 +33,7 @@ router.get('/api/evaluation/prova_list', function(req, res, next) {
     })
 });
 
-router.get('/api/evaluation/correct', function(req, res, next) {
+router.get('/api/realizacao/correct', function(req, res, next) {
   if (req.query) {
     if (req.query.id) {
       ProvaDuplicada.getById(req.query.id)
@@ -57,9 +57,6 @@ router.get('/api/evaluation/correct', function(req, res, next) {
             .catch(e =>{
               res.jsonp({'error':e})
             })
-
-
-          res.jsonp(prova)
         })
         .catch(erro => {
           res.jsonp({'error':erro})
@@ -72,7 +69,7 @@ router.get('/api/evaluation/correct', function(req, res, next) {
   else {res.jsonp({'error':'Id nonexistent in query string'})}
 });
 
-router.put('/api/evaluation/prova', function(req, res, next) {
+router.put('/api/realizacao/prova', function(req, res, next) {
   if (req.query) {
     if (req.query.id && req.body._id == req.query.id) {
       ProvaDuplicada.updateProva(req.body)
@@ -91,7 +88,7 @@ router.put('/api/evaluation/prova', function(req, res, next) {
 });
 
 
-router.put('/api/evaluation/updateRespostas', function(req, res, next) {
+router.put('/api/realizacao/updateRespostas', function(req, res, next) {
   if (req.body) {
       ProvaDuplicada.updateRespostasInQuestao(req.body.id_prova, req.body.id_questao, req.body.respostas)
         .then(dados => {
@@ -105,11 +102,18 @@ router.put('/api/evaluation/updateRespostas', function(req, res, next) {
 });
 
 
-router.post('/api/evaluation/save/:idProva', function(req, res, next) {
+router.post('/api/realizacao/save/:idProva', function(req, res, next) {
   if (req.params.idProva == req.body._id)
     ProvaDuplicada.addProva(req.body)
       .then(dados => {
         res.jsonp(dados)
+        axios.get('http://localhost:9999/api/realizacao/correct')
+          .then(response => {
+            res.jsonp(response)
+          })
+          .catch(e =>{
+            res.jsonp({'error':e})
+          })
       })
       .catch(erro => {
         res.jsonp({'error':erro})
