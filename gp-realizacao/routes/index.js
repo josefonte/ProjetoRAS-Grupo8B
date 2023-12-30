@@ -103,9 +103,32 @@ router.put('/api/realizacao/updateRespostas', function(req, res, next) {
 
 
 router.post('/api/realizacao/save/:idProva', function(req, res, next) {
-  if (req.params.idProva == req.body._id)
-    ProvaDuplicada.addProva(req.body)
-      .then(dados => {
+  //if (req.params.idProva == req.body._id)
+  //console.log(req.body)
+
+  var lista=[]
+
+  for (var i=0;i<req.body.length;i++){
+    lista.push({"opcoes":req.body[i]["selectedIndexes"]}) 
+  }  
+/*
+  var dados={
+    "_id":req.body._id,
+    "id_aluno":req.body.id_aluno,
+    "id_prova_original":req.body.id_prova_original,
+    "respostas":lista
+  }
+  
+*/
+var dados={
+  "_id":"1",
+  "id_aluno":"2",
+  "id_prova_original":"3",
+  "respostas":lista
+}
+
+    ProvaDuplicada.addProva(dados)
+      .then( _ => {
         axios.get('http://localhost:9999/api/realizacao/correct')
           .then(response => {
             res.jsonp(response)
