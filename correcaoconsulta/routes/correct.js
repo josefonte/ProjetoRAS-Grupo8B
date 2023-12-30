@@ -34,10 +34,10 @@ router.put('/corrAUTOprovas/:id', async (req, res) => {
         provaoriginal = resp.data;
       })
       
-
+      /*
     //BUSCAR TODAS AS PROVAS QUE FORAM REALIZADAS
      const provas = await Prova.getProvasByDuplicateId(provadupId) 
-      /*
+      
      //TESTE DO EQUIVALENTE DE FAZER AXIOS.GET
       const fileContent = fs.readFileSync("test/criar.json", 'utf8');
 
@@ -95,7 +95,7 @@ router.put('/corrAUTOprovas/:id', async (req, res) => {
             
         }
         console.log("cotacoes:", cotacoes)
-
+        if(cotacoes < 0) cotacoes=0;
         const jsonObject2 = {
             classificacao_final: cotacoes
           };

@@ -47,6 +47,7 @@ router.get('/prova/:id', async (req, res) => {
     }
   });
 
+
   router.get('/alunoready/:id/:id2', async (req, res) => {
     try {
       const alunoID = req.params.id;

@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var axios = require('axios');
 
-
+//ze isto não existe
+axios.get('http://localhost:8011/api/gestao/{req.params.id}')
 
 
 router.get('/correct/listaprova/:id', function(req, res, next) {
@@ -29,11 +30,51 @@ router.put('/correct/corriMANUALprovas/:id', function(req, res, next){
 });
 
 router.put('/correct/prova/:id', function(req, res, next){
-  axios.put(`http://localhost:7778/api/correct/prova/:id${req.params.id}`, req.body).then(resp => {
+  axios.put(`http://localhost:7778/api/correct/prova/${req.params.id}`, req.body).then(resp => {
     res.status(200).json(resp.data)
   })
   .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
 });
+
+
+
+
+router.get('/see/listprovas/:id/ready', async (req, res) => {
+  axios.get(`http://localhost:7778/api/see/listprovas/${req.params.id}/ready`, req.body).then(resp => {
+    res.status(200).json(resp.data)
+  })
+  .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
+});
+
+
+router.get('/prova/:id', async (req, res) => {
+  axios.get(`http://localhost:7778/api/see/prova/${req.params.id}`, req.body).then(resp => {
+    res.status(200).json(resp.data)
+  })
+  .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
+});
+
+
+router.get('/alunoready/:id', async (req, res) => {
+  axios.get(`http://localhost:7778/api/see/alunoready/${req.params.id}`, req.body).then(resp => {
+    res.status(200).json(resp.data)
+  })
+  .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
+});
+
+
+router.get('/alunoready/:id/:id2', async (req, res) => {
+  axios.get(`http://localhost:7778/api/see/alunoready/${req.params.id}/${req.params.id2}`, req.body).then(resp => {
+    res.status(200).json(resp.data)
+  })
+  .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
+});
+
+
+router.post('/prova/:id/recorrect', async (req, res) => {
+  console.log("NAO FAZ NADA")
+});
+
 
 
 
