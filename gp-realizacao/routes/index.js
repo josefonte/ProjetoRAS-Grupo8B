@@ -106,7 +106,6 @@ router.post('/api/realizacao/save/:idProva', function(req, res, next) {
   if (req.params.idProva == req.body._id)
     ProvaDuplicada.addProva(req.body)
       .then(dados => {
-        res.jsonp(dados)
         axios.get('http://localhost:9999/api/realizacao/correct')
           .then(response => {
             res.jsonp(response)
