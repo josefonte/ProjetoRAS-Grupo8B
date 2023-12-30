@@ -130,5 +130,122 @@ router.post('/api/realizacao/save/:idProva', function(req, res, next){
   else res.status(555).json({mensagem: "Rota Inválida"})
 });
 
+// Gestão Users
+
+/* POST /api/usr/register?userType=<USER_TYPE> */
+router.post('/api/usr/register', function(req, res, next){
+  const usrType = req.query.userType;
+
+  if (usrType != undefined){
+    axios.post(`http://localhost:8080/api/usr/register?userType=${usrType}`, req.body).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro no registo dos utilizadores"}))
+  }
+  else res.status(524).json({mensagem: "Rota Inválida"})
+});	
+
+
+/* POST /api/usr/login?password=<PASSWORD>&number=<NUMBER> */
+router.post('/api/usr/login', function(req, res, next){
+  const password = req.query.password;
+  const number = req.query.number;
+
+  if (password != undefined && number != undefined){
+    axios.post(`http://localhost:8080/api/usr/login?password=${password}&number=${number}`, req.body).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro no login do utilizador " + number}))
+  }
+  else res.status(524).json({mensagem: "Rota Inválida"})
+});
+
+
+/* GET /api/usr/profile?number=<NUMBER> */
+router.get('/api/usr/profile', function(req, res, next) {
+  const number = req.query.number;
+
+  if (number != undefined){
+    axios.get(`http://localhost:8080/api/usr/profile?number=${number}`).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro na obtenção do perfil do utilizador " + number}))
+  }
+  else res.status(524).json({mensagem: "Rota Inválida"})
+})
+
+/* POST /api/usr/profile */
+router.post('/api/usr/profile', function(req, res, next){
+    axios.post(`http://localhost:8080/api/usr/profile`, req.body).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro na alteração da informação" }))
+});
+
+/* Put /api/usr/verify?info=<INFO> */
+router.put('/api/usr/verify', function(req, res, next){
+  const info = req.query.info;
+
+  if (info != undefined){
+    axios.put(`http://localhost:8080/api/usr/verify?info=${info}`, req.body).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro na verificação" }))
+  }
+  else res.status(524).json({mensagem: "Rota Inválida"})
+});
+
+/* POST /api/usr/notifications?type=<TYPE> */
+router.post('/api/usr/notifications', function(req, res, next){
+  const type = req.query.type;
+
+  if (type != undefined){
+    axios.post(`http://localhost:8080/api/usr/notifications?type=${type}`, req.body).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro a criar a notificação" }))
+  }
+  else res.status(524).json({mensagem: "Rota Inválida"})
+});
+
+/* Put /api/usr/notifications?type=<EXAM> */
+router.put('/api/usr/notifications', function(req, res, next){
+  const exam = req.query.type;
+
+  if (exam != undefined){
+    axios.put(`http://localhost:8080/api/usr/notifications?type=${exam}`, req.body).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro a adicionar a notificação" }))
+  }
+  else res.status(524).json({mensagem: "Rota Inválida"})
+});
+
+/* GET /api/usr/notifications?type=<TYPE> */
+router.get('/api/usr/notifications', function(req, res, next) {
+  const exam = req.query.type;
+
+  if (exam != undefined){
+    axios.get(`http://localhost:8080/api/usr/notifications?type=${exam}`).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro na obtenção das notificações"}))
+  }
+  else res.status(524).json({mensagem: "Rota Inválida"})
+})
+
+/* DELETE /api/usr/notifications?type=<TYPE> */
+router.delete('/api/usr/notifications', function(req, res, next) {
+  const exam = req.query.type;
+
+  if (exam != undefined){
+    axios.delete(`http://localhost:8080/api/usr/notifications?type=${exam}`).then(resp => {
+      res.status(200).json(resp.data)
+    })
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro eliminação das notificações"}))
+  }
+  else res.status(524).json({mensagem: "Rota Inválida"})
+})
+
 
 module.exports = router;

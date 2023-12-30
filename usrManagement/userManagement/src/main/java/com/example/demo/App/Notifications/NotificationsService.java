@@ -1,5 +1,6 @@
 package com.example.demo.App.Notifications;
 
+import com.example.demo.App.JsonModels.MessageFormat;
 import com.example.demo.App.Mail.MailService;
 import com.example.demo.App.User.User;
 import com.example.demo.App.User.UserRepository;
@@ -48,13 +49,13 @@ public class NotificationsService {
     }
 
     @Transactional
-    public boolean addNotification(String type, String subject, String message){
+    public boolean addNotification(String type, MessageFormat message){
         Optional<Notifications> notificationsOptional = this.notificationsRepository.findById(type);
         if(notificationsOptional.isEmpty()) return false;
 
-        notifyUsers(type, subject, message);
+        notifyUsers(type, message.getSubject(), message.getMessageBody());
 
-        this.notificationsMessageRepository.save(new NotificationMessage(message, notificationsOptional.get()));
+        this.notificationsMessageRepository.save(new NotificationMessage(message.getMessageBody(), notificationsOptional.get()));
         return true;
     }
 
