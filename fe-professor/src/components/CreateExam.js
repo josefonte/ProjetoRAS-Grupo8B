@@ -19,6 +19,8 @@ const CreateExam = (props) => {
   const [formData, setFormData] = useState({
     _id: uuidv4(),
     cotacao: "",
+    uc: "",
+    curso: "",
     nome: "",
     id_docente: props.idDocente,
     alunos: [],
@@ -126,6 +128,27 @@ const CreateExam = (props) => {
           margin="normal"
           opacity={0.5}
         />
+
+        <TextField
+          id="uc"
+          label="Unidade Curricular"
+          name="uc"
+          onChange={handleChange}
+          // onChange={(e) => setDuracao(e.target.value)}
+          variant="filled"
+          margin="normal"
+        />
+
+        <TextField
+          id="curso"
+          label="Curso"
+          name="curso"
+          onChange={handleChange}
+          // onChange={(e) => setDuracao(e.target.value)}
+          variant="filled"
+          margin="normal"
+        /> 
+
 
         <TextField
           id="tempo_Admissao"
