@@ -148,16 +148,10 @@ router.post('/api/usr/register', function(req, res, next){
 
 /* POST /api/usr/login?password=<PASSWORD>&number=<NUMBER> */
 router.post('/api/usr/login', function(req, res, next){
-  const password = req.query.password;
-  const number = req.query.number;
-
-  if (password != undefined && number != undefined){
-    axios.post(`http://localhost:8080/api/usr/login?password=${password}&number=${number}`, req.body).then(resp => {
+    axios.post(`http://localhost:8080/api/usr/login`, req.body).then(resp => {
       res.status(200).json(resp.data)
     })
-    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro no login do utilizador " + number}))
-  }
-  else res.status(524).json({mensagem: "Rota Inválida"})
+    .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro no login do utilizador "}))
 });
 
 

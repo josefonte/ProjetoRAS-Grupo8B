@@ -1,5 +1,6 @@
 package com.example.demo.App.User;
 
+import com.example.demo.App.JsonModels.LoginFormat;
 import com.example.demo.App.JsonModels.UserInfoRequest;
 import com.example.demo.App.JsonModels.UserInfoResponse;
 import com.example.demo.App.JsonModels.UserVerificationResponse;
@@ -31,8 +32,8 @@ public class UserController {
     }
 
     @PostMapping(path="/login")
-    public ResponseEntity<String> authenticateUser(@RequestParam String password, @RequestParam String number){
-        return this.userService.authenticateUser(password, number)
+    public ResponseEntity<String> authenticateUser(@RequestBody LoginFormat loginFormat){
+        return this.userService.authenticateUser(loginFormat.getPassword(), loginFormat.getNumber())
                 ? ResponseEntity.ok("User successfully authenticated")
                 : ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
     }
