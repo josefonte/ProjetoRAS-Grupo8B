@@ -3,7 +3,8 @@ var router = express.Router();
 var axios = require('axios');
 
 //ze isto não existe
-axios.get('http://localhost:8011/api/gestao/{req.params.id}')
+
+
 
 
 router.get('/correct/listaprova/:id', function(req, res, next) {
@@ -57,18 +58,72 @@ router.get('/prova/:id', async (req, res) => {
 
 router.get('/alunoready/:id', async (req, res) => {
   axios.get(`http://localhost:7778/api/see/alunoready/${req.params.id}`, req.body).then(resp => {
-    res.status(200).json(resp.data)
+    var l = len(my_list)
+    var objectlist = []
+    for(i=0;i<l;i++){
+      axios.get(`http://localhost:8011/api/gestao/gestprovas/getprova/${req.params.id}`).then(resp2 => {
+        var object = {idProva:resp[i].id_prova_duplicada, nome:resp2.nome, data: resp2.data, classificação_total: resp[i].classificacao_final}
+      })
+      .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
+      //n sei se queres o id da prova realizada ou duplicada
+      objectlist.push(object)
+    }
+    res.status(200).json(objectlist)
   })
   .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
+  
+
 });
 
 
+
+
+//ConsultarProva(idProva,idAluno) -> { nomeProva, classificação_total, questoes:[{enunciado,  cotaçaototal, cotação obtida, resposta:{selected,content,correct} }] } 
 router.get('/alunoready/:id/:id2', async (req, res) => {
   axios.get(`http://localhost:7778/api/see/alunoready/${req.params.id}/${req.params.id2}`, req.body).then(resp => {
-    res.status(200).json(resp.data)
+    axios.get(`http://localhost:8011/api/gestao/gestprovas/getprova/${req.params.id}`).then(resp2 => {
+      qlist = []
+      const cotacaoDict = {};
+      for (const questao of resp.questoes) {
+        cotacaoDict[(questao.nr_questao,questao.resposta)] = questao.cotacaoTotal;
+      }
+      for(questao in resp2.questoes){
+        rlist=[]
+        var qnum = 0
+        for(resposta in questao.options){
+          var isSelected = ((questao._id,resposta._id) in cotacaoDict)
+          var isCorrect = (isSelected && cotacaoDict[(questao._id,resposta._id)] > 0)
+          
+          obj3={
+            selected:isSelected,
+            content:resp2.texto,
+            correct:isCorrect,
+          }
+          rlist.push(obj3)
+        }
+        let sum = 0;
+        for (const [key, cotacao] of Object.entries(cotacaoObject)) {
+          const [questaoKey, _] = key;
+          if (questaoKey === questao) {
+            sum += cotacao;
+          }
+        }
+        obj2={
+          enunciado:questao.enunciado,
+          cotaçaototal: resp2.cotacaoTotal ,
+          cotação_obtida: sum,
+          resposta:rlist,
+        }
+        qlist.push(obj2)
+      }
+      var object = {nome:resp2.nome, classificação_total:resp.classificacao_final, questoes: qlist}
+    })
+    .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
+    //n sei se queres o id da prova realizada ou duplicada
+    res.status(200).json(object)
   })
   .catch(erro => res.status(526).json({erro: erro, mensagem: "Erro na edição da prova corrigida com id " + req.params.idProva}))
-});
+  });
 
 
 router.post('/prova/:id/recorrect', async (req, res) => {

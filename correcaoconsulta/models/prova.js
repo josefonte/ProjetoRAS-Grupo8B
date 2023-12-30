@@ -48,54 +48,83 @@ const ProvaModel = {
         FROM Prova
         LEFT JOIN Questao ON Prova.id_prova_realizada = Questao.Prova_id_prova_realizada
         WHERE Prova.num_aluno = ?;`;
-        connection.query(selectQuery, [id], (err, results) => {
-          if (err) {
-            reject(err);
-          } else {
-            const ProvaData = results.map(result => ({
-              id_prova_realizada: result.id_prova_realizada,
-              id_prova_duplicada: result.id_prova_duplicada,
-              classificacao_final: result.classificacao_final,
-              num_Aluno: result.num_Aluno,
+  
+      connection.query(selectQuery, [id], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          const provaDataMap = new Map();
+  
+          results.forEach((result) => {
+            const idProvaRealizada = result.id_prova_realizada;
+  
+            if (!provaDataMap.has(idProvaRealizada)) {
+              provaDataMap.set(idProvaRealizada, {
+                id_prova_realizada: result.id_prova_realizada,
+                id_prova_duplicada: result.id_prova_duplicada,
+                classificacao_final: result.classificacao_final,
+                num_Aluno: result.num_Aluno,
+                respostas: [],
+              });
+            }
+  
+            provaDataMap.get(idProvaRealizada).respostas.push({
+              id_questao: result.id_questao,
+              nr_questao: result.nr_questao,
+              resposta: result.resposta,
+              cotacaoTotal: result.cotacaoTotal,
+              TipoQuestao_id_tipo: result.TipoQuestao_id_tipo,
+            });
+          });
+  
+          const ProvaData = Array.from(provaDataMap.values());
+          resolve(ProvaData);
+        }
+      });
+    });
+  },
+  getProvasByAlunoAndProva: (id, id2) => {
+    return new Promise((resolve, reject) => {
+      const selectQuery = `SELECT Prova.*, Questao.*
+        FROM Prova
+        LEFT JOIN Questao ON Prova.id_prova_realizada = Questao.Prova_id_prova_realizada
+        WHERE Prova.num_aluno = ? AND Prova.id_prova_duplicada = ?;`;
+  
+      connection.query(selectQuery, [id, id2], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          const provaDataMap = new Map();
+  
+          results.forEach((result) => {
+            const idProvaRealizada = result.id_prova_realizada;
+  
+            if (!provaDataMap.has(idProvaRealizada)) {
+              provaDataMap.set(idProvaRealizada, {
+                id_prova_realizada: result.id_prova_realizada,
+                id_prova_duplicada: result.id_prova_duplicada,
+                classificacao_final: result.classificacao_final,
+                num_Aluno: result.num_Aluno,
+                questoes: [],
+              });
+            }
+  
+            provaDataMap.get(idProvaRealizada).questoes.push({
               id_questao: result.id_questao,
               nr_questao: result.nr_questao,
               resposta: result.resposta,
               cotacaoTotal: result.cotacaoTotal,
               Prova_id_prova_realizada: result.Prova_id_prova_realizada,
               TipoQuestao_id_tipo: result.TipoQuestao_id_tipo,
-            }));
-            resolve(ProvaData);
-          }
-        });
-      });
-    },
-    getProvasByAlunoAndProva: (id,id2) => {
-      return new Promise((resolve, reject) => {
-        const selectQuery = `SELECT Prova.*, Questao.*
-          FROM Prova
-          LEFT JOIN Questao ON Prova.id_prova_realizada = Questao.Prova_id_prova_realizada
-          WHERE Prova.num_aluno = ? AND Prova.id_prova_duplicada = ?;`;
-          connection.query(selectQuery, [id,id2], (err, results) => {
-            if (err) {
-              reject(err);
-            } else {
-              const ProvaData = results.map(result => ({
-                id_prova_realizada: result.id_prova_realizada,
-                id_prova_duplicada: result.id_prova_duplicada,
-                classificacao_final: result.classificacao_final,
-                num_Aluno: result.num_Aluno,
-                id_questao: result.id_questao,
-                nr_questao: result.nr_questao,
-                resposta: result.resposta,
-                cotacaoTotal: result.cotacaoTotal,
-                Prova_id_prova_realizada: result.Prova_id_prova_realizada,
-                TipoQuestao_id_tipo: result.TipoQuestao_id_tipo,
-              }));
-              resolve(ProvaData);
-            }
+            });
           });
-        });
-      },
+  
+          const [singleProvaData] = Array.from(provaDataMap.values());
+          resolve(singleProvaData);
+        }
+      });
+    });
+  },
   createProva: (prova) => {
     return new Promise((resolve, reject) => {
       const insertQuery = 'INSERT INTO Prova (id_prova_realizada, id_prova_duplicada, classificacao_final, num_Aluno) VALUES (?, ?, ?, ?)';

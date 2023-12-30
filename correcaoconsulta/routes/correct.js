@@ -29,7 +29,7 @@ router.put('/corrAUTOprovas/:id', async (req, res) => {
 
       // nao esta no sitio certo
       
-      axios.get(`http://localhost:8011/api/gestao/prova/${provadupId}`).then(resp => {
+      axios.get(`http://localhost:8011/api/gestao/gestprovas/getprova/${provadupId}`).then(resp => {
         // pode ser necessario tratar a data ?
         provaoriginal = resp.data;
       })
