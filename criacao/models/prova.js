@@ -20,11 +20,13 @@ var questaoSchema = new mongoose.Schema({
 
 var criaProvaSchema = new mongoose.Schema({
     _id : String,
+    uc : String,
+    curso : String,
     cotacao : String,
     nome: String,
     id_docente : String,
     versao : Number,
-    data : String, 
+    data : String,
     hora_preferencial : String,
     tempo_admissao : Number,
     duracao : Number,
