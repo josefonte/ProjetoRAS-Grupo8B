@@ -7,6 +7,7 @@ import AppHome from "./pages/home";
 import AppStartProva from "./pages/startProva";
 import AppConsultarProva from "./pages/consultarProva";
 import AppResolverProva from "./pages/resolverProva";
+import AppLogin from "./pages/login";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             path="/provas-ativas/resolver-prova/:id"
             element={<AppResolverProva />}
           />
+          <Route path="/login" element={<AppLogin />} />
         </Routes>
       </Router>
     </>

@@ -91,12 +91,15 @@ export function AppHeader() {
       </Menu>
 
       <div className="logo" style={{ paddingRight: "10px" }}>
-        <Space wrap size={16}>
+        <Space direction="horizontal" wrap size={16}>
           <Badge count={1}>
             <BellOutlined style={{ fontSize: "18px", paddingTop: "2px" }} />
           </Badge>
+
           <Avatar size="small" icon={<UserOutlined />} />
-          <p style={{ margin: "0 0 0 0" }}> Paulo Flores(d458)</p>
+          <Link to={"/login"}>
+            <p style={{ margin: "0 0 0 0" }}> Paulo Flores(d458)</p>
+          </Link>
         </Space>
       </div>
     </div>
