@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Listar Salas</title>
+  </head>
+  <body>
+   {{#each sala}}
+    ID: {{idSala}}<br>
+    Edificio: {{idEdificio}}<br>
+    Capacidade: {{Capacidade}}<br>
+    Nome da Sala: {{nome}}<br>
+    <a href=" /del-salas/{{idSala}}"><button>Apagar</button></a>
+    <hr>
+   {{/each}}
+   </body>
+</html>
