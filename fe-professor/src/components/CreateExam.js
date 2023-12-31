@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import * as pdfjs from 'pdfjs-dist/build/pdf';
+import 'pdfjs-dist/web/pdf_viewer.css';
 import { useNavigate } from "react-router-dom";
 import { TextField, FormControl, Box, Typography } from "@mui/material";
 
@@ -12,8 +14,36 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { v4 as uuidv4 } from 'uuid';
 
 import "./css/createExam.css";
-
 const CreateExam = (props) => {
+  const [ids, setIds] = useState([]);
+  
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = async (e) => {
+        const arrayBuffer = e.target.result;
+        const pdf = await pdfjs.getDocument(arrayBuffer).promise;
+
+        const ids = [];
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const textContent = await page.getTextContent();
+          const text = textContent.items.map((item) => item.str).join('\n');
+          const pageIds = text.split('\n').filter((id) => id.trim() !== '');
+          ids.push(...pageIds);
+        }
+
+        setIds(ids);
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+  };
+  
   const [openDialog, setOpenDialog] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -96,15 +126,15 @@ const CreateExam = (props) => {
         />
 
         <Typography
-          variant="h6"
           style={{ margin: "10px 0", textAlign: "left" }}>
           Alunos Admitidos
         </Typography>
         <TextField
           type="file"
+          onChange={handleFileChange}
         />
 
-        <Button variant="contained" color="primary" component="span">
+        <Button variant="contained" color="primary" component="span" style={{width: "150px", height:"28px"}}>
           Upload file
         </Button>
 
@@ -113,8 +143,8 @@ const CreateExam = (props) => {
           label="Cotação"
           name="cotacao"
           onChange={handleChange}
-          // onChange={(e) => setGoalDescription(e.target.value)}
-          variant="outlined"
+          // onChange={(e) => setDuracao(e.target.value)}
+          variant="filled"
           margin="normal"
         />
         <TextField
@@ -126,7 +156,7 @@ const CreateExam = (props) => {
           type="date"
           variant="filled"
           margin="normal"
-          opacity={0.5}
+          
         />
 
         <TextField
@@ -148,7 +178,6 @@ const CreateExam = (props) => {
           variant="filled"
           margin="normal"
         /> 
-
 
         <TextField
           id="tempo_Admissao"

@@ -7,7 +7,7 @@ import CorrectExam from './components/CorrectExam';
 import CreateQuestions from './components/CreateQuestions';
 import ExamList  from './components/ExamList';
 import ChoicePage from './components/ChoicePage';
-
+import Login from './components/Login';
 function App() {
   const [exams, setExams] = useState([]);
 
@@ -23,7 +23,8 @@ function App() {
         <Navbar />
 
         <Routes>
-          <Route path="/" element={<ExamList idDocente={id_docente}/>} />
+          <Route path="/" element={<Login />} />
+          <Route path="/exam-list" element={<ExamList idDocente={id_docente}/>} />
           <Route path="/choice-page/:idProva" element={<ChoicePage idDocente={id_docente}/>} />
           <Route path="/create-exam" element={<CreateExam idDocente={id_docente} />} />
           <Route path="/create-questions/:idProva" element={<CreateQuestions />} />

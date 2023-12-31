@@ -25,9 +25,10 @@ const CorrectExam = () => {
   };
 
   return (
-    <div className='root'>
+    <div>
       
       <FormControl  class="form" style={{ flexDirection: 'column' , textAlign:'center', padding: '20px'}}>
+        <div className="container"></div>
         <Typography variant="h4" className='title'>
           Correção da Prova
         </Typography>
@@ -42,20 +43,20 @@ const CorrectExam = () => {
           
         />
       
-      <Typography variant="h6" className='title'> Correção Automática</Typography>
-      <Switch
-        label="Correção Automática"
-        checked={correction}
-        onChange={(event) => setCorrection(event.target.checked)}
-        className='textField'
-      />    
+      <div className="switch-container">
+
+        <Typography className='title'> Correção Automática</Typography>
+        <Switch
+          label="Correção Automática"
+          checked={correction}
+          onChange={(event) => setCorrection(event.target.checked)}
+          className='textField'
+        />    
+        </div>
 
         <div>
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Submeter
-          </Button>
-          <Button variant="outlined" color="secondary">
-            Próxima Prova
           </Button>
         </div>
 

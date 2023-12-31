@@ -18,11 +18,27 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./css/ExamList.css";
 
 const maxWidth = window.innerWidth * 0.7;
+const data = [
+  {
+    _id: "1",
+    nome: "Teste de Ras",
+    descricao: "Teste de escolhas Mutiplas de 10 questões",
+    data: "10/12/2020",
+    tags: ["Done"],
+  },
+  {
+    _id: "2",
+    nome: "Teste de CP",
+    descricao: "Teste de escolhas Mutiplas de 10 questões",
+    data: "13/12/2020",
+    tags: ["To be corrected"],
+  },
+];
 
 
 const ExamList = (props) => {
 
-  const [data, setExamData] = useState([]);
+  /*const [data, setExamData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +52,7 @@ const ExamList = (props) => {
     };
 
     fetchData();
-  }, []);
+  }, []); */
 
 
   const format = (value, rowData) => {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { Link } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import {
   Button,
   TextField,
@@ -26,32 +27,29 @@ const CreateQuestions = () => {
 
   const { idProva } = useParams();
 
-
   const [formData, setFormData] = useState({
     _id: uuidv4(),
     enunciado: "",
     imagens: "",
     cotacaoTotal: "",
     tipo_Questao: "",
-    options: []
+    options: [],
   });
 
   const [optionsData, setOptionsData] = useState([
     { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" },
     { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" },
     { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" },
-    { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" }
+    { _id: uuidv4(), texto: "", cotacao: "", resolucao: "" },
   ]);
-
 
   const handleChangeForm = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
-  
 
   const handleChangeOptions = (index) => (e) => {
     const { name, value } = e.target;
@@ -59,12 +57,11 @@ const CreateQuestions = () => {
       const updatedOptionsData = [...prevOptionsData];
       updatedOptionsData[index] = {
         ...updatedOptionsData[index],
-        [name]: value
+        [name]: value,
       };
       return updatedOptionsData;
     });
   };
-
 
   function setValue(index, newValue) {
     const newRespostas = respostas.slice(0);
@@ -91,25 +88,27 @@ const CreateQuestions = () => {
     setQuestionType(event.target.value);
   };
 
-  const handleSubmit =  async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     setFormData({
       ...formData,
-      options: optionsData
+      options: optionsData,
     });
 
     try {
-      const response = await fetch(`http://localhost:8010/api/gestao/criar/questao/d123?idProva=${idProva}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
+      const response = await fetch(
+        `http://localhost:8010/api/gestao/criar/questao/d123?idProva=${idProva}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
     } catch (error) {
-      console.error('Erro ao enviar o formulário:', error.message);
+      console.error("Erro ao enviar o formulário:", error.message);
     }
   };
 
@@ -178,7 +177,7 @@ const CreateQuestions = () => {
               <TextField
                 id={option._id}
                 //value={resposta.text}
-                variant = 'filled'
+                variant="filled"
                 className="text-field"
                 name="texto"
                 onChange={handleChangeOptions(index)}
@@ -203,13 +202,11 @@ const CreateQuestions = () => {
                 onChange={handleChangeOptions(index)}
                 //onChange={(event, val) => setCotacao(respostas[index].text, val)}
               />
-          </div>
+            </div>
           </div>
         ))}
 
-
-
-            {/* <NumberInput
+        {/* <NumberInput
               className="number-input"
               aria-label="Demo number input"
               placeholder="cotação"
@@ -239,18 +236,19 @@ const CreateQuestions = () => {
           variant="filled"
         /> */}
 
+        <Link to="/exam-list" style={{ cursor: "pointer" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ margin: "10px 0" }}
+          >
+            Sair
+          </Button>
+        </Link>
         <Button
           variant="contained"
           color="primary"
           onClick={handleSubmit}
-          style={{ margin: "10px 0" }}
-        >
-          Guardar tudo
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmitNextQuestion}
           style={{ margin: "10px 0" }}
         >
           Próxima Questão
