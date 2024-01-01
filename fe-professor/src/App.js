@@ -27,7 +27,7 @@ function App() {
           <Route path="/exam-list" element={<ExamList idDocente={id_docente}/>} />
           <Route path="/choice-page/:idProva" element={<ChoicePage idDocente={id_docente}/>} />
           <Route path="/create-exam" element={<CreateExam idDocente={id_docente} />} />
-          <Route path="/create-questions/:idProva" element={<CreateQuestions />} />
+          <Route path="/create-questions/:idProva" element={<CreateQuestions idDocente={id_docente}/>} />
           <Route path="/correct-exam" element={<CorrectExam />} />  
         </Routes>
       </BrowserRouter>

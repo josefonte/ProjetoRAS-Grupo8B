@@ -20,7 +20,7 @@ import {
 } from "@mui/base/Unstable_NumberInput";
 import "./css/CreateQuestions.css";
 
-const CreateQuestions = () => {
+const CreateQuestions = (props) => {
   const [questionDescription, setQuestionDescription] = React.useState("");
   const [questionType, setQuestionType] = React.useState("multiple_choice");
   const [correctAnswers, setCorrectAnswers] = React.useState([]);
@@ -91,20 +91,22 @@ const CreateQuestions = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    setFormData({
+    const updatedFormData = {
       ...formData,
       options: optionsData,
-    });
+    };
+  
+    setFormData(updatedFormData);
 
     try {
       const response = await fetch(
-        `http://localhost:8010/api/gestao/criar/questao/d123?idProva=${idProva}`,
+        `http://localhost:8010/api/gestao/criar/questao/${props.idDocente}?idProva=${idProva}`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(updatedFormData),
         }
       );
     } catch (error) {
@@ -132,9 +134,7 @@ const CreateQuestions = () => {
       return updatedRespostas;
     });
   };
-  const handleSubmitQuestions = () => {
-    // Get the selected anwser
-  };
+  
 
   return (
     <div className="global-container">

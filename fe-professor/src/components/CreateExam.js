@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as pdfjs from 'pdfjs-dist/build/pdf';
-import 'pdfjs-dist/web/pdf_viewer.css';
+// import 'pdfjs-dist/web/pdf_viewer.css';
 import { useNavigate } from "react-router-dom";
 import { TextField, FormControl, Box, Typography } from "@mui/material";
 
