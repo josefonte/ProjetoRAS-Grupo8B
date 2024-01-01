@@ -30,7 +30,7 @@ router.get('/api/gestao/gestprovas/:idUtilizador', function(req, res, next){
 router.post('/api/gestao/addUserToProva/:idUtilizador', function(req, res, next) {
   const idProva = req.query.id;
   if (idProva !== undefined) {
-    addUserToProva(req.params.idUtilizador, idProva)
+    adicionarAlunoAProva( idProva,req.params.idUtilizador)
       .then(() => res.status(200).json({ mensagem: "Utilizador adicionado com sucesso à prova." }))
       .catch(erro => res.status(523).json({ erro: erro, mensagem: "Erro ao adicionar utilizador à prova." }));
   } else {
