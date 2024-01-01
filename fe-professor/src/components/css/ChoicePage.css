@@ -20,13 +20,21 @@
     max-width: 350px;
 }
 
-.questions {
+
+
+.questions-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+  }
+  
+.enunciado {
+    text-align: center;
+    border-top: 2px solid #ccc; 
+    padding-top: 10px; 
+  
 }
 
-.questions {
-    flex-direction: column;
-}
+.answers {
+    text-align: center;
+  }

@@ -5,9 +5,8 @@ import { Button, Typography, Paper } from "@mui/material";
 import { Box, List, ListItem, ListItemText, Checkbox } from "@mui/material";
 import "./css/ChoicePage.css";
 
-
 const ChoicePage = (props) => {
-  const optionsSchema = [
+  const optionsSchema1 = [
     {
       _id: "a",
       texto: "dao afonso henriques",
@@ -27,19 +26,88 @@ const ChoicePage = (props) => {
       resolucao: "errada",
     },
   ];
-  
-  
+
+  const optionsSchema2 = [
+    {
+      _id: "a",
+      texto: "nop",
+      cotacao: "-1",
+      resolucao: "errada",
+    },
+    {
+      _id: "b",
+      texto: "siiiiiiiiiiiiiim",
+      cotacao: "4",
+      resolucao: "certa",
+    },
+    {
+      _id: "c",
+      texto: "meh",
+      cotacao: "0",
+      resolucao: "errada",
+    },
+    {
+      _id: "d",
+      texto: "meh 2.0",
+      cotacao: "0",
+      resolucao: "errada",
+    },
+  ];
+
+  const optionsSchema3 = [
+    {
+      _id: "a",
+      texto: "nop",
+      cotacao: "-1",
+      resolucao: "errada",
+    },
+    {
+      _id: "b",
+      texto: "siiiiiiiiiiiiiim",
+      cotacao: "4",
+      resolucao: "errada",
+    },
+    {
+      _id: "c",
+      texto: "meh",
+      cotacao: "0",
+      resolucao: "errada",
+    },
+    {
+      _id: "d",
+      texto: "meh 2.0",
+      cotacao: "4",
+      resolucao: "certa",
+    },
+  ];
+
   const questoes = [
     {
-    _id: "1",
-    enunciado: "primeiro rei de portugal",
-    imagem: "",
-    cotacaoTotal: "3",
-    tipo_Questao: "EC",
-    options: [optionsSchema],
-  },
+      _id: "1",
+      enunciado: "primeiro rei de portugal",
+      imagem: "",
+      cotacaoTotal: "3",
+      tipo_Questao: "EC",
+      options: [optionsSchema1],
+    },
+    {
+      _id: "2",
+      enunciado: "pergunta muuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuito grande",
+      imagem: "",
+      cotacaoTotal: "4",
+      tipo_Questao: "EC",
+      options: [optionsSchema2],
+    },
+    {
+      _id: "3",
+      enunciado: "pergunta ",
+      imagem: "",
+      cotacaoTotal: "4",
+      tipo_Questao: "EC",
+      options: [optionsSchema3],
+    },
   ];
-  
+
   const { idProva } = useParams(); // Está aqui o id da prova
   const [checked, setChecked] = useState(false);
 
@@ -63,7 +131,6 @@ const ChoicePage = (props) => {
 
     fetchData();
   }, []);
-  
 
   return (
     <div
@@ -86,36 +153,6 @@ const ChoicePage = (props) => {
           Nome da Prova: {exame.nome}
         </Typography>
       </Paper>
-      {/* Lista de questões */}
-      <Typography variant="h4" gutterBottom>
-        Questões Da Prova
-      </Typography>
-
-   {/*   <div className="questions">
-        <List style={{ flexDirection: "column" }}>
-          {questoes.map((questao) => (
-            <ListItem key={questao._id}>
-              <Typography variant="subtitle2">
-                {questao._id}) {questao.enunciado}
-              </Typography>
-              <List style={{ flexDirection: "column"}}
-              >
-                {questao.options && questao[0].options.map((opcao) => (
-                  <ListItem key={opcao._id}>
-                    <Checkbox
-                      checked={opcao.resolucao === "certa"}
-                      onChange={(event) => setChecked(event.target.checked)}
-                    />
-                    <ListItemText>
-                      {opcao._id}: {opcao.texto}
-                    </ListItemText>
-                  </ListItem>
-                ))}
-              </List>
-            </ListItem>
-          ))}
-        </List>
-                </div> */}
 
       <div className="button-container">
         <Link to="/edit-exam" style={{ cursor: "pointer" }}>
@@ -137,6 +174,36 @@ const ChoicePage = (props) => {
             Corrigir Prova
           </Button>
         </Link>
+      </div>
+      
+      {/* Lista de questões */}
+      <Typography variant="h4" gutterBottom>
+        Questões Da Prova
+      </Typography>
+
+      <div className="questions-container">
+        <List style={{ flexDirection: "column" }}>
+          {questoes.map((questao) => (
+            <React.Fragment key={questao._id}>
+              <Typography variant="h6" className="enunciado">
+                {questao._id}) {questao.enunciado}
+              </Typography>
+              {questao.options[0].map((opcao) => (
+              <div className="answers">
+                <ListItem key={opcao._id}>
+                  <Checkbox
+                    checked={opcao.resolucao === "certa"}
+                    onChange={(event) => setChecked(event.target.checked)}                    
+                    />
+                  <ListItemText>
+                    {opcao._id}) {opcao.texto}
+                  </ListItemText>
+                </ListItem>
+              </div>
+              ))}
+            </React.Fragment>
+          ))}
+        </List>
       </div>
     </div>
   );
