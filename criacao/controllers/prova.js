@@ -23,6 +23,22 @@ module.exports.getProva = (idProva, idUtilizador) => {
         })
 }
 
+
+module.exports.adicionarAlunoAProva = (idProva, idUtilizador) => {
+    return Prova.findOneAndUpdate(
+        { _id: idProva, alunos: { $ne: idUtilizador } }, // Ensure user is not already in the array
+        { $addToSet: { alunos: idUtilizador } },
+        { new: true }
+    )
+        .then(resposta => {
+            return resposta;
+        })
+        .catch(erro => {
+            return erro;
+        });
+}
+
+
 module.exports.getProvaById = (idProva, ) => {
     return Prova.findOne({_id: idProva})
         .then(resposta => {
