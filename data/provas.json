@@ -18,13 +18,26 @@
             "_id": "q1",
             "enunciado": "Qual o significado de 'boosting' no contexto de modelos de previsão?",
             "imagem": "",
-            "cotacaoTotal": "4",
+            "cotacaoTotal": "1",
             "tipo_Questao": "EC",
             "options": [
               { "_id": "o1", "texto": "Fazer diferentes modelos 'votar' para obter uma solução final;", "cotacao": "-0.5", "resolucao": "" },
               { "_id": "o2", "texto": "Validar um modelo utilizando conjuntos de dados maiores;", "cotacao": "-0.5", "resolucao": "" },
               { "_id": "o3", "texto": "Treinar modelos iterativamente de acordo com os erros de classificação;", "cotacao": "1", "resolucao": "" },
               { "_id": "o4", "texto": "Dividir aleatoriamente um conjunto de dados para produzir modelos alternativos.", "cotacao": "-0.5", "resolucao": "" }
+            ]
+          },
+          {
+            "_id": "q2",
+            "enunciado": "O que define um modelo que apresenta 'overfitting'?",
+            "imagem": "",
+            "cotacaoTotal": "2",
+            "tipo_Questao": "EC",
+            "options": [
+              { "_id": "o9", "texto": "Um modelo que se ajusta muito bem aos dados de treino, mas não generaliza corretamente para novos dados;", "cotacao": "2", "resolucao": "" },
+              { "_id": "o10", "texto": "Um modelo que não se ajusta bem aos dados de treino;", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o11", "texto": "Um modelo que não faz previsões corretas;", "cotacao": "-1", "resolucao": "" },
+              { "_id": "o12", "texto": "Um modelo que só faz previsões erradas.", "cotacao": "-1", "resolucao": "" }
             ]
           }
         ]

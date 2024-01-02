@@ -65,9 +65,13 @@ module.exports.getProvas = idUtilizador => {
 module.exports.criarProva = (novaProva) => {
 
     const idDocente = novaProva.id_docente
-
     novaProva.acesso_autorizado.push(idDocente)
-
+    
+    novaProva.alunos = novaProva.alunos.split(';').map((aluno) => aluno.trim());
+    
+    novaProva.alunos.forEach((aluno) => {
+        novaProva.acesso_autorizado.push(aluno);
+    });
 
     return Prova.create(novaProva)
         .then(resposta => {
