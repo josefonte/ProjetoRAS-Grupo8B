@@ -49,3 +49,8 @@
 .centered-text input {
   text-align: center;
 }
+
+.tipoQuestap-container {
+  padding: 200px;
+  background-color: blueviolet;
+}

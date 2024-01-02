@@ -15,7 +15,6 @@ const CorrectExam = () => {
   const [openDialog, setopenDialog] = React.useState(false);
 
   const handleSubmit = () => {
-    // Save the correction to the database.
     // Open the modal.
     setopenDialog(true);
   };
@@ -27,8 +26,7 @@ const CorrectExam = () => {
   return (
     <div>
       
-      <FormControl  class="form" style={{ flexDirection: 'column' , textAlign:'center', padding: '20px'}}>
-        <div className="container"></div>
+      <FormControl  class="form" style={{ flexDirection: 'column' , textAlign:'center', padding: '20px'}}> 
         <Typography variant="h4" className='title'>
           Correção da Prova
         </Typography>
@@ -42,23 +40,21 @@ const CorrectExam = () => {
           variant="outlined"
           
         />
-      
-      <div className="switch-container">
-
-        <Typography className='title'> Correção Automática</Typography>
-        <Switch
-          label="Correção Automática"
-          checked={correction}
-          onChange={(event) => setCorrection(event.target.checked)}
-          className='textField'
-        />    
-        </div>
-
-        <div>
+        <div className="switch-container">
+          <Typography className='title'> Correção Automática</Typography>
+          <Switch
+            label="Correção Automática"
+            checked={correction}
+            onChange={(event) => setCorrection(event.target.checked)}
+            className='textField'
+          />    
+          </div>
+    
+        
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Submeter
           </Button>
-        </div>
+       
 
         <Dialog open={openDialog} onClose={handleCloseDialog} className='modal'>
         <DialogTitle>Correção Automática executada com sucesso!</DialogTitle>

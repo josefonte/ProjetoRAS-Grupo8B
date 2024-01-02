@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
-import * as pdfjs from 'pdfjs-dist/build/pdf';
+// import * as pdfjs from 'pdfjs-dist/build/pdf';
 // import 'pdfjs-dist/web/pdf_viewer.css';
 import { useNavigate } from "react-router-dom";
-import { TextField, FormControl, Box, Typography } from "@mui/material";
-
-
+import { TextField, FormControl, Box, Typography, Paper } from "@mui/material";
 import Dialog from "@material-ui/core/Dialog";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 import "./css/createExam.css";
+import zIndex from "@mui/material/styles/zIndex";
 const CreateExam = (props) => {
   const [ids, setIds] = useState([]);
-  
-  const handleFileChange = async (event) => {
+
+  {
+    /* const handleFileChange = async (event) => {
     const file = event.target.files[0];
 
     if (file) {
@@ -42,8 +42,9 @@ const CreateExam = (props) => {
 
       reader.readAsArrayBuffer(file);
     }
-  };
-  
+  }; */
+  }
+
   const [openDialog, setOpenDialog] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -59,30 +60,33 @@ const CreateExam = (props) => {
     tempo_admissao: "",
     duracao: "",
     acesso_autorizado: [],
-    versao: ""
+    versao: "",
   });
 
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleSubmit =  async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8010/api/gestao/criar/${props.idDocente}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-  
+      const response = await fetch(
+        `http://localhost:8010/api/gestao/criar/${props.idDocente}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
       if (response.ok) {
         setOpenDialog(true);
       } else {
-        console.error('Erro ao enviar o formulário:', response.statusText);
+        console.error("Erro ao enviar o formulário:", response.statusText);
       }
     } catch (error) {
-      console.error('Erro ao enviar o formulário:', error.message);
+      console.error("Erro ao enviar o formulário:", error.message);
     }
     setOpenDialog(true);
   };
@@ -92,7 +96,7 @@ const CreateExam = (props) => {
     setOpenDialog(false);
   };
 
-  const handleCreateQuestions =  () => {
+  const handleCreateQuestions = () => {
     navigate(`/create-questions/${formData._id}`);
     setOpenDialog(false);
   };
@@ -101,11 +105,24 @@ const CreateExam = (props) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
+  const HelperBox = ({ children }) => {
+    const [helperVisible, setHelperVisible] = useState(false);
 
+    const handleClick = () => {
+      setHelperVisible(!helperVisible);
+    };
+
+    return (
+      <Box >
+        <Button onClick={handleClick} style={{color:"#8b0000", fontWeight: "bold", backgroundColor:"8b0000"}}>?</Button>
+        {helperVisible && <Paper sx={{ padding: "16px" , marginRight:"-200px" }}>{children}</Paper>}
+      </Box>
+    );
+  };
 
   return (
     <>
@@ -121,23 +138,38 @@ const CreateExam = (props) => {
           name="nome"
           onChange={handleChange}
           // onChange={(e) => setTitulo(e.target.value)}
-          variant="outlined"
+          variant="filled"
           margin="normal"
         />
 
-        <Typography
+        {/*<Typography
           style={{ margin: "10px 0", textAlign: "left" }}>
           Alunos Admitidos
         </Typography>
         <TextField
           type="file"
           onChange={handleFileChange}
-        />
-
+        /> 
         <Button variant="contained" color="primary" component="span" style={{width: "150px", height:"28px"}}>
           Upload file
         </Button>
-
+        */}
+        <div className="helper-alunos">
+          <TextField 
+          id="alunos"
+          label="Alunos admitidos"
+          name="alunos"
+          onChange={handleChange}
+          // onChange={(e) => setTitulo(e.target.value)}
+          variant="filled"
+          margin="normal"
+          style={{maxWidth:"170px"}}
+          />
+          <HelperBox>
+            <p>O formato deve ser "id1;id2;id3".</p>
+          </HelperBox>
+        </div>
+        
         <TextField
           id="cotacao"
           label="Cotação"
@@ -156,7 +188,6 @@ const CreateExam = (props) => {
           type="date"
           variant="filled"
           margin="normal"
-          
         />
 
         <TextField
@@ -177,7 +208,7 @@ const CreateExam = (props) => {
           // onChange={(e) => setDuracao(e.target.value)}
           variant="filled"
           margin="normal"
-        /> 
+        />
 
         <TextField
           id="tempo_Admissao"
@@ -233,16 +264,14 @@ const CreateExam = (props) => {
         <DialogContent>
           <DialogContentText>Data/Hora do teste. Salas</DialogContentText>
         </DialogContent>
-				<DialogActions>
-  				<Button onClick={handleCloseDialog} color="primary">
-  				  Fechar
-  				</Button>
-  				  <Button onClick={handleCreateQuestions} color="primary">
-  				    Criar Questões
-  				  </Button>
-  				
-				</DialogActions>
-
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Fechar
+          </Button>
+          <Button onClick={handleCreateQuestions} color="primary">
+            Criar Questões
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   );

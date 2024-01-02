@@ -150,20 +150,27 @@ const CreateQuestions = (props) => {
           style={{ margin: "10px 0" }}
         />
 
-        <Select
-          label="Tipo"
-          name="tipo_Questao"
-          //value={questionType}
-          onChange={handleChangeForm}
-          //onChange={handleQuestionTypeChange}
-          style={{ margin: "10px 0" }}
-        >
-          <MenuItem value="multiple_choice">Escolha Múltipla</MenuItem>
-          <MenuItem value="t_f">Verdadeiro ou Falso</MenuItem>
-          <MenuItem value="development">Desenvolvimento</MenuItem>
-          <MenuItem value="fill_in_the_blank">Completar Espaços</MenuItem>
-        </Select>
+        <div className="tipoQuestao-container">
+    
+          <Typography variant="h6" style={{ margin: "10px 0" }}>
+            Tipo de Questão
+          </Typography>
 
+          <Select
+            label="Tipo de Questão"
+            name="tipo_Questao"
+            //value={questionType}
+            onChange={handleChangeForm}
+            //onChange={handleQuestionTypeChange}
+            style={{ margin: "20px" }}
+          >
+            <MenuItem value="multiple_choice">Escolha Múltipla</MenuItem>
+            <MenuItem value="t_f">Verdadeiro ou Falso</MenuItem>
+            <MenuItem value="development">Desenvolvimento</MenuItem>
+            <MenuItem value="fill_in_the_blank">Completar Espaços</MenuItem>
+          </Select>
+        </div>
+        
         <Typography variant="h6" style={{ margin: "10px 0" }}>
           Respostas (selecione as corretas e as respetivas cotações)
         </Typography>

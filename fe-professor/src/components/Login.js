@@ -53,10 +53,12 @@ export default function Login({ setToken }) {
         </div>
 
         
-        <FormGroup id="remember" className='remember-me'>
-          <InputLabel for="remember">Remember me</InputLabel>
-          <Checkbox id="remember" value="true" name="remember" />
-        </FormGroup>
+          <FormGroup id="remember">
+            <div className='remember-me'>
+              <InputLabel for="remember">Remember me</InputLabel>
+              <Checkbox id="remember" value="true" name="remember" />
+            </div>
+          </FormGroup>
 
         <Link to="/exam-list" style={{ cursor: 'pointer' }}>
           <Button type="submit" variant="contained">
