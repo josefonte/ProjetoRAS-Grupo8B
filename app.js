@@ -30,48 +30,101 @@ app.post("/cad-sala", async (req, res) => {
 
 });
 
-
+//Rotas para apagar uma sala identificando o id
 app.delete("/Sala/:id", async (req, res) => {
     const { id } = req.params;
     await Sala.destroy({
         where: { id }
     }).then(() => {
         return res.json({
-            mensagem: "Sala Apagada com sucesso"
+            mensagem: "{id} Sala Apagada com sucesso"
         }).catch(() => {
             return res.json({
                 mensagem: "Sala não apagada com sucesso"
-            })
+            });
 
         });
+    });
+});
+//Rota para listar as salas cadastradas
+app.get("/Salas", (req, res) => {
+    Sala.findAll().then((salas) => {
+        return res.json(salas);
+    }).catch((erro) => {
+        return res.status(400).json({
+            mensagem: "Nenhuma sala encontrada"
+
+        });
+    });
+
+});
+
+//Rota para editar as salas cadastradas
+app.put("/update_sala/:id", (req, res) => {
+    Sala.updateOne({ _id: req.params.id }, req.body, (err) => {
+        if (err) return res.status(400).json({
+            mensagem: "Sala não editada"
+        });
+        return res.json({
+            mensagem: "Sala editada com sucesso"
+        });
+    });
 
 
+});
 
-        //Rotas para a Tabela Horários
+//Rotas para a Tabela Horários
 
-        app.post("/cad-horario", async (req, res) => {
-            await horarios.create(req.body)
-                .then(() => {
-                    return res.json({
-                        mensagem: "Horario cadastrado com sucesso"
-                    }).catch(() => {
-                        return res.status(400).json({
-                            erro: true,
-                            mensagem: "Horario não cadastrado"
-                        });
-
-                    });
-
+app.post("/cad-horario", async (req, res) => {
+    await horarios.create(req.body)
+        .then(() => {
+            return res.json({
+                mensagem: "Horario cadastrado com sucesso"
+            }).catch(() => {
+                return res.status(400).json({
+                    erro: true,
+                    mensagem: "Horario não cadastrado"
                 });
 
+            });
+
         });
 
+});
+//Rota para listar as salas cadastradas
+app.get("/Horarios", (req, res) => {
+    horarios.findAll().then((horarios) => {
+        return res.json(horarios);
+    }).catch((erro) => {
+        return res.status(400).json({
+            mensagem: "Nenhum horário encontrada"
 
-
-        app.get("/listar-horario ", function (req, res) {
-            res.send("Salas");
         });
+    });
 
-        app.listen(8050, () => {
-            console.log("Servidor iniciado na porta 8050: http://localhost:8050");
+});
+app.delete("/Horario/:id", async (req, res) => {
+    const { id } = req.params;
+    await horarios.destroy({
+        where: { id }
+    }).then(() => {
+        return res.json({
+            mensagem: "Horario Apagado com sucesso"
+        }).catch(() => {
+            return res.json({
+                mensagem: "Horario não apagado"
+            });
+
         });
+    });
+});
+
+
+app.get("/listar-horario ", function (req, res) {
+    res.send("Salas");
+});
+
+app.listen(8050, () => {
+
+    console.log("Servidor iniciado na porta 8050: http://localhost:8050");
+});
