@@ -11,7 +11,7 @@ import joaopedro from "../assets/images/joaopedro.jpg";
 import juliana from "../assets/images/juliana.jpg";
 import lucena from "../assets/images/lucena.jpg";
 import nsimba from "../assets/images/nsimba.jpg";
-import picao from "../assets/images/picao.jpg";
+import picao from "../assets/images/picao.png";
 import raposo from "../assets/images/raposo.jpg";
 import senra from "../assets/images/senra.jpg";
 import ze from "../assets/images/ze.jpg";

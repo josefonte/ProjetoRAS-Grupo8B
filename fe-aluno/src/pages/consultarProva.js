@@ -23,7 +23,6 @@ const exam = {
   classificacao_total: "14/20",
   questions: [
     {
-      title: "indicadores financeiros",
       enunciado:
         "Lorem ipsum dolor sit amet consectetur. Ultricies consequat massa platea amet ornare. Fermentum in ornare ac velit ut leo risus diam risus. Habitant ut vitae morbi libero purus facilisi velit ac mi. Diam nunc eu tempus vel pretium. Quis odio risus eget commodo maecenas. Lacus praesent at tellus amet sed sit velit. Faucibus libero semper viverra sit. ",
       cotação_total: "3",
