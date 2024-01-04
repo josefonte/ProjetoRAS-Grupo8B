@@ -10,7 +10,7 @@ import AppResolverProva from "./pages/resolverProva";
 import AppLogin from "./pages/login";
 
 function App() {
-  const id_aluno = "a96075";
+  const id_aluno = "1";
 
   return (
     <>
@@ -26,7 +26,9 @@ function App() {
             path="/provas-ativas/:idProva"
             element={<AppStartProva idAluno={id_aluno} />}
           />
-          <Route path="/provas-concluidas" element={<AppProvasConcluidas />} />
+          <Route path="/provas-concluidas"
+            element={<AppProvasConcluidas idAluno={id_aluno} />}
+          />
           <Route
             path="/provas-concluidas/:id"
             element={<AppConsultarProva />}
