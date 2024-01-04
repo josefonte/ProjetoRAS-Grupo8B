@@ -22,17 +22,17 @@ router.get('/listaprova/:id', async (req, res) => {
     }
   });
 
-router.put('/corrAUTOprovas/:id', async (req, res) => {
+router.get('/corrAUTOprovas/:id', async (req, res) => {
     try {
-      var provadupId = req.params.id;
+      var provadupId = req.params.id
+      console.log(provadupId)
       var provaoriginal;
 
       // nao esta no sitio certo
       
-      axios.get(`http://localhost:8011/api/gestao/gestprovas/getprova/${provadupId}`).then(resp => {
-        // pode ser necessario tratar a data ?
-        provaoriginal = resp.data;
-      })
+      let resp = await axios.get(`http://localhost:8011/api/gestao/gestprovas/getprova/${provadupId}`)
+      provaoriginal = resp.data;
+      console.log(provaoriginal)
       
       /*
     //BUSCAR TODAS AS PROVAS QUE FORAM REALIZADAS
@@ -48,7 +48,8 @@ router.put('/corrAUTOprovas/:id', async (req, res) => {
 
       //QUESTOES DA PROVA ORIGINAL
       questoes = provaoriginal.questoes
-      
+      let provas = await Prova.getProvasByDuplicateId(provadupId)
+      console.log(provas)
       //PARA TODAS AS PROVAS
       for(const prova of provas)    {  
         //BUSCAR O ID DA PROVA REALIZADA
