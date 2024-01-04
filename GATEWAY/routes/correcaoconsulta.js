@@ -57,6 +57,7 @@ router.get('/prova/:id', async (req, res) => {
 
 
 router.get('/alunoready/:id', async (req, res) => {
+  console.log("ENTROU NO ALUNO READY / ID ")
   axios.get(`http://localhost:7778/api/see/alunoready/${req.params.id}`, req.body).then(async resp => {
     var resp = resp.data
     console.log("1")
