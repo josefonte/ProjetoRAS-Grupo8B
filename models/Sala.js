@@ -1,17 +1,21 @@
 const db = require("./db")
+const Sequelize = require('sequelize');
 
-const Sala = db.sequelize.define('sala', {
-    ID: {
-        type: db.Sequelize.INTEGER
+
+const Sala = db.define('sala', {
+    nome: {
+        type: Sequelize.STRING,
+        allowNull: false,
     },
-    Edificio: {
-        type: db.Sequelize.STRING
+
+    idEdificio: {
+        type: Sequelize.STRING,
+        allowNull: false
     },
     Capacidade: {
-        type: db.Sequelize.INTEGER
-    },
-    Nome: {
-        type: db.Sequelize.STRING
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
-})
+});
+//Sala.sync();
 module.exports = Sala

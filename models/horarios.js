@@ -1,23 +1,29 @@
 const db = require("./db")
+const Sequelize = require('sequelize');
 
-const Horarios = db.sequelize.define('horarios', {
-    idHorarios: {
-        type: db.Sequelize.INTEGER
-    },
+
+const horarios = db.define('Horarios', {
     Hora: {
-        type: db.Sequelize.STRING
+        type: Sequelize.DATE,
+        allowNull: false,
     },
+
     idProva: {
-        type: db.Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
     },
     idDocente: {
-        type: db.Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
     },
     Lista_Alunos: {
-        type: db.Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
     },
     Disponibilidade: {
-        type: db.Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        allowNull: false
     }
-})
-module.exports = Horarios
+});
+//horarios.sync();
+module.exports = horarios;
