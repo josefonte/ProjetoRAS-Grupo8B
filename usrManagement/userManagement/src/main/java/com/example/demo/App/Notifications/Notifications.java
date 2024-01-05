@@ -1,5 +1,8 @@
 package com.example.demo.App.Notifications;
 
+import com.example.demo.App.JsonModels.MessageFormat;
+import com.example.demo.App.Observer.Observer;
+import com.example.demo.App.Observer.Subject;
 import com.example.demo.App.User.User;
 import jakarta.persistence.*;
 
@@ -7,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Notifications {
+public class Notifications implements Subject {
     @Id
     private String id;
 
@@ -43,16 +46,25 @@ public class Notifications {
         this.id = id;
     }
 
-    public void addUsers(Set<User> users){
-        this.users.addAll(users);
+    public Set<User> getUsers(){
+        return this.users;
     }
 
-    public void removeUsers(Set<User> users){
-        this.users.removeAll(users);
+    @Override
+    public void registerObserver(Observer observer){
+        this.users.add((User) observer);
     }
 
-    public void removeAllUsers(){
-        removeUsers(this.users);
+    @Override
+    public void removeObserver(Observer observer){
+        this.users.remove((User) observer);
+    }
+
+    @Override
+    public void notifyObservers(Object o){
+        for(User user: users){
+            user.update(o);
+        }
     }
 
     public Notifications clone()

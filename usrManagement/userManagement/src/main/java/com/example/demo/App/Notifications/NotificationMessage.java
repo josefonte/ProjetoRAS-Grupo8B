@@ -8,17 +8,19 @@ public class NotificationMessage {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int id_message;
 
-    @ManyToOne
-    @JoinColumn(name="id", nullable=false)
-    private Notifications notification;
+
+    private String subject;
+
+    private String sender;
 
     private String message;
 
     public NotificationMessage(){}
 
-    public NotificationMessage(String message, Notifications notification) {
+    public NotificationMessage(String message, String subject, String sender) {
         this.message = message;
-        this.notification = notification;
+        this.subject = subject;
+        this.sender = sender;
     }
 
     public String getMessage() {
@@ -27,5 +29,39 @@ public class NotificationMessage {
 
     public void setMessage(String type) {
         this.message = type;
+    }
+
+    public int getId_message() {
+        return id_message;
+    }
+
+    public void setId_message(int id_message) {
+        this.id_message = id_message;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String from) {
+        this.sender = from;
+    }
+
+    @Override
+    public String toString() {
+        return "NotificationMessage{" +
+                "id_message=" + id_message +
+                ", subject='" + subject + '\'' +
+                ", from='" + sender + '\'' +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

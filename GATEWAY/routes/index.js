@@ -146,7 +146,7 @@ router.post('/api/usr/register', function(req, res, next){
 });	
 
 
-/* POST /api/usr/login?password=<PASSWORD>&number=<NUMBER> */
+/* POST /api/usr/login*/
 router.post('/api/usr/login', function(req, res, next){
     axios.post(`http://localhost:8080/api/usr/login`, req.body).then(resp => {
       res.status(200).json(resp.data)
@@ -215,12 +215,12 @@ router.put('/api/usr/notifications', function(req, res, next){
   else res.status(524).json({mensagem: "Rota Inválida"})
 });
 
-/* GET /api/usr/notifications?type=<TYPE> */
+/* GET /api/usr/notifications?number=<NUMBER> */
 router.get('/api/usr/notifications', function(req, res, next) {
-  const exam = req.query.type;
+  const number = req.query.number;
 
-  if (exam != undefined){
-    axios.get(`http://localhost:8080/api/usr/notifications?type=${exam}`).then(resp => {
+  if (number != undefined){
+    axios.get(`http://localhost:8080/api/usr/notifications?number=${number}`).then(resp => {
       res.status(200).json(resp.data)
     })
     .catch(erro => res.status(523).json({erro: erro, mensagem: "Erro na obtenção das notificações"}))

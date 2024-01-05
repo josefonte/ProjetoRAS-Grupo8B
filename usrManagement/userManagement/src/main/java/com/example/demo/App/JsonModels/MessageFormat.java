@@ -4,12 +4,15 @@ public class MessageFormat {
 
     private String subject;
 
+    private String from;
+
     private String messageBody;
 
     public MessageFormat(){}
 
-    public MessageFormat(String subject, String messageBody) {
+    public MessageFormat(String subject, String from, String messageBody) {
         this.subject = subject;
+        this.from = from;
         this.messageBody = messageBody;
     }
 
@@ -29,10 +32,19 @@ public class MessageFormat {
         this.messageBody = messageBody;
     }
 
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
     @Override
     public String toString() {
         return "MessageFormat{" +
                 "subject='" + subject + '\'' +
+                ", from='" + from + '\'' +
                 ", messageBody='" + messageBody + '\'' +
                 '}';
     }

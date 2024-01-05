@@ -21,11 +21,11 @@ public class NotificationsController {
     }
 
     @GetMapping(path="/notifications")
-    public ResponseEntity<Object> getNotificationType(@RequestParam String type){
-        List<String> notificationMessages = this.notificationsService.getNotificationMessages(type);
+    public ResponseEntity<Object> getNotificationType(@RequestParam String number){
+        List<MessageFormat> notificationMessages = this.notificationsService.getNotificationMessages(number);
         return  notificationMessages!=null
                 ? ResponseEntity.ok(notificationMessages)
-                : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Type");
+                : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No messages found");
     }
 
     @PutMapping(path="/notifications")

@@ -9,10 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class NotificationsService {
@@ -24,6 +21,7 @@ public class NotificationsService {
     private final UserRepository userRepository;
 
     private final UserService userService;
+
 
     private final MailService mailService;
 
@@ -40,22 +38,17 @@ public class NotificationsService {
         this.mailService = mailService;
     }
 
-    private void notifyUsers(String type, String subject, String message){
-        List<User> users = this.notificationsRepository.getAllUsers(type);
 
-        for(User user: users){
-            this.mailService.sendEmail(user.getEmail(), subject, message);
-        }
-    }
 
     @Transactional
     public boolean addNotification(String type, MessageFormat message){
         Optional<Notifications> notificationsOptional = this.notificationsRepository.findById(type);
         if(notificationsOptional.isEmpty()) return false;
 
-        notifyUsers(type, message.getSubject(), message.getMessageBody());
+        Notifications notification = notificationsOptional.get();
+        mailMessage(type, message);
+        notification.notifyObservers(message);
 
-        this.notificationsMessageRepository.save(new NotificationMessage(message.getMessageBody(), notificationsOptional.get()));
         return true;
     }
 
@@ -64,37 +57,49 @@ public class NotificationsService {
         Optional<Notifications> notificationsOptional = this.notificationsRepository.findById(type);
         if(notificationsOptional.isPresent() || !this.userService.isEveryUserValid(users)) return false;
 
-        Notifications notifications = new Notifications(type);
-
-        Set<User> UsersObservers = new HashSet<>();
+        Notifications notification = new Notifications(type);
 
         for(String userNumber: users){
-            UsersObservers.add(this.userRepository.findById(userNumber).get());
+            notification.registerObserver(this.userRepository.findById(userNumber).get());
         }
 
-        notifications.addUsers(UsersObservers);
-
-        this.notificationsRepository.save(notifications);
+        this.notificationsRepository.save(notification);
         return true;
     }
 
+    private void mailMessage(String type, MessageFormat messageFormat){
+        for(User user: this.notificationsRepository.getAllUsers(type)){
+            this.mailService.sendEmail(messageFormat.getFrom(), user.getEmail(), messageFormat.getSubject(), messageFormat.getMessageBody());
+        }
+
+    }
+
     @Transactional
-    public boolean removeNotificationType(String type){
+    public boolean removeNotificationType(String type) {
         Optional<Notifications> notificationsOptional = this.notificationsRepository.findById(type);
-        if(notificationsOptional.isEmpty()) return false;
+        if (notificationsOptional.isEmpty()) return false;
 
         Notifications notification = notificationsOptional.get();
-        notification.removeAllUsers();
-        this.notificationsMessageRepository.removeAllNotificationsByType(type);
+        Set<User> users = new HashSet<>(notification.getUsers());
+
+        for (User user : users) {
+            notification.removeObserver(user);
+        }
 
         this.notificationsRepository.delete(notification);
         return true;
     }
 
     @Transactional
-    public List<String> getNotificationMessages(String type){
-        if(this.notificationsRepository.findById(type).isEmpty()) return null;
+    public List<MessageFormat> getNotificationMessages(String number){
+        List<NotificationMessage> notificationMessages = this.userRepository.getAllMessages(number);
+        if(notificationMessages.isEmpty()) return null;
 
-        return this.notificationsMessageRepository.getAllMessagesFromType(type);
+        List<MessageFormat> messageFormats = new ArrayList<>();
+        for(NotificationMessage notificationMessage: notificationMessages){
+            messageFormats.add(new MessageFormat(notificationMessage.getSubject(), notificationMessage.getSender(), notificationMessage.getMessage()));
+        }
+
+        return messageFormats;
     }
 }

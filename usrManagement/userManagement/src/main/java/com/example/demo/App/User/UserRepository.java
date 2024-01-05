@@ -1,5 +1,6 @@
 package com.example.demo.App.User;
 
+import com.example.demo.App.Notifications.NotificationMessage;
 import com.example.demo.App.User.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,5 +25,10 @@ public interface UserRepository extends CrudRepository<User, String> {
     @Transactional
     @Query("SELECT u FROM User u WHERE (u.number = :userInfo AND :info = 'number') OR (u.email = :userInfo AND :info = 'email') OR (u.name = :userInfo AND :info = 'name')")
     List<User> findUserByInfo(String info, String userInfo);
+
+    @Transactional
+    @Modifying
+    @Query("SELECT n.notificationMessages FROM User n WHERE n.number = :number")
+    List<NotificationMessage> getAllMessages(String number);
 
 }

@@ -1,13 +1,17 @@
 package com.example.demo.App.User;
 
-import com.example.demo.App.Notifications.Notifications;
+import com.example.demo.App.JsonModels.MessageFormat;
+import com.example.demo.App.Notifications.NotificationMessage;
+import com.example.demo.App.Observer.Observer;
 import jakarta.persistence.*;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class User {
+@Service
+public class User implements Observer{
 
     @Id
     private String number;
@@ -25,6 +29,14 @@ public class User {
     )
     private Set<UsersType> usersTypes;
 
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "user_message",
+            joinColumns = { @JoinColumn(name = "number") },
+            inverseJoinColumns = { @JoinColumn(name = "id_message") }
+    )
+    private Set<NotificationMessage> notificationMessages;
+
     public User(){
         this.usersTypes = new HashSet<>();
     }
@@ -34,6 +46,7 @@ public class User {
         this.number = number;
         this.email = email;
         this.usersTypes = new HashSet<>();
+        this.notificationMessages = new HashSet<>();
     }
 
     public User(User user){
@@ -42,6 +55,7 @@ public class User {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.usersTypes = new HashSet<>();
+        this.notificationMessages = new HashSet<>();
     }
 
     public String getNumber() {
@@ -82,6 +96,12 @@ public class User {
 
     public void setUserType(UsersType usersType) {
         this.usersTypes.add(usersType);
+    }
+
+    @Override
+    public void update(Object o){
+        MessageFormat messageFormat = (MessageFormat) o;
+        this.notificationMessages.add(new NotificationMessage(messageFormat.getMessageBody(), messageFormat.getSubject(), messageFormat.getFrom()));
     }
 
     @Override

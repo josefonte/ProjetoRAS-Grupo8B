@@ -18,9 +18,10 @@ public class MailService {
         this.probUMMail = "probUM@example.com";
     }
 
-    public void sendEmail(String to, String subject, String body){
+
+    public void sendEmail(String from, String to, String subject, String body){
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(this.probUMMail);
+        message.setFrom(from);
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
@@ -37,6 +38,6 @@ public class MailService {
                 "For security reasons, we recommend changing the password!\n\n" +
                 "Best regards,\nThe ProbUM Team";
 
-        sendEmail(to, subject, body);
+        sendEmail("ProbUm", to, subject, body);
     }
 }
