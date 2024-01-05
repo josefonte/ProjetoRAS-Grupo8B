@@ -1,19 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Layout, theme, Row, Button, Checkbox, Form, Input } from "antd";
 import { Footer } from "antd/es/layout/layout";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
-const onFinish = (values) => {
-  console.log("Success:", values);
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
 function AppLogin() {
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    console.log("Trying to log in");
+    console.log(values);
+
+    try {
+      const response = await fetch("http://localhost:8010/api/usr/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          number: values.username,
+          password: values.password,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Server response:", data);
+      if (response.ok) {
+        navigate(`/`);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -27,11 +52,8 @@ function AppLogin() {
         }}
       >
         <Row justify={"center"}>
-          <Link to={"/"}>
-            <h1 style={{ color: "black" }}>ProbUM</h1>
-          </Link>
+          <h1>ProbUM</h1>
         </Row>
-
         <Row justify={"center"}>
           <Form
             name="basic"
@@ -96,7 +118,7 @@ function AppLogin() {
               }}
             >
               <Button type="primary" htmlType="submit">
-                Entrar
+                Submit
               </Button>
             </Form.Item>
           </Form>
@@ -110,3 +132,4 @@ function AppLogin() {
 }
 
 export default AppLogin;
+
