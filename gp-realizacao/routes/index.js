@@ -38,7 +38,15 @@ router.get('/api/realizacao/correct', function(req, res, next) {
     if (req.query.id) {
       ProvaDuplicada.getById(req.query.id)
         .then(prova => {
-          
+        
+        	info = {
+                id_prova_realizada: prova._id,
+                id_prova_duplicada: prova.id_prova_original,
+                classificacao_final: null,
+                num_Aluno: prova.id_aluno,
+                //respostas: prova.respostas
+          }
+          /*
           info = {
               prova: {
                 id_prova_realizada: prova._id,
@@ -48,10 +56,21 @@ router.get('/api/realizacao/correct', function(req, res, next) {
                 respostas: prova.respostas
               }
           }
-
-
-          axios.post('http://localhost:7778/api/cc/prova', newprova)
+	*/
+	
+          axios.post('http://localhost:7778/api/cc/prova', info)
             .then(response => {
+            
+            	for(var i=0;i<prova.respostas.length;i++){
+            	  resposta={}
+            	  resposta["_id"]=prova._id
+            	  for(var j=0;j<prova.respostas.selectedIndexes.length;j++){
+            	    resposta["questionId"]= prova.respostas[i].questionId
+            	    resposta["resposta"]= prova.respostas[i].selectedIndexes[j]
+            	
+            	    axios.post('http://localhost:7778/api/cc/questão',resposta )
+            	  }
+            	}
               res.jsonp(response)
             })
             .catch(e =>{
@@ -104,13 +123,15 @@ router.put('/api/realizacao/updateRespostas', function(req, res, next) {
 
 router.post('/api/realizacao/save/:idProva', function(req, res, next) {
   //if (req.params.idProva == req.body._id)
-  //console.log(req.body)
+  console.log(req.body)
 
   var lista=[]
 
-  for (var i=0;i<req.body.length;i++){
-    lista.push({"opcoes":req.body[i]["selectedIndexes"]}) 
-  }  
+  //for (var i=0;i<req.body.length;i++){
+    //lista.push({"opcoes":req.body["respostas"][i]["selectedIndexes"]}) 
+  //} 
+  
+  var lista=req.body["respostas"]
 /*
   var dados={
     "_id":req.body._id,
@@ -121,9 +142,9 @@ router.post('/api/realizacao/save/:idProva', function(req, res, next) {
   
 */
 var dados={
-  "_id":"1",
-  "id_aluno":"2",
-  "id_prova_original":"3",
+  "_id":req.body._id+req.body._id_aluno,
+  "id_aluno":req.body._id_aluno,
+  "id_prova_original":req.body._id,
   "respostas":lista
 }
 
