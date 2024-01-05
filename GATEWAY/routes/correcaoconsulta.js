@@ -107,17 +107,20 @@ router.get('/alunoready/:id/:id2', async (req, res) => {
         cotacaoDict[(questao.nr_questao,questao.resposta)] = questao.cotacaoTotal;
       }
       console.log("4")
-      for(questao in resp2.questoes){
+      console.log("resp2",resp2.questoes)
+      for(const questao of resp2.questoes){
         rlist=[]
         var qnum = 0
       console.log("4.1")
-        for(resposta in questao.options){
+      console.log("questao",questao)
+      console.log("questao.options",questao.options)
+        for(const resposta of questao.options){
+          console.log("opt", resposta)
           var isSelected = ((questao._id,resposta._id) in cotacaoDict)
-          var isCorrect = (isSelected && cotacaoDict[(questao._id,resposta._id)] > 0)
-          
+          var isCorrect = ( resposta.cotacao > 0)
           obj3={
             selected:isSelected,
-            content:resp2.texto,
+            content:resposta.texto,
             correct:isCorrect,
           }
           rlist.push(obj3)
@@ -132,9 +135,10 @@ router.get('/alunoready/:id/:id2', async (req, res) => {
           }
         }
       console.log("4.3")
+      console.log( resp2 )
         obj2={
           enunciado:questao.enunciado,
-          cotaçaototal: resp2.cotacaoTotal ,
+          cotaçaototal: questao.cotacaoTotal ,
           cotação_obtida: sum,
           resposta:rlist,
         }
