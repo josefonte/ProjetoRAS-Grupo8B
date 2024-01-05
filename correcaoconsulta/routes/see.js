@@ -39,7 +39,7 @@ router.get('/prova/:id', async (req, res) => {
     try {
       const alunoID = req.params.id;
       const provas = await Prova.getProvasByAluno(alunoID);
-      
+      console.log(provas)
       res.json(provas);
     } catch (error) {
       console.error('Error getting Provas:', error);
@@ -50,11 +50,11 @@ router.get('/prova/:id', async (req, res) => {
 
   router.get('/alunoready/:id/:id2', async (req, res) => {
     try {
-      const alunoID = req.params.id;
-      const provaID = req.params.id2;
+      const alunoID = req.params.id2;
+      const provaID = req.params.id;
 
       const provas = await Prova.getProvasByAlunoAndProva(alunoID,provaID);
-      
+      console.log(provas)
       res.json(provas);
     } catch (error) {
       console.error('Error getting Provas:', error);

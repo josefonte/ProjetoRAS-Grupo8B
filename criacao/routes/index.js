@@ -26,6 +26,18 @@ router.get('/api/gestao/gestprovas/:idUtilizador', function(req, res, next){
   }
 });
 
+/* POST /api/gestao/addUserToProva/:idUtilizador?id=<ID_PROVA> */
+router.post('/api/gestao/addUserToProva/:idUtilizador', function(req, res, next) {
+  const idProva = req.query.id;
+  if (idProva !== undefined) {
+    adicionarAlunoAProva( idProva,req.params.idUtilizador)
+      .then(() => res.status(200).json({ mensagem: "Utilizador adicionado com sucesso à prova." }))
+      .catch(erro => res.status(523).json({ erro: erro, mensagem: "Erro ao adicionar utilizador à prova." }));
+  } else {
+    res.status(524).json({ mensagem: "Rota Inválida" });
+  }
+});
+
 router.get('/api/gestao/gestprovas/getprova/:idProva', function(req, res, next){
   Prova.getProvaById(req.params.idProva)
     .then(dados => res.status(200).json(dados))
