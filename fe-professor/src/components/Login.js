@@ -1,72 +1,112 @@
-import React, { useState } from 'react';
+import React from "react";
+
+import { Layout, theme, Row, Button, Checkbox, Form, Input } from "antd";
+import { Footer } from "antd/es/layout/layout";
 import { Link } from "react-router-dom";
-import { ThemeProvider, Container } from '@mui/material';
-import { Button, Input, Typography, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel } from '@mui/material';
-import { createTheme } from "@mui/material/styles";
-import './css/login.css';
 
+const { Content } = Layout;
 
-const theme = createTheme();
-async function loginUser(credentials) {
-  return fetch('http://localhost:8080/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
- }
- 
+const onFinish = (values) => {
+  console.log("Success:", values);
+};
+const onFinishFailed = (errorInfo) => {
+  console.log("Failed:", errorInfo);
+};
 
-export default function Login({ setToken }) {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+function AppLogin() {
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const token = await loginUser({
-      username,
-      password
-    });
-    setToken(token);
-  }
+  return (
+    <Layout>
+      <Content
+        style={{
+          padding: "20px 20%",
+          minHeight: "calc(100vh - 64px)",
+        }}
+      >
+        <Row justify={"center"}>
+          <Link to={"/"}>
+            <h1 style={{ color: "black" }}>ProbUM</h1>
+          </Link>
+        </Row>
 
+        <Row justify={"center"}>
+          <Form
+            name="basic"
+            labelCol={{
+              span: 8,
+            }}
+            wrapperCol={{
+              span: 16,
+            }}
+            style={{
+              maxWidth: 700,
+              minWidth: 550,
+            }}
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+          >
+            <Form.Item
+              label="Username"
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
 
-  return(
-    <ThemeProvider theme={theme}>
-    <Container maxWidth="lg">
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
 
-      <form onSubmit={handleSubmit} className='form'>
-      <Typography variant="h3" className='title'>Welcome to ProbUM</Typography>
-      <div className='box-container' >
-        <FormGroup id="username" className='box'>
-          <InputLabel for="username">Username</InputLabel>
-          <Input type="text" id="username" name="username" required />
-        </FormGroup>
+            <Form.Item
+              name="remember"
+              valuePropName="checked"
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
 
-
-        <FormGroup id="password" className='box'>
-          <InputLabel for="password">Password</InputLabel>
-          <Input type="password" id="password" name="password" required />
-        </FormGroup>
-        </div>
-
-        
-          <FormGroup id="remember">
-            <div className='remember-me'>
-              <InputLabel for="remember">Remember me</InputLabel>
-              <Checkbox id="remember" value="true" name="remember" />
-            </div>
-          </FormGroup>
-
-        <Link to="/exam-list" style={{ cursor: 'pointer' }}>
-          <Button type="submit" variant="contained">
-            Submit
-          </Button>
-      </Link>
-      </form>
-    </Container>
-  </ThemeProvider>
-  )
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button type="primary" htmlType="submit">
+                Entrar
+              </Button>
+            </Form.Item>
+          </Form>
+        </Row>
+      </Content>
+      <Footer style={{ textAlign: "center", fontWeight: "500" }}>
+        Requisitos de Arquiteturas de Software ©2023 Desenvolvido por Grupo 8B
+      </Footer>
+    </Layout>
+  );
 }
+
+export default AppLogin;

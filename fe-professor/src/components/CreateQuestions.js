@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -10,14 +10,13 @@ import {
   Select,
   MenuItem,
 } from "@material-ui/core";
-import { Stack, InputAdornment, FormControl } from "@mui/material";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import {
-  Unstable_NumberInput as NumberInput,
-  numberInputClasses,
-} from "@mui/base/Unstable_NumberInput";
+import { FormControl } from "@mui/material";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 import "./css/CreateQuestions.css";
 
 const CreateQuestions = (props) => {
@@ -26,7 +25,11 @@ const CreateQuestions = (props) => {
   const [correctAnswers, setCorrectAnswers] = React.useState([]);
 
   const { idProva } = useParams();
-
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleCloseDialog = () => {
+    // Close the dialog
+    setOpenDialog(false);
+  };
   const [formData, setFormData] = useState({
     _id: uuidv4(),
     enunciado: "",
@@ -44,6 +47,7 @@ const CreateQuestions = (props) => {
   ]);
 
   const handleChangeForm = (e) => {
+    setOpenDialog(false);
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -95,7 +99,7 @@ const CreateQuestions = (props) => {
       ...formData,
       options: optionsData,
     };
-  
+
     setFormData(updatedFormData);
 
     try {
@@ -112,6 +116,7 @@ const CreateQuestions = (props) => {
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error.message);
     }
+    setOpenDialog(true);
   };
 
   const handleSubmitNextQuestion = (event) => {
@@ -134,7 +139,6 @@ const CreateQuestions = (props) => {
       return updatedRespostas;
     });
   };
-  
 
   return (
     <div className="global-container">
@@ -151,7 +155,6 @@ const CreateQuestions = (props) => {
         />
 
         <div className="tipoQuestao-container">
-    
           <Typography variant="h6" style={{ margin: "10px 0" }}>
             Tipo de Questão
           </Typography>
@@ -159,7 +162,7 @@ const CreateQuestions = (props) => {
           <Select
             label="Tipo de Questão"
             name="tipo_Questao"
-            //value={questionType}
+            value={"multiple_choice"}
             onChange={handleChangeForm}
             //onChange={handleQuestionTypeChange}
             style={{ margin: "20px" }}
@@ -170,17 +173,13 @@ const CreateQuestions = (props) => {
             <MenuItem value="fill_in_the_blank">Completar Espaços</MenuItem>
           </Select>
         </div>
-        
+
         <Typography variant="h6" style={{ margin: "10px 0" }}>
           Respostas (selecione as corretas e as respetivas cotações)
         </Typography>
         {optionsData.map((option, index) => (
           <div key={index} className="answers-container">
             <div className="up-part">
-              <Checkbox
-                checked={respostas[1].checked}
-                onChange={() => handleChange(index)}
-              />
               <TextField
                 id={option._id}
                 //value={resposta.text}
@@ -213,53 +212,46 @@ const CreateQuestions = (props) => {
           </div>
         ))}
 
-        {/* <NumberInput
-              className="number-input"
-              aria-label="Demo number input"
-              placeholder="cotação"
-              label="cotação"
-              step={0.1}
-              value={respostas[index].cotacao}
-              onChange={(event, val) => setCotacao(respostas[index].text, val)}
-            /> */}
-        {/* <TextField
-          label="cotacao Mínima"
-          id="filled-start-adornment"
-          sx={{ m: 1, width: '25ch' }}
-          style={{ margin: '10px 0' }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
-          }}
-          variant="filled"
-        />
         <TextField
-          label="cotacao Incompleta"
-          id="filled-start-adornment"
-          sx={{ m: 1, width: '25ch' }}
-          style={{ margin: '10px 0' }}
-          InputProps={{
-            startAdornment: <InputAdornment position="start"></InputAdornment>,
-          }}
-          variant="filled"
-        /> */}
+          label="Cotação Total da Questão"
+          name="cotacaoTotal"
+          onChange={handleChangeForm}
+          // onChange={(e) => setNumeroDeVersoes(e.target.value)}
+          type="number"
+          variant="outlined"
+          margin="normal"
+        />
 
-        <Link to="/exam-list" style={{ cursor: "pointer" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ margin: "10px 0" }}
-          >
-            Sair
-          </Button>
-        </Link>
         <Button
           variant="contained"
           color="primary"
           onClick={handleSubmit}
           style={{ margin: "10px 0" }}
         >
-          Próxima Questão
+          Guardar
         </Button>
+        
+        <Dialog open={openDialog} onClose={handleCloseDialog}>
+          <DialogTitle>Questão criada!</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Pretende sair ou criar outra questão?</DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleSubmitNextQuestion} >
+              Próxima Questão
+            </Button>
+
+            <Link to="/exam-list" style={{ cursor: "pointer" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ margin: "10px 0" }}
+              >
+                Sair
+              </Button>
+            </Link>
+          </DialogActions>
+        </Dialog>
       </FormControl>
     </div>
   );

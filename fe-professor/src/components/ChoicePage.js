@@ -157,16 +157,6 @@ const ChoicePage = (props) => {
       </Paper>
 
       <div className="button-container">
-        <Link to="/edit-exam" style={{ cursor: "pointer" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ margin: "10px 0" }}
-          >
-            Editar Prova
-          </Button>
-        </Link>
-
         <Link to="/correct-exam" style={{ cursor: "pointer" }}>
           <Button
             variant="contained"
