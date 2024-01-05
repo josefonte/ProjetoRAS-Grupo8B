@@ -1,7 +1,7 @@
 import React from "react";
 
 import { AppHeader } from "../components/AppHeader";
-import { Layout, theme, Row, Col } from "antd";
+import { Layout, theme, Row, Col, Card, Avatar } from "antd";
 import { Footer } from "antd/es/layout/layout";
 import carlos from "../assets/images/carlos.jpg";
 import duarte from "../assets/images/duarte.jpg";
@@ -11,11 +11,11 @@ import joaopedro from "../assets/images/joaopedro.jpg";
 import juliana from "../assets/images/juliana.jpg";
 import lucena from "../assets/images/lucena.jpg";
 import nsimba from "../assets/images/nsimba.jpg";
-import picao from "../assets/images/picao.jpg";
+import picao from "../assets/images/picao.png";
 import raposo from "../assets/images/raposo.jpg";
 import senra from "../assets/images/senra.jpg";
 import ze from "../assets/images/ze.jpg";
-
+const { Meta } = Card;
 const { Header, Content } = Layout;
 
 function AppHome() {
@@ -35,7 +35,7 @@ function AppHome() {
 
       <Content
         style={{
-          padding: "20px 20%",
+          padding: "20px 15%",
           minHeight: "calc(100vh - 128px)",
         }}
       >
@@ -44,74 +44,121 @@ function AppHome() {
         </Row>
 
         <Row>
-          <Col span={6} align="center">
-            <img src={joaopedro} alt="Joao Pedro" class="fit-picture" />
-            PG53951
+          <Col span={8} align="center">
+            <Card style={{ marginBottom: "8px", marginRight: "8px" }}>
+              <Meta
+                avatar={<Avatar src={joaopedro} size={64} />}
+                title="João Braga"
+                description="PG53951"
+              ></Meta>
+            </Card>
           </Col>
-          <Col span={6} align="center">
-            <img src={nsimba} alt="Nsimba" class="fit-picture" />
-            PG51636
+          <Col span={8} align="center">
+            <Card style={{ marginBottom: "8px", marginRight: "8px" }}>
+              <Meta
+                avatar={<Avatar src={nsimba} size={64} />}
+                title="Nsimba Teresa "
+                description="PG51636"
+              ></Meta>
+            </Card>
           </Col>
-          <Col span={6} align="center">
-            <img src={duarte} alt="Duarte" class="fit-picture" />
-            PG53791
-          </Col>
-          <Col span={6} align="center">
-            <img src={juliana} alt="juliana" class="fit-picture" />
-            PG50006
-          </Col>
-        </Row>
-        <Row>
-          <Col span={6} align="center">
-            <img src={raposo} alt="raposo" class="fit-picture" />
-            A94942
-          </Col>
-          <Col span={6} align="center">
-            <img src={ze} alt="ze" class="fit-picture" />
-            A91775
-          </Col>
-          <Col span={6} align="center">
-            <img src={carlos} alt="carlos" class="fit-picture" />
-            PG52675
-          </Col>
-          <Col span={6} align="center">
-            <img src={francisca} alt="francisca" class="fit-picture" />
-            PG52693
+          <Col span={8} align="center">
+            <Card>
+              <Meta
+                avatar={<Avatar src={duarte} size={64} />}
+                title="Duarte Parente"
+                description="PG53791"
+              ></Meta>
+            </Card>
           </Col>
         </Row>
         <Row>
-          <Col span={6} align="center">
-            <img src={escudeiro} alt="escudeiro" class="fit-picture" />
-            A96075
+          <Col span={8} align="center">
+            <Card style={{ marginBottom: "8px", marginRight: "8px" }}>
+              <Meta
+                avatar={<Avatar src={juliana} size={64} />}
+                title="Juliana Silvério"
+                description="PG50006"
+              ></Meta>
+            </Card>
           </Col>
-          <Col span={6} align="center">
-            <img src={picao} alt="picao" class="fit-picture" />
-            PG54162
+          <Col span={8} align="center">
+            <Card style={{ marginBottom: "8px", marginRight: "8px" }}>
+              <Meta
+                avatar={<Avatar src={raposo} size={64} />}
+                title="Miguel Raposo"
+                description="A94942"
+              ></Meta>
+            </Card>
           </Col>
-          <Col span={6} align="center">
-            <img src={lucena} alt="lucena" class="fit-picture" />
-            PG52672
-          </Col>
-          <Col span={6} align="center">
-            <img src={senra} alt="senra" class="fit-picture" />
-            PG54093
+          <Col span={8} align="center">
+            <Card>
+              <Meta
+                avatar={<Avatar src={ze} size={64} />}
+                title="José Fonte"
+                description="A91775"
+              ></Meta>
+            </Card>
           </Col>
         </Row>
-
-        <p>
-          O ProbUM é um produto de software desenvolvido em resposta ao pedido
-          do Reitor da Universidade de Vigo, com o propósito de facilitar a
-          realização de provas de avaliação acadêmica. Este software permite que
-          alunos de cursos universitários ou politécnicos realizem suas
-          avaliações utilizando as infraestruturas informáticas de suas próprias
-          instituições de ensino superior, mesmo que estas sejam limitadas em
-          dimensão, disponibilidade e capacidade. O ProbUM é projetado para ser
-          utilizado em diversas instituições de ensino, sendo configurável e
-          parametrizável. Em resumo, o ProbUM possibilita que professores criem
-          e agendem provas de avaliação, alunos as realizem conforme o
-          calendário estabelecido, e as provas sejam corrigidas,
-          preferencialmente de forma automática.
-        </p>
+        <Row>
+          <Col span={8} align="center">
+            <Card style={{ marginBottom: "8px", marginRight: "8px" }}>
+              <Meta
+                avatar={<Avatar src={carlos} size={64} />}
+                title="Carlos Machado"
+                description="PG52675"
+              ></Meta>
+            </Card>
+          </Col>
+          <Col span={8} align="center">
+            <Card style={{ marginBottom: "8px", marginRight: "8px" }}>
+              <Meta
+                avatar={<Avatar src={francisca} size={64} />}
+                title="Francisca Lemos"
+                description="PG52693"
+              ></Meta>
+            </Card>
+          </Col>
+          <Col span={8} align="center">
+            <Card>
+              <Meta
+                avatar={<Avatar src={escudeiro} size={64} />}
+                title="Bernardo Escudeiro"
+                description="A96075"
+              ></Meta>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={8} align="center">
+            <Card style={{ marginBottom: "8px", marginRight: "8px" }}>
+              <Meta
+                avatar={<Avatar src={picao} size={64} />}
+                title="Rafael Picão"
+                description="PG54162"
+              ></Meta>
+            </Card>
+          </Col>
+          <Col span={8} align="center">
+            <Card style={{ marginBottom: "8px", marginRight: "8px" }}>
+              <Meta
+                avatar={<Avatar src={lucena} size={64} />}
+                title="André Lucena"
+                description="PG52672"
+              ></Meta>
+            </Card>
+          </Col>
+          <Col span={8} align="center">
+            <Card>
+              <Meta
+                avatar={<Avatar src={senra} size={64} />}
+                title="Miguel Senra"
+                description="PG54093"
+              ></Meta>
+            </Card>
+          </Col>
+        </Row>
       </Content>
       <Footer style={{ textAlign: "center", fontWeight: "500" }}>
         Requisitos de Arquiteturas de Software ©2023 Desenvolvido por Grupo 8B

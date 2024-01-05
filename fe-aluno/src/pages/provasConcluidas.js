@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppHeader } from "../components/AppHeader";
 import { Link } from "react-router-dom";
 
@@ -42,42 +42,47 @@ const data = [
   },
 ];
 
-function AppProvasConcluidas() {
+function AppProvasConcluidas(props) {
+  const [listExams, setListExams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(
+          `http://localhost:8010/api/correcaoconsulta/alunoready/1`
+        );
+        const dados = await response.json();
+        setListExams(dados);
+        setLoading(false)
+        console.log("DASASDOOS",dados);
+        console.log("LISTa", listExams)
+      } catch (error) {
+        console.error("Erro ao obter o exame:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const navigate = useNavigate();
+
+  const handleStartExam = (examId) => {
+    navigate(`/provas-concluidas/${examId}`);
+  };
   const columns = [
     {
       title: "Nome",
       dataIndex: "nome",
       key: "nome",
-      render: (text, record) => (
-        <Link
-          to={`/provas-concluidas/${record.key}`}
-          style={{ minWidth: "100px" }}
-        >
-          {text}
-        </Link>
-      ),
-    },
-    {
-      title: "Descrição",
-      dataIndex: "descricao",
-      key: "descricao",
-      render: (text) => (
-        <p
-          style={{
-            margin: "0 0 0 0",
-            maxWidth: "600px",
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {text}
-        </p>
-      ),
+      render: (_, record) => (
+          <a onClick={() => handleStartExam(record.idProva)}>
+            {record.nome}
+          </a>
+      )
     },
     {
       title: "Data",
@@ -85,31 +90,9 @@ function AppProvasConcluidas() {
       key: "data",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = "green";
-            if (tag === "Finished") {
-              color = "orange";
-            }
-
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-
-    {
       title: "Classificação",
-      dataIndex: "classificacao",
-      key: "classificacao",
+      dataIndex: "classificação_total",
+      key: "classificação_total",
     },
   ];
 
@@ -130,7 +113,9 @@ function AppProvasConcluidas() {
         }}
       >
         <h3 style={{ paddingLeft: "10px" }}>Provas Concluídas</h3>
-        <Table columns={columns} dataSource={data} />
+        {console.log("MERDA PRA ISTO",listExams)}
+        {loading}
+        <Table loading={loading} columns={columns} dataSource={listExams} />
       </Content>
     </Layout>
   );

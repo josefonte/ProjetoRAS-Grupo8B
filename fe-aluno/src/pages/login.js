@@ -2,6 +2,7 @@ import React from "react";
 
 import { Layout, theme, Row, Button, Checkbox, Form, Input } from "antd";
 import { Footer } from "antd/es/layout/layout";
+import { Link } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -26,8 +27,11 @@ function AppLogin() {
         }}
       >
         <Row justify={"center"}>
-          <h1>ProbUM</h1>
+          <Link to={"/"}>
+            <h1 style={{ color: "black" }}>ProbUM</h1>
+          </Link>
         </Row>
+
         <Row justify={"center"}>
           <Form
             name="basic"
