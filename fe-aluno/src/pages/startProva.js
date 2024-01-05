@@ -56,8 +56,9 @@ function AppStartProva(props) {
           `http://localhost:8010/api/gestao/gestprovas/${props.idAluno}?id=${idProva}`
         );
         const dados = await response.json();
+        console.log("aqui")
         setExam(dados);
-        console.log(dados);
+        console.log("lista " +dados);
       } catch (error) {
         console.error("Erro ao obter o exame:", error);
       }
@@ -67,8 +68,12 @@ function AppStartProva(props) {
   }, []);
 
   const { hours: dur_hora, minutes: dur_min } = getDuration(exam.duracao);
+  
+  console.log("hora: "+ JSON.stringify(exam))
 
-  const hora_fim = calculateEndTime(exam.hora_preferencial, exam.duracao);
+  const hora_fim =
+    exam.hora_preferencial &&
+    calculateEndTime(exam.hora_preferencial, exam.duracao);
 
   const {
     token: { colorBgContainer },

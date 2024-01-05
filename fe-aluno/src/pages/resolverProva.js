@@ -4,6 +4,8 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
+import axios from 'axios';
+
 import {
   Layout,
   Modal,
@@ -55,6 +57,7 @@ function AppResolverProva(props) {
         setQuestoesProva(dados.questoes);
         setNavItems(createNavItems(dados.questoes, current));
         setLoading(false); // Set loading to false when data is fetched
+        console.log("AQUI2")
         console.log(dados.questoes);
       } catch (error) {
         console.error("Erro ao obter o exame:", error);
@@ -68,7 +71,8 @@ function AppResolverProva(props) {
   const [NavItems, setNavItems] = useState(createNavItems(questoesProva));
   const [current, setCurrent] = useState(0);
   const [respostas, setRespostas] = useState([]); // [ {id: 1, resposta: 1}, {id: 2, resposta: 2}
-  const [selectedOptions, setSelectedOptions] = useState([]); // [ {id: 1, resposta: 1}, {id: 2, resposta: 2}
+  //const [selectedOptions, setSelectedOptions] = useState([]); // [ {id: 1, resposta: 1}, {id: 2, resposta: 2}
+const [selectedOptions, setSelectedOptions] = useState([]);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -78,10 +82,12 @@ function AppResolverProva(props) {
 
   const handleOk = () => {
     respostas.push({
-      selectedIndexes: selectedOptions
-        .map((option, index) => (option ? index : null))
-        .filter((index) => index !== null),
-    });
+  questionId: questoesProva[current]._id,
+  selectedIndexes: selectedOptions
+    //.filter(([, isSelected]) => isSelected)
+    //.map(([id]) => id),
+});
+    console.log("depois "+JSON.stringify(respostas))
     submitProva();
     //submeter respostas
     //informar que a prova foi preenchida
@@ -96,10 +102,12 @@ function AppResolverProva(props) {
 
   const nextQuestion = () => {
     respostas.push({
-      selectedIndexes: selectedOptions
-        .map((option, index) => (option ? index : null))
-        .filter((index) => index !== null),
-    });
+  questionId: questoesProva[current]._id,
+    selectedIndexes: selectedOptions
+  //selectedIndexes: Object.entries(selectedOptions)
+    //.filter(([, isSelected]) => isSelected)
+    //.map(([id]) => id),
+});
     console.log(respostas);
     setSelectedOptions([]);
 
@@ -120,16 +128,36 @@ function AppResolverProva(props) {
     }
     //if current == questoes.length => submit respostas
   };
-
+	
+/*
   const handleCheckboxChange = (index) => {
+  	console.log("estou aqui ")
     const updatedSelectedOptions = [...selectedOptions];
     updatedSelectedOptions[index] = !updatedSelectedOptions[index];
     setSelectedOptions(updatedSelectedOptions);
+  	console.log(selectedOptions[index] )
   };
+*/
+
+const handleCheckboxChange = (optionId) => {
+  setSelectedOptions((prevSelectedOptions) => {
+    if (prevSelectedOptions.includes(optionId)) {
+      return prevSelectedOptions.filter((id) => id !== optionId);
+    } else {
+      return [...prevSelectedOptions, optionId];
+    }
+  });
+};
 
   const submitProva = () => {
     console.log("submit prova");
     console.log(respostas);
+    var obj={"_id":idProva,"_id_aluno":props.idAluno,"respostas":respostas}
+    	//respostas.forEach(item => {
+  	//obj.respostas.p({"questionId":item.questionId,"selectedIndexes":item.selectedIndexes});
+	//});
+
+    axios.post("http://localhost:8010/api/realizacao/save/${idProva}",obj)
   };
 
   return (
@@ -190,7 +218,7 @@ function AppResolverProva(props) {
                   <Checkbox
                     key={opção._id}
                     onChange={() => handleCheckboxChange(opção._id)}
-                    checked={selectedOptions[opção._id]}
+                    checked={selectedOptions.includes(opção._id)}
                   >
                     {opção.texto}
                   </Checkbox>
