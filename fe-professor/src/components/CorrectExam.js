@@ -9,26 +9,20 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import './css/CorrectExam.css'
-const CorrectExam = (props) => {
+const CorrectExam = () => {
   
   const [examNumber, setExamNumber] = React.useState('');
-  const [correction, setCorrection] = React.useState('');
+  const [correction, setCorrection] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [examId, setExamId] = React.useState('');
-
-
-
-  const handleSubmitDialog = () => {
-    // Open the modal.
-    props.setOpenDialog(true);
-  };
-
-  const handleSubmit = () => {
-    // Extract the exam ID from the input field
-    const examId = parseInt(examNumber);
   
-    // Send a PUT request to the API
-    axios.get(`http://localhost:8010/api/correcaoconsulta/correct/corrAUTOprovas/${examId}`)
+
+  const handleSubmit = async (event) => {
+    // Cancela o comportamento padrão do formulário para evitar recarregamento da página
+    event.preventDefault();
+
+    // Verifica se a correção automática está ativada
+    if (correction) {
+      axios.get(`http://localhost:8010/api/correcaoconsulta/correct/corrAUTOprovas/${examNumber}`)
       .then(response => {
         // Success callback
         setOpenDialog(true);
@@ -38,9 +32,11 @@ const CorrectExam = (props) => {
         console.error(error);
       });
       setOpenDialog(true);
-      
+    } else {
+      // Se a correção automática não estiver ativada, você pode exibir uma mensagem ou tomar outra ação
+      console.log("A correção automática não está ativada");
+    }
   };
-
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
