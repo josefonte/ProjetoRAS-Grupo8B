@@ -38,14 +38,16 @@ router.get('/api/realizacao/correct', function(req, res, next) {
     if (req.query.id) {
       ProvaDuplicada.getById(req.query.id)
         .then(prova => {
-        
+
+
         	info = {
-                id_prova_realizada: prova._id,
-                id_prova_duplicada: prova.id_prova_original,
+                id_prova_realizada: prova[0]._id,
+                id_prova_duplicada: prova[0].id_prova_original,
                 classificacao_final: null,
-                num_Aluno: prova.id_aluno,
+                num_Aluno: prova[0].id_aluno,
                 //respostas: prova.respostas
           }
+          console.log("info",info)
           /*
           info = {
               prova: {
@@ -57,18 +59,27 @@ router.get('/api/realizacao/correct', function(req, res, next) {
               }
           }
 	*/
-	
+          console.log("FIXE")      
           axios.post('http://localhost:7778/api/cc/prova', info)
-            .then(response => {
+            .then(async response => {
+              console.log(prova[0].respostas)
+              console.log(prova[0].respostas.length)
+
             
-            	for(var i=0;i<prova.respostas.length;i++){
+            	for(var i=0;i<prova[0].respostas.length;i++){
             	  resposta={}
-            	  resposta["_id"]=prova._id
-            	  for(var j=0;j<prova.respostas.selectedIndexes.length;j++){
-            	    resposta["questionId"]= prova.respostas[i].questionId
-            	    resposta["resposta"]= prova.respostas[i].selectedIndexes[j]
+                console.log("ahudsahsdahj",prova[0].respostas[i].selectedIndexes)
+            	  for(var j=0;j<prova[0].respostas[i].selectedIndexes.length;j++){
+                  //console.log((prova[0].respostas)[i])
+                  resposta["id_questao"]=prova[0]._id + prova[0].respostas[i].selectedIndexes[j]
+            	    resposta["nr_questao"]= prova[0].respostas[i].questionId
+            	    resposta["resposta"]= prova[0].respostas[i].selectedIndexes[j]
+            	    resposta["Prova_id_prova_realizada"]= prova[0]._id
+            	    resposta["TipoQuestao_id_tipo"]= "multiple_choice"
+
             	
-            	    axios.post('http://localhost:7778/api/cc/questão',resposta )
+            	    let algo = await axios.post('http://localhost:7778/api/cc/questao',resposta )
+                  console.log("resposta",resposta)
             	  }
             	}
               res.jsonp(response)
@@ -150,7 +161,7 @@ var dados={
 
     ProvaDuplicada.addProva(dados)
       .then( _ => {
-        axios.get('http://localhost:9999/api/realizacao/correct')
+        axios.get(`http://localhost:9999/api/realizacao/correct?id=${req.body._id+req.body._id_aluno}`)
           .then(response => {
             res.jsonp(response)
           })
