@@ -28,7 +28,7 @@ public interface UserRepository extends CrudRepository<User, String> {
 
     @Transactional
     @Modifying
-    @Query("SELECT n.notificationMessages FROM User n WHERE n.number = :number")
+    @Query("SELECT message FROM User u INNER JOIN u.notificationMessages message WHERE u.number = :number ORDER BY message.messageDate DESC")
     List<NotificationMessage> getAllMessages(String number);
 
 }

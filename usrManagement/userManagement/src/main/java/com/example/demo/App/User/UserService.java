@@ -56,8 +56,10 @@ public class UserService {
     @Transactional
     public boolean changeUserInfo(UserInfoRequest user){
         if(this.userRepository.findById(user.getNumber()).isPresent()){
-            if(user.getPassword()!=null)
+            if(user.getPassword()!=null) {
+                if(user.getPassword().length() < 8) return false;
                 this.userRepository.updateUserPasswordByNumber(user.getNumber(), user.getPassword());
+            }
             if(user.getEmail()!=null)
                 this.userRepository.updateUserEmailByNumber(user.getNumber(), user.getEmail());
 

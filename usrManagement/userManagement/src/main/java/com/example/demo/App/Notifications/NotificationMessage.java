@@ -2,6 +2,9 @@ package com.example.demo.App.Notifications;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Entity
 public class NotificationMessage {
     @Id
@@ -15,12 +18,16 @@ public class NotificationMessage {
 
     private String message;
 
-    public NotificationMessage(){}
+    private LocalDateTime messageDate;
+
+    public NotificationMessage(){
+    }
 
     public NotificationMessage(String message, String subject, String sender) {
         this.message = message;
         this.subject = subject;
         this.sender = sender;
+        this.messageDate = LocalDateTime.now();
     }
 
     public String getMessage() {
