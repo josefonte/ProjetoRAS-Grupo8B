@@ -28,7 +28,7 @@ const CorrectExam = (props) => {
     const examId = parseInt(examNumber);
   
     // Send a PUT request to the API
-    axios.put(`http://localhost:8010/api/correcaoconsulta/correct/corrAUTOprovas/${examId}`)
+    axios.get(`http://localhost:8010/api/correcaoconsulta/correct/corrAUTOprovas/${examId}`)
       .then(response => {
         // Success callback
         setOpenDialog(true);
