@@ -31,7 +31,7 @@ function App() {
           />
           <Route
             path="/provas-concluidas/:id"
-            element={<AppConsultarProva />}
+            element={<AppConsultarProva idAluno={id_aluno} />}
           />
           <Route
             path="/provas-ativas/resolver-prova/:idProva"

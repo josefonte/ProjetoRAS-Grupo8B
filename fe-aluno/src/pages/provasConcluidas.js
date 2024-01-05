@@ -113,8 +113,7 @@ function AppProvasConcluidas(props) {
         }}
       >
         <h3 style={{ paddingLeft: "10px" }}>Provas Concluídas</h3>
-        {console.log("MERDA PRA ISTO",listExams)}
-        {loading}
+       
         <Table loading={loading} columns={columns} dataSource={listExams} />
       </Content>
     </Layout>
